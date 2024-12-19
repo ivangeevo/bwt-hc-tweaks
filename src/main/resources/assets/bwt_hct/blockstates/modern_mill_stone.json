@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "mech_powered=true,full=true": { "model": "bwt_hct:block/modern_mill_stone_on_full"},
+    "mech_powered=true,full=false": { "model": "bwt_hct:block/modern_mill_stone_on"},
+    "mech_powered=false,full=true": { "model": "bwt_hct:block/modern_mill_stone_full"},
+    "mech_powered=false,full=false": { "model": "bwt_hct:block/modern_mill_stone"}
+
+  }
+}

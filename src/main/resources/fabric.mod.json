@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "bwt_hct",
+  "version": "${version}",
+  "name": "BWT: HC Tweaks",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/bwt-hc-tweaks/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "org.ivangeevo.bwt_hct.client.BWT_HCTModClient"
+    ],
+    "main": [
+      "org.ivangeevo.bwt_hct.BWT_HCTMod"
+    ],
+    "fabric-datagen": [
+      "org.ivangeevo.bwt_hct.BWT_HCT_DataGenerator"
+    ]
+  },
+  "mixins": [
+    "bwt-hc-tweaks.mixins.json",
+    {
+      "config": "bwt-hc-tweaks.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
