@@ -4,7 +4,6 @@ import com.bwt.blocks.BwtBlocks;
 import com.bwt.generation.EmiDefaultsGenerator;
 import com.bwt.recipes.BwtRecipes;
 import com.bwt.recipes.IngredientWithCount;
-import com.bwt.recipes.mill_stone.MillStoneRecipe;
 import com.bwt.recipes.mill_stone.MillStoneRecipeInput;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -18,7 +17,6 @@ import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.RecipeProvider;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -32,13 +30,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import org.ivangeevo.bwt_hct.block.ModBlocks;
-import org.ivangeevo.bwt_hct.recipes.ModRecipes;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ModernMillStoneRecipe implements Recipe<SingleItemMillStoneRecipeInput> {
+public class ModernMillStoneRecipe implements Recipe<SingleCountMillStoneRecipeInput> {
     protected final String group;
     protected final CraftingRecipeCategory category;
     final Ingredient ingredient;
@@ -62,9 +59,13 @@ public class ModernMillStoneRecipe implements Recipe<SingleItemMillStoneRecipeIn
     }
 
     @Override
-    public boolean matches(SingleItemMillStoneRecipeInput input, World world) {
-        // error here maybe?
-        return true;
+    public boolean matches(SingleCountMillStoneRecipeInput input, World world) {
+
+        Optional<Integer> matchingCount = input.items().stream()
+                .filter(ingredient::test)
+                .map(ItemStack::getCount)
+                .reduce(Integer::sum);
+        return matchingCount.orElse(0) >= Arrays.stream(ingredient.getMatchingStacks()).count();
     }
 
     @Override
@@ -79,6 +80,9 @@ public class ModernMillStoneRecipe implements Recipe<SingleItemMillStoneRecipeIn
         return defaultedList;
     }
 
+    public List<ItemStack> getResults() {
+        return results.stream().map(ItemStack::copy).collect(Collectors.toList());
+    }
 
     @Override
     public String getGroup() {
@@ -87,7 +91,7 @@ public class ModernMillStoneRecipe implements Recipe<SingleItemMillStoneRecipeIn
 
     @Override
     public RecipeType<?> getType() {
-        return BwtRecipes.MILL_STONE_RECIPE_TYPE;
+        return Type.INSTANCE;
     }
 
     public CraftingRecipeCategory getCategory() {
@@ -105,12 +109,8 @@ public class ModernMillStoneRecipe implements Recipe<SingleItemMillStoneRecipeIn
     }
 
     @Override
-    public ItemStack craft(SingleItemMillStoneRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
+    public ItemStack craft(SingleCountMillStoneRecipeInput input, RegistryWrapper.WrapperLookup lookup) {
         return getResult(lookup);
-    }
-
-    public List<ItemStack> getResults() {
-        return results.stream().map(ItemStack::copy).collect(Collectors.toList());
     }
 
     @Override
@@ -172,7 +172,6 @@ public class ModernMillStoneRecipe implements Recipe<SingleItemMillStoneRecipeIn
         public static void write(RegistryByteBuf buf, ModernMillStoneRecipe recipe) {
             buf.writeString(recipe.group);
             buf.writeEnumConstant(recipe.category);
-
             Ingredient.PACKET_CODEC.encode(buf, recipe.ingredient);
             ItemStack.LIST_PACKET_CODEC.encode(buf, recipe.getResults());
         }

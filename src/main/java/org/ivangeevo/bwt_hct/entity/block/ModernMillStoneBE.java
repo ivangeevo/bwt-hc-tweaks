@@ -1,11 +1,6 @@
 package org.ivangeevo.bwt_hct.entity.block;
 
-import com.bwt.blocks.BwtBlocks;
 import com.bwt.blocks.mill_stone.MillStoneBlock;
-import com.bwt.recipes.BwtRecipes;
-import com.bwt.recipes.IngredientWithCount;
-import com.bwt.recipes.mill_stone.MillStoneRecipe;
-import com.bwt.recipes.mill_stone.MillStoneRecipeInput;
 import com.bwt.utils.OrderedRecipeMatcher;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -14,10 +9,10 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
@@ -26,45 +21,41 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.ivangeevo.bwt_hct.block.ModBlocks;
-import org.ivangeevo.bwt_hct.block.blocks.ModernMillStoneBlock;
 import org.ivangeevo.bwt_hct.entity.ModBlockEntities;
+import org.ivangeevo.bwt_hct.recipes.mill_stone.ModernMillStoneRecipe;
+import org.ivangeevo.bwt_hct.recipes.mill_stone.SingleCountMillStoneRecipeInput;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static org.ivangeevo.bwt_hct.block.blocks.ModernMillStoneBlock.FULL;
 
-public class ModernMillstoneBE extends BlockEntity implements NamedScreenHandlerFactory, Inventory
-{
+public class ModernMillStoneBE extends BlockEntity implements Inventory {
     protected int grindProgressTime;
     public static final int timeToGrind = 200;
-    protected static final int INVENTORY_SIZE = 1;
 
-    public final ModernMillstoneBE.Inventory inventory = new Inventory(INVENTORY_SIZE);
-    public final InventoryStorage inventoryWrapper = InventoryStorage.of(inventory, null);
-    final RecipeManager.MatchGetter<MillStoneRecipeInput, MillStoneRecipe> matchGetter = RecipeManager.createCachedMatchGetter(BwtRecipes.MILL_STONE_RECIPE_TYPE);
+    public final ModernMillStoneBE.Inventory inventory = new ModernMillStoneBE.Inventory(1);
 
-    public ModernMillstoneBE(BlockPos pos, BlockState state) {
+    public final InventoryStorage inventoryWrapper = InventoryStorage.of(inventory, Direction.UP);
+
+    final RecipeManager.MatchGetter<SingleCountMillStoneRecipeInput, ModernMillStoneRecipe> matchGetter =
+            RecipeManager.createCachedMatchGetter(ModernMillStoneRecipe.Type.INSTANCE);
+
+    public ModernMillStoneBE(BlockPos pos, BlockState state) {
         super(ModBlockEntities.MODERN_MILLSTONE, pos, state);
     }
 
-    public static void tick(World world, BlockPos pos, BlockState state, ModernMillstoneBE blockEntity) {
+    public static void tick(World world, BlockPos pos, BlockState state, ModernMillStoneBE blockEntity) {
         if (!state.isOf(ModBlocks.modernMillStoneBlock) || !state.get(MillStoneBlock.MECH_POWERED)) {
             return;
         }
-        MillStoneRecipeInput recipeInput = new MillStoneRecipeInput(blockEntity.inventory.getHeldStacks());
-        List<RecipeEntry<MillStoneRecipe>> matches = world.getRecipeManager().getAllMatches(BwtRecipes.MILL_STONE_RECIPE_TYPE, recipeInput, world);
+        SingleCountMillStoneRecipeInput recipeInput = new SingleCountMillStoneRecipeInput(blockEntity.inventory.getHeldStacks());
+        List<RecipeEntry<ModernMillStoneRecipe>> matches = world.getRecipeManager().getAllMatches(ModernMillStoneRecipe.Type.INSTANCE, recipeInput, world);
         if (matches.isEmpty()) {
             if (blockEntity.grindProgressTime != 0) {
                 blockEntity.grindProgressTime = 0;
@@ -73,10 +64,38 @@ public class ModernMillstoneBE extends BlockEntity implements NamedScreenHandler
             return;
         }
 
+        // Get the item currently in the millstone inventory
+        ItemStack currentStack = blockEntity.inventory.getStack(0);
+
+        // If the inventory is full (contains 1 item), don't transfer anything
+        if (currentStack.getCount() == 1) {
+            // Optionally emit a redstone signal to indicate the inventory is full
+            world.updateListeners(pos, state, state.with(FULL, true), Block.NOTIFY_LISTENERS);
+            return; // Early exit if the inventory is full
+        }
+
+        // If the inventory is empty (room for 1 item), we should try to transfer an item from the hopper
+        if (currentStack.isEmpty()) {
+            net.minecraft.inventory.Inventory inventoryUp = HopperBlockEntity.getInventoryAt(world, pos.up());
+            if (inventoryUp != null) {
+                ItemStack itemStackToTransfer = inventoryUp.getStack(0).copy();
+                if (!itemStackToTransfer.isEmpty()) {
+                    // Attempt to transfer the item from the hopper to the millstone
+                    ItemStack remainingStack = HopperBlockEntity.transfer(inventoryUp, blockEntity.inventory, itemStackToTransfer, Direction.UP);
+                    if (remainingStack.isEmpty()) {
+                        blockEntity.setStack(0, itemStackToTransfer);
+                        blockEntity.markDirty();
+                        world.updateListeners(pos, state, state.with(FULL, true), Block.NOTIFY_LISTENERS); // Inventory is now full
+                    }
+                }
+            }
+        }
+
+
         blockEntity.grindProgressTime += 1;
-        // TODO: Setting the FULL state like this might not be ideal.
-        // theres slight flicker when states change on item insertion from hopper
+
         world.setBlockState(pos, state.with(FULL, true));
+
         if (blockEntity.grindProgressTime >= timeToGrind) {
             blockEntity.grindProgressTime = 0;
             world.setBlockState(pos, state.with(FULL, false));
@@ -90,24 +109,26 @@ public class ModernMillstoneBE extends BlockEntity implements NamedScreenHandler
         OrderedRecipeMatcher.getFirstRecipe(matches, blockEntity.inventory.getHeldStacks(), match -> blockEntity.completeRecipe(match, world, pos));
     }
 
-    public boolean completeRecipe(MillStoneRecipe recipe, World world, BlockPos pos) {
+    public Optional<RecipeEntry<ModernMillStoneRecipe>> getRecipeFor(ItemStack stack)
+    {
+        if (stack.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return this.matchGetter.getFirstMatch(new SingleCountMillStoneRecipeInput(Collections.singletonList(stack)), this.world);
+    }
+
+    public boolean completeRecipe(ModernMillStoneRecipe recipe, World world, BlockPos pos) {
         try (Transaction transaction = Transaction.openOuter()) {
             // Spend ingredients
-            for (IngredientWithCount ingredientWithCount : recipe.getIngredientsWithCount()) {
-                long countToSpend = ingredientWithCount.count();
-                while (countToSpend > 0) {
-                    ItemVariant itemVariant = StorageUtil.findStoredResource(inventoryWrapper, ingredientWithCount::test);
-                    if (itemVariant == null) {
-                        continue;
-                    }
-                    long taken = inventoryWrapper.extract(itemVariant, countToSpend, transaction);
-                    countToSpend -= taken;
-                    if (taken == 0) {
-                        transaction.abort();
-                        return false;
-                    }
+                ItemVariant itemVariant = StorageUtil.findStoredResource(inventoryWrapper, input -> recipe.getIngredients().getFirst().test(input.toStack()));
+                long taken = inventoryWrapper.extract(itemVariant, 1, transaction);
+
+                if (taken == 0) {
+                    transaction.abort();
+                    return false;
                 }
-            }
+
             // Eject results
             for (ItemStack result : recipe.getResults()) {
                 ejectItem(world, result, pos);
@@ -142,13 +163,36 @@ public class ModernMillstoneBE extends BlockEntity implements NamedScreenHandler
         world.spawnEntity(itemEntity);
     }
 
-    public Optional<RecipeEntry<MillStoneRecipe>> getRecipeFor(ItemStack stack)
-    {
-        if (stack.isEmpty()) {
-            return Optional.empty();
-        }
+    public boolean addItem(Entity user, ItemStack stack) {
+        this.setStack(0, stack);
+        this.getWorld().emitGameEvent(GameEvent.BLOCK_CHANGE, this.getPos(), GameEvent.Emitter.of(user, this.getCachedState()));
+        world.setBlockState(pos, world.getBlockState(pos).with(FULL, true));
+        this.updateListeners();
+        stack.decrement(1); // Decrement the original stack by 1
 
-        return this.matchGetter.getFirstMatch(new MillStoneRecipeInput(Collections.singletonList(stack)), this.world);
+        return true;
+    }
+
+
+    public void retrieveItem(World world, PlayerEntity player) {
+
+        if (!inventory.isEmpty() && !world.isClient()) {
+            boolean addedToInventory = player.giveItemStack(inventory.getStack(0));
+            if (!addedToInventory) {
+                player.dropItem(inventory.getStack(0), false);
+            }
+            // set the inventory slot to empty
+            this.setStack(0, ItemStack.EMPTY);
+            // make the blockstate full ( maybe we can move this logic all together to a separate method?)
+            world.setBlockState(pos, world.getBlockState(pos).with(FULL, false));
+            this.updateListeners();
+            this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+        }
+    }
+
+    private void updateListeners() {
+        this.markDirty();
+        this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), 3);
     }
 
     @Override
@@ -163,47 +207,6 @@ public class ModernMillstoneBE extends BlockEntity implements NamedScreenHandler
         super.writeNbt(nbt, registryLookup);
         nbt.put("Inventory", this.inventory.toNbtList(registryLookup));
         nbt.putInt("grindProgressTime", this.grindProgressTime);
-    }
-
-    @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return null;
-    }
-
-    public boolean addItem(Entity user, ItemStack stack) {
-        this.inventory.setStack(0, stack.copyWithCount(1));
-        this.getWorld().emitGameEvent(GameEvent.BLOCK_CHANGE, this.getPos(), GameEvent.Emitter.of(user, this.getCachedState()));
-        world.setBlockState(pos, world.getBlockState(pos).with(FULL, true));
-        this.updateListeners();
-        stack.decrement(1);
-
-        return true;
-    }
-
-    public void retrieveItem(World world, PlayerEntity player) {
-        ItemStack inputStack = inventory.getStack(0);
-
-        if (!inputStack.isEmpty() && !world.isClient()) {
-            boolean addedToInventory = player.giveItemStack(inputStack);
-            if (!addedToInventory) {
-                player.dropItem(inputStack, false);
-            }
-            setStack(0, ItemStack.EMPTY);
-            world.setBlockState(pos, world.getBlockState(pos).with(FULL, false));
-            markDirty();
-            Objects.requireNonNull(this.getWorld()).updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
-        }
-    }
-
-    private void updateListeners() {
-        this.markDirty();
-        this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), 3);
-    }
-
-
-    @Override
-    public Text getDisplayName() {
-        return Text.translatable(getCachedState().getBlock().getTranslationKey());
     }
 
     @Override
@@ -232,6 +235,11 @@ public class ModernMillstoneBE extends BlockEntity implements NamedScreenHandler
     }
 
     @Override
+    public int getMaxCountPerStack() {
+        return inventory.getMaxCountPerStack();
+    }
+
+    @Override
     public void setStack(int slot, ItemStack stack) {
         inventory.setStack(slot, stack);
     }
@@ -246,14 +254,25 @@ public class ModernMillstoneBE extends BlockEntity implements NamedScreenHandler
         inventory.clear();
     }
 
-    public class Inventory extends SimpleInventory
-    {
+    public class Inventory extends SimpleInventory {
         public Inventory(int size) {
             super(size);
         }
+
+        @Override
+        public boolean canInsert(ItemStack stack) {
+            return stack.getCount() == 1;
+        }
+
+        @Override
+        public ItemStack addStack(ItemStack stack) {
+            return isEmpty() ? stack : ItemStack.EMPTY;
+        }
+
         @Override
         public void markDirty() {
-            ModernMillstoneBE.this.markDirty();
+            ModernMillStoneBE.this.markDirty();
         }
     }
+
 }

@@ -1,8 +1,6 @@
 package org.ivangeevo.bwt_hct.block.blocks;
 
-import com.bwt.block_entities.BwtBlockEntities;
 import com.bwt.blocks.mill_stone.MillStoneBlock;
-import com.bwt.blocks.mill_stone.MillStoneBlockEntity;
 import com.bwt.sounds.BwtSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -26,7 +24,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.ivangeevo.bwt_hct.entity.ModBlockEntities;
-import org.ivangeevo.bwt_hct.entity.block.ModernMillstoneBE;
+import org.ivangeevo.bwt_hct.entity.block.ModernMillStoneBE;
 import org.jetbrains.annotations.Nullable;
 
 public class ModernMillStoneBlock extends MillStoneBlock {
@@ -46,7 +44,7 @@ public class ModernMillStoneBlock extends MillStoneBlock {
 
     @Override
     public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new ModernMillstoneBE(pos, state);
+        return new ModernMillStoneBE(pos, state);
     }
 
     @Override
@@ -59,7 +57,7 @@ public class ModernMillStoneBlock extends MillStoneBlock {
         ItemStack heldStack = player.getStackInHand(player.getActiveHand());
         BlockEntity blockEntity = world.getBlockEntity(pos);
 
-        if (blockEntity instanceof ModernMillstoneBE millStoneBE) {
+        if (blockEntity instanceof ModernMillStoneBE millStoneBE) {
             if (handleItemRetrieval(world, pos, player, millStoneBE)) {
                 return ActionResult.SUCCESS;
             } else if (handleItemInsertion(world, player, heldStack, millStoneBE)) {
@@ -81,7 +79,7 @@ public class ModernMillStoneBlock extends MillStoneBlock {
         }
     }
 
-    private boolean handleItemRetrieval(World world, BlockPos pos, PlayerEntity player, ModernMillstoneBE millStoneBE) {
+    private boolean handleItemRetrieval(World world, BlockPos pos, PlayerEntity player, ModernMillStoneBE millStoneBE) {
         if (millStoneBE.inventory.isEmpty()) {
             return false;
         }
@@ -90,7 +88,7 @@ public class ModernMillStoneBlock extends MillStoneBlock {
         return true;
     }
 
-    private boolean handleItemInsertion(World world, PlayerEntity player, ItemStack heldStack, ModernMillstoneBE millStoneBE) {
+    private boolean handleItemInsertion(World world, PlayerEntity player, ItemStack heldStack, ModernMillStoneBE millStoneBE) {
         if (heldStack.isEmpty() || millStoneBE.getRecipeFor(heldStack).isEmpty()) {
             return false;
         }
@@ -119,7 +117,7 @@ public class ModernMillStoneBlock extends MillStoneBlock {
 
     @Nullable
     protected static <A extends BlockEntity> BlockEntityTicker<A> validateTicker(World world, BlockEntityType<A> givenType) {
-        return world.isClient ? null : BlockWithEntity.validateTicker(givenType, ModBlockEntities.MODERN_MILLSTONE, ModernMillstoneBE::tick);
+        return world.isClient ? null : BlockWithEntity.validateTicker(givenType, ModBlockEntities.MODERN_MILLSTONE, ModernMillStoneBE::tick);
     }
 
     @Nullable

@@ -18,6 +18,9 @@
     ],
     "fabric-datagen": [
       "org.ivangeevo.bwt_hct.BWT_HCT_DataGenerator"
+    ],
+    "emi": [
+      "org.ivangeevo.bwt_hct.client.emi.recipes.ModEmiPlugin"
     ]
   },
   "mixins": [

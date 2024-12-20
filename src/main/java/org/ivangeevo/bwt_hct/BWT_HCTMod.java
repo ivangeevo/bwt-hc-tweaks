@@ -18,5 +18,6 @@ public class BWT_HCTMod implements ModInitializer
         ModBlocks.registerModBlocks();
         ModBlockEntities.registerBlockEntities();
         ModRecipes.registerRecipes();
+
     }
 }
