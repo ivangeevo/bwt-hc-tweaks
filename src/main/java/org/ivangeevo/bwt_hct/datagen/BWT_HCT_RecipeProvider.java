@@ -24,8 +24,8 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
 
     @Override
     public void generate(RecipeExporter exporter) {
-        this.generateDisabledRecipes(exporter);
-        this.generateModRecipes(exporter);
+        //this.generateDisabledRecipes(exporter);
+        //this.generateModRecipes(exporter);
     }
 
     @Override

@@ -15,6 +15,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -250,6 +251,11 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
     }
 
     @Override
+    public int getMaxCount(ItemStack stack) {
+        return inventory.getMaxCount(stack);
+    }
+
+    @Override
     public void clear() {
         inventory.clear();
     }
@@ -260,13 +266,33 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
         }
 
         @Override
+        public boolean isEmpty() {
+            return inventory.getStack(0).getCount() < 1;
+        }
+
+        @Override
         public boolean canInsert(ItemStack stack) {
-            return stack.getCount() == 1;
+            return isEmpty();
         }
 
         @Override
         public ItemStack addStack(ItemStack stack) {
             return isEmpty() ? stack : ItemStack.EMPTY;
+        }
+
+        @Override
+        public int size() {
+            return 1;
+        }
+
+        @Override
+        public int getMaxCountPerStack() {
+            return size();
+        }
+
+        @Override
+        public int getMaxCount(ItemStack stack) {
+            return getMaxCountPerStack();
         }
 
         @Override
