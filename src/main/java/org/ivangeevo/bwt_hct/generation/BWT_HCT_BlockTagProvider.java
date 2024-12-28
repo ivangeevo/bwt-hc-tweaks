@@ -1,12 +1,11 @@
-package org.ivangeevo.bwt_hct.datagen;
+package org.ivangeevo.bwt_hct.generation;
 
 import com.bwt.tags.BwtBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
-import org.ivangeevo.bwt_hct.block.ModBlocks;
+import org.ivangeevo.bwt_hct.blocks.ModBlocks;
 
 import java.util.concurrent.CompletableFuture;
 

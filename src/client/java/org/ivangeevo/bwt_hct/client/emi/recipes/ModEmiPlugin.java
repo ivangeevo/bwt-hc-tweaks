@@ -2,8 +2,6 @@ package org.ivangeevo.bwt_hct.client.emi.recipes;
 
 import com.bwt.blocks.BwtBlocks;
 import com.bwt.recipes.BlockIngredient;
-import com.bwt.recipes.BwtRecipes;
-import com.bwt.recipes.IngredientWithCount;
 import com.bwt.utils.Id;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
@@ -17,7 +15,7 @@ import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.util.Identifier;
-import org.ivangeevo.bwt_hct.block.ModBlocks;
+import org.ivangeevo.bwt_hct.blocks.ModBlocks;
 import org.ivangeevo.bwt_hct.recipes.mill_stone.ModernMillStoneRecipe;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package org.ivangeevo.bwt_hct.entity.block;
+package org.ivangeevo.bwt_hct.entities.block;
 
 import com.bwt.blocks.mill_stone.MillStoneBlock;
 import com.bwt.utils.OrderedRecipeMatcher;
@@ -15,7 +15,6 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -27,14 +26,14 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
-import org.ivangeevo.bwt_hct.block.ModBlocks;
-import org.ivangeevo.bwt_hct.entity.ModBlockEntities;
+import org.ivangeevo.bwt_hct.blocks.ModBlocks;
+import org.ivangeevo.bwt_hct.entities.ModBlockEntities;
 import org.ivangeevo.bwt_hct.recipes.mill_stone.ModernMillStoneRecipe;
 import org.ivangeevo.bwt_hct.recipes.mill_stone.SingleCountMillStoneRecipeInput;
 
 import java.util.*;
 
-import static org.ivangeevo.bwt_hct.block.blocks.ModernMillStoneBlock.FULL;
+import static org.ivangeevo.bwt_hct.blocks.blocks.ModernMillStoneBlock.FULL;
 
 public class ModernMillStoneBE extends BlockEntity implements Inventory {
     protected int grindProgressTime;
@@ -48,7 +47,7 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
             RecipeManager.createCachedMatchGetter(ModernMillStoneRecipe.Type.INSTANCE);
 
     public ModernMillStoneBE(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.MODERN_MILLSTONE, pos, state);
+        super(ModBlockEntities.modernMillStoneEntity, pos, state);
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, ModernMillStoneBE blockEntity) {

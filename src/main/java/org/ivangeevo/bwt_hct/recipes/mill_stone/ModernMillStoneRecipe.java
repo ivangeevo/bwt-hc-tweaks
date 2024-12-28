@@ -1,10 +1,6 @@
 package org.ivangeevo.bwt_hct.recipes.mill_stone;
 
-import com.bwt.blocks.BwtBlocks;
 import com.bwt.generation.EmiDefaultsGenerator;
-import com.bwt.recipes.BwtRecipes;
-import com.bwt.recipes.IngredientWithCount;
-import com.bwt.recipes.mill_stone.MillStoneRecipeInput;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -29,7 +25,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
-import org.ivangeevo.bwt_hct.block.ModBlocks;
+import org.ivangeevo.bwt_hct.blocks.ModBlocks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;

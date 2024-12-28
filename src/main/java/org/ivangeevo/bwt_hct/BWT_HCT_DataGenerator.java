@@ -2,10 +2,7 @@ package org.ivangeevo.bwt_hct;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import org.ivangeevo.bwt_hct.datagen.BWT_HCT_BlockTagProvider;
-import org.ivangeevo.bwt_hct.datagen.BWT_HCT_ItemTagProvider;
-import org.ivangeevo.bwt_hct.datagen.BWT_HCT_LootTableProvider;
-import org.ivangeevo.bwt_hct.datagen.BWT_HCT_RecipeProvider;
+import org.ivangeevo.bwt_hct.generation.*;
 
 public class BWT_HCT_DataGenerator implements DataGeneratorEntrypoint {
     @Override

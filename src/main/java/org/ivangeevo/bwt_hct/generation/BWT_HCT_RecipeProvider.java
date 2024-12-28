@@ -1,4 +1,4 @@
-package org.ivangeevo.bwt_hct.datagen;
+package org.ivangeevo.bwt_hct.generation;
 
 import btwr.btwrsl.lib.util.utils.RecipeProviderUtils;
 import com.bwt.items.BwtItems;
@@ -10,7 +10,8 @@ import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
-import org.ivangeevo.bwt_hct.block.ModBlocks;
+import org.ivangeevo.bwt_hct.blocks.ModBlocks;
+import org.ivangeevo.bwt_hct.items.ModItems;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -26,6 +27,14 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
     public void generate(RecipeExporter exporter) {
         //this.generateDisabledRecipes(exporter);
         //this.generateModRecipes(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.verticalWindmillItem)
+                .pattern("sss")
+                .pattern("s s")
+                .pattern("sss")
+                .input('s', BwtItems.sailItem)
+                .criterion(hasItem(BwtItems.sailItem), conditionsFromItem(BwtItems.sailItem))
+                .offerTo(exporter);
     }
 
     @Override

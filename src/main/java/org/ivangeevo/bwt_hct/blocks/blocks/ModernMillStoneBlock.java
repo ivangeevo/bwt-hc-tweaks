@@ -1,4 +1,4 @@
-package org.ivangeevo.bwt_hct.block.blocks;
+package org.ivangeevo.bwt_hct.blocks.blocks;
 
 import com.bwt.blocks.mill_stone.MillStoneBlock;
 import com.bwt.sounds.BwtSoundEvents;
@@ -23,8 +23,8 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import org.ivangeevo.bwt_hct.entity.ModBlockEntities;
-import org.ivangeevo.bwt_hct.entity.block.ModernMillStoneBE;
+import org.ivangeevo.bwt_hct.entities.ModBlockEntities;
+import org.ivangeevo.bwt_hct.entities.block.ModernMillStoneBE;
 import org.jetbrains.annotations.Nullable;
 
 public class ModernMillStoneBlock extends MillStoneBlock {
@@ -117,7 +117,7 @@ public class ModernMillStoneBlock extends MillStoneBlock {
 
     @Nullable
     protected static <A extends BlockEntity> BlockEntityTicker<A> validateTicker(World world, BlockEntityType<A> givenType) {
-        return world.isClient ? null : BlockWithEntity.validateTicker(givenType, ModBlockEntities.MODERN_MILLSTONE, ModernMillStoneBE::tick);
+        return world.isClient ? null : BlockWithEntity.validateTicker(givenType, ModBlockEntities.modernMillStoneEntity, ModernMillStoneBE::tick);
     }
 
     @Nullable

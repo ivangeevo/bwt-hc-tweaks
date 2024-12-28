@@ -1,4 +1,4 @@
-package org.ivangeevo.bwt_hct.block;
+package org.ivangeevo.bwt_hct.blocks;
 
 import com.bwt.blocks.BwtBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -11,7 +11,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.ivangeevo.bwt_hct.BWT_HCTMod;
-import org.ivangeevo.bwt_hct.block.blocks.ModernMillStoneBlock;
+import org.ivangeevo.bwt_hct.blocks.blocks.ModernMillStoneBlock;
 
 public class ModBlocks
 {

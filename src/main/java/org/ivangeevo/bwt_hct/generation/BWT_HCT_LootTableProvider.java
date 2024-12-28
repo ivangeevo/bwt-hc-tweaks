@@ -1,9 +1,9 @@
-package org.ivangeevo.bwt_hct.datagen;
+package org.ivangeevo.bwt_hct.generation;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.registry.RegistryWrapper;
-import org.ivangeevo.bwt_hct.block.ModBlocks;
+import org.ivangeevo.bwt_hct.blocks.ModBlocks;
 
 import java.util.concurrent.CompletableFuture;
 
