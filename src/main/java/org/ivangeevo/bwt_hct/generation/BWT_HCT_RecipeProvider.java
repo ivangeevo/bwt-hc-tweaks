@@ -1,6 +1,6 @@
 package org.ivangeevo.bwt_hct.generation;
 
-import btwr.btwrsl.lib.util.utils.RecipeProviderUtils;
+import btwr.btwr_sl.lib.util.utils.RecipeProviderUtils;
 import com.bwt.items.BwtItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
