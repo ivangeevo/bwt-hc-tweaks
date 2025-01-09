@@ -79,7 +79,7 @@ dependencies {
 
     modImplementation files("libs/better_with_time-1.7.2.jar")
 
-    modImplementation("org.ivangeevo:btwr-shared-lib:${project.btwr_lib_version}")
+    modImplementation("org.ivangeevo:btwr-shared-lib:${project.btwr_sl_version}")
 
     modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
     modLocalRuntime "dev.emi:emi-fabric:${emi_version}"

@@ -26,21 +26,9 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
     @Override
     public void generate(RecipeExporter exporter) {
         //this.generateDisabledRecipes(exporter);
-        //this.generateModRecipes(exporter);
-
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.verticalWindmillItem)
-                .pattern("sss")
-                .pattern("s s")
-                .pattern("sss")
-                .input('s', BwtItems.sailItem)
-                .criterion(hasItem(BwtItems.sailItem), conditionsFromItem(BwtItems.sailItem))
-                .offerTo(exporter);
+        this.generateModRecipes(exporter);
     }
 
-    @Override
-    protected Identifier getRecipeIdentifier(Identifier identifier) {
-        return identifier;
-    }
 
     private void generateDisabledRecipes(RecipeExporter exporter) {
         disableRecipe(exporter, "bwt", "mill_stone");
@@ -56,7 +44,21 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
                 .criterion("has_gear", conditionsFromItem(BwtItems.gearItem))
                 .offerTo(exporter, Identifier.of("bwt_hct", "modern_mill_stone"));
 
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.verticalWindmillItem)
+                .pattern("sss")
+                .pattern("s s")
+                .pattern("sss")
+                .input('s', BwtItems.sailItem)
+                .criterion(hasItem(BwtItems.sailItem), conditionsFromItem(BwtItems.sailItem))
+                .offerTo(exporter, Identifier.of("bwt_hct", "vertical_windmill"));
+
 
     }
+
+    @Override
+    protected Identifier getRecipeIdentifier(Identifier identifier) {
+        return identifier;
+    }
+
 
 }
