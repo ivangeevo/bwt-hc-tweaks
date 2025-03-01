@@ -18,9 +18,5 @@ public class BWT_HCT_ItemTagProvider extends FabricTagProvider.ItemTagProvider
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-
-        getOrCreateTagBuilder(BwtItemTags.PASSES_LADDER_FILTER)
-                .add(ModItems.verticalWindmillItem);
-
     }
 }

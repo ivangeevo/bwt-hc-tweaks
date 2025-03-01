@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dormant_soul_forge": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bwt_hct:dormant_soul_forge"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bwt:soul_forge"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dormant_soul_forge"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bwt:soul_forge"
+    ]
+  }
+}

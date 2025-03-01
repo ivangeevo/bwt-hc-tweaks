@@ -1,0 +1,6 @@
+{
+  "parent": "bwt:block/crop_cross",
+  "textures": {
+    "cross": "bwt_hct:block/hemp_crop_top"
+  }
+}

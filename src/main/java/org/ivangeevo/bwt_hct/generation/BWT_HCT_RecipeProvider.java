@@ -1,17 +1,19 @@
 package org.ivangeevo.bwt_hct.generation;
 
 import btwr.btwr_sl.lib.util.utils.RecipeProviderUtils;
+import com.bwt.blocks.BwtBlocks;
 import com.bwt.items.BwtItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import org.ivangeevo.bwt_hct.blocks.ModBlocks;
-import org.ivangeevo.bwt_hct.items.ModItems;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -27,11 +29,20 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
     public void generate(RecipeExporter exporter) {
         //this.generateDisabledRecipes(exporter);
         this.generateModRecipes(exporter);
+        this.generateBwtRecipes(exporter);
     }
 
 
     private void generateDisabledRecipes(RecipeExporter exporter) {
         disableRecipe(exporter, "bwt", "mill_stone");
+    }
+
+    private void generateBwtRecipes(RecipeExporter exporter) {
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, BwtBlocks.soulForgeBlock)
+                .input(ModBlocks.dormantSoulForge)
+                .input(Items.NETHER_STAR)
+                .criterion("has_dormant_soul_forge", conditionsFromItem(ModBlocks.dormantSoulForge))
+                .offerTo(exporter, ID.ofBWT("soul_forge"));
     }
 
     private void generateModRecipes(RecipeExporter exporter) {
@@ -43,16 +54,6 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
                 .pattern("SGS")
                 .criterion("has_gear", conditionsFromItem(BwtItems.gearItem))
                 .offerTo(exporter, Identifier.of("bwt_hct", "modern_mill_stone"));
-
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.verticalWindmillItem)
-                .pattern("sss")
-                .pattern("s s")
-                .pattern("sss")
-                .input('s', BwtItems.sailItem)
-                .criterion(hasItem(BwtItems.sailItem), conditionsFromItem(BwtItems.sailItem))
-                .offerTo(exporter, Identifier.of("bwt_hct", "vertical_windmill"));
-
-
     }
 
     @Override

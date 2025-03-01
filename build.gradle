@@ -67,6 +67,9 @@ repositories {
         url = "https://maven.terraformersmc.com/"
     }
 
+    maven { url "https://api.modrinth.com/maven" }
+
+
 }
 
 dependencies {
@@ -77,12 +80,17 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation files("libs/better_with_time-1.7.2.jar")
-
+    // BTWR: Shared Library
     modImplementation("org.ivangeevo:btwr-shared-lib:${project.btwr_sl_version}")
 
+    // Better With Time
+    modImplementation "maven.modrinth:better-with-time:${project.bwt_version}"
+
+    // EMI
     modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
     modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
+
+
 
 }
 

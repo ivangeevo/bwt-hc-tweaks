@@ -7,17 +7,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.ivangeevo.bwt_hct.BWT_HCTMod;
-import org.ivangeevo.bwt_hct.entities.VerticalWindmillEntity;
 
-public class ModItems
-{
-    public static final Item verticalWindmillItem = register(
-            "vertical_windmill",
-            new VerticalMechPowerSourceItem(
-                    VerticalWindmillEntity::new,
-                    new Item.Settings().maxCount(1)
-            )
-    );
+public class ModItems {
 
 
     private static Item register(String name, Item item) {
@@ -28,7 +19,7 @@ public class ModItems
         BWT_HCTMod.LOGGER.info("Registering Mod Items for " + BWT_HCTMod.MOD_ID);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register(content -> {
-            content.add(verticalWindmillItem);
+            //content.add(verticalWindmillItem);
         });
     }
 }

@@ -3,10 +3,12 @@
   "id": "bwt_hct",
   "version": "${version}",
   "name": "BWT: HC Tweaks",
-  "description": "",
-  "authors": [],
+  "description": "Hardcore tweaks and features for Better With Time",
+  "authors": [
+    "ivangeevo"
+  ],
   "contact": {},
-  "license": "MIT",
+  "license": "CC-BY-4.0",
   "icon": "assets/bwt-hc-tweaks/icon.png",
   "environment": "*",
   "entrypoints": {
