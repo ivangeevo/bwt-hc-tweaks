@@ -1,0 +1,19 @@
+{
+  "type": "bwt:soul_forge_shaped",
+  "category": "misc",
+  "key": {
+    "g": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    "gggg",
+    " g  ",
+    " g  ",
+    "gggg"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bwt_hct:dormant_soul_forge"
+  }
+}

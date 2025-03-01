@@ -37,6 +37,13 @@ public class ModBlocks
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries ->
         {
             entries.add(modernMillStoneBlock.asItem());
+
+        });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries ->
+        {
+            entries.add(dormantSoulForge.asItem());
+
         });
 
     }

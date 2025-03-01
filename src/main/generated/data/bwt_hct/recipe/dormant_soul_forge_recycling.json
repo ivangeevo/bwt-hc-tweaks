@@ -1,0 +1,18 @@
+{
+  "type": "bwt:stoked_crucible",
+  "category": "misc",
+  "group": "",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "bwt_hct:dormant_soul_forge"
+      }
+    }
+  ],
+  "results": [
+    {
+      "count": 60,
+      "id": "minecraft:gold_nugget"
+    }
+  ]
+}
