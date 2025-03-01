@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "BwtBlocksMixin",
-    "DormantSoulforgePlacer"
+    "DormantSoulforgePlacer",
+    "HempCropMixin"
   ],
   "injectors": {
     "defaultRequire": 1
