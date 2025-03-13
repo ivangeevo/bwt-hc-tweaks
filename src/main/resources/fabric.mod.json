@@ -9,7 +9,7 @@
   ],
   "contact": {},
   "license": "CC-BY-4.0",
-  "icon": "assets/bwt-hc-tweaks/icon.png",
+  "icon": "assets/bwt_hct/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [

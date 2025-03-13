@@ -9,6 +9,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
@@ -18,6 +19,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(HempCropBlock.class)
 public abstract class HempCropMixin extends CropBlock {
@@ -28,6 +30,17 @@ public abstract class HempCropMixin extends CropBlock {
 
     public HempCropMixin(Settings settings) {
         super(settings);
+    }
+
+    // set the growth amount to the super (original from CropBlock)
+    @Inject(method = "getGrowthAmount", at = @At("HEAD"), cancellable = true)
+    private void customGrowthAmount(World world, CallbackInfoReturnable<Integer> cir) {
+        cir.setReturnValue(super.getGrowthAmount(world));
+    }
+
+    @Inject(method = "hasRandomTicks", at = @At("HEAD"), cancellable = true)
+    private void setHasRandomTicks(BlockState state, CallbackInfoReturnable<Boolean> cir) {
+        cir.setReturnValue(!state.get(CONNECTED_UP));
     }
 
     @Inject(method = "randomTick", at = @At("HEAD"))
