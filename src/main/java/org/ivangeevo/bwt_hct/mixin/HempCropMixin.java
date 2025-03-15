@@ -2,14 +2,12 @@ package org.ivangeevo.bwt_hct.mixin;
 
 import com.bwt.blocks.BwtBlocks;
 import com.bwt.blocks.HempCropBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropBlock;
+import net.minecraft.block.*;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
@@ -26,28 +24,34 @@ public abstract class HempCropMixin extends CropBlock {
 
     @Shadow @Final public static BooleanProperty CONNECTED_UP;
 
+    @Unique
+    private static BooleanProperty IS_TOP = BooleanProperty.of("is_top");
+
     @Unique private static final float BASE_GROWTH_CHANCE = 0.1F;
 
     public HempCropMixin(Settings settings) {
         super(settings);
     }
 
-    // set the growth amount to the super (original from CropBlock)
-    @Inject(method = "getGrowthAmount", at = @At("HEAD"), cancellable = true)
-    private void customGrowthAmount(World world, CallbackInfoReturnable<Integer> cir) {
-        cir.setReturnValue(super.getGrowthAmount(world));
+    @Inject(method = "<init>", at = @At("TAIL"))
+    private void initProperty(Settings settings, CallbackInfo ci) {
+        this.setDefaultState(this.getDefaultState().with(CONNECTED_UP, false).with(IS_TOP, false));
+    }
+
+    @Inject(method = "appendProperties", at = @At("TAIL"))
+    private void appendCustomProperties(StateManager.Builder<Block, BlockState> builder, CallbackInfo ci) {
+        builder.add(IS_TOP);
     }
 
     @Inject(method = "hasRandomTicks", at = @At("HEAD"), cancellable = true)
     private void setHasRandomTicks(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(!state.get(CONNECTED_UP));
+        cir.setReturnValue(!state.get(IS_TOP));
     }
 
-    @Inject(method = "randomTick", at = @At("HEAD"))
+    @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
     private void onRandomTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
-        if (state.get(CONNECTED_UP)) return;
 
-        if (world.getLightLevel(pos) < 15 && !isValidAlternateLightSourceAbove(world, pos)) return;
+        if (!world.isSkyVisible(pos) && world.getLightLevel(pos) < 15 && !isValidAlternateLightSourceAbove(world, pos)) return;
 
         // The block that the crop is planted on
         Block soilBlock = world.getBlockState(pos.down()).getBlock();
@@ -58,6 +62,8 @@ public abstract class HempCropMixin extends CropBlock {
         } else if (world.isAir(pos.up())) {
             attemptTopGrowth(world, pos, state, random, soilBlock);
         }
+
+        ci.cancel();
     }
 
     @Unique
@@ -72,7 +78,7 @@ public abstract class HempCropMixin extends CropBlock {
     private void attemptTopGrowth(World world, BlockPos pos, BlockState state, Random random, Block soilBlock) {
         float topGrowthChance = (BASE_GROWTH_CHANCE / 4F) * soilBlock.getPlantGrowthOnMultiplier(world, pos.down(), this);
         if (random.nextFloat() <= topGrowthChance) {
-            world.setBlockState(pos.up(), state.with(CONNECTED_UP, true).with(AGE, 7), Block.NOTIFY_LISTENERS);
+            world.setBlockState(pos.up(), state.with(IS_TOP, true).with(AGE, 7), Block.NOTIFY_LISTENERS);
             soilBlock.notifyOfFullStagePlantGrowthOn(world, pos.down(), this);
         }
     }
