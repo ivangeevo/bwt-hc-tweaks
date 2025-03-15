@@ -7,6 +7,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.ivangeevo.bwt_hct.BWT_HCTMod;
+import org.ivangeevo.bwt_hct.blocks.ModBlocks;
 
 public class ModItems {
 
@@ -18,8 +19,11 @@ public class ModItems {
     public static void registerModItems() {
         BWT_HCTMod.LOGGER.info("Registering Mod Items for " + BWT_HCTMod.MOD_ID);
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register(content -> {
-            //content.add(verticalWindmillItem);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(content -> {
+            //content.add(ModBlocks.modernMillStoneBlock);
+            content.add(ModBlocks.dormantSoulForge);
+
         });
+
     }
 }
