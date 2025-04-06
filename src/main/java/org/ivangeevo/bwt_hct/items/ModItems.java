@@ -11,7 +11,6 @@ import org.ivangeevo.bwt_hct.blocks.ModBlocks;
 
 public class ModItems {
 
-
     private static Item register(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(BWT_HCTMod.MOD_ID, name), item);
     }

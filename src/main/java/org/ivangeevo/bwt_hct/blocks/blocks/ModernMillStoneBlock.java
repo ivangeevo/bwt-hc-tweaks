@@ -2,6 +2,7 @@ package org.ivangeevo.bwt_hct.blocks.blocks;
 
 import com.bwt.blocks.mill_stone.MillStoneBlock;
 import com.bwt.sounds.BwtSoundEvents;
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -53,22 +54,6 @@ public class ModernMillStoneBlock extends MillStoneBlock {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        ItemStack heldStack = player.getStackInHand(player.getActiveHand());
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-
-        if (blockEntity instanceof ModernMillStoneBE millStoneBE) {
-            if (handleItemRetrieval(world, pos, player, millStoneBE)) {
-                return ActionResult.SUCCESS;
-            } else if (handleItemInsertion(world, player, heldStack, millStoneBE)) {
-                return ActionResult.SUCCESS;
-            }
-        }
-
-        return ActionResult.PASS;
-    }
-
-    @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (this.isMechPowered(state)) {
             this.emitGearBoxParticles(world, pos, random);
@@ -78,7 +63,21 @@ public class ModernMillStoneBlock extends MillStoneBlock {
         }
     }
 
-    private boolean handleItemRetrieval(World world, BlockPos pos, PlayerEntity player, ModernMillStoneBE millStoneBE) {
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        if (!world.isClient) {
+            BlockEntity be = world.getBlockEntity(pos);
+            if (be instanceof ModernMillStoneBE millStoneBE) {
+                if (millStoneBE.onUseByPlayer(player)) {
+                    return ActionResult.SUCCESS;
+                }
+            }
+        }
+        return ActionResult.PASS;
+    }
+
+    private boolean handleItemRetrieval(World world, BlockPos pos, PlayerEntity player, ModernMillStoneBE millStoneBE, Transaction transaction) {
+
         if (millStoneBE.inventory.isEmpty()) {
             return false;
         }

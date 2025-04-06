@@ -1,6 +1,7 @@
 package org.ivangeevo.bwt_hct.entities.block;
 
 import com.bwt.blocks.mill_stone.MillStoneBlock;
+import com.bwt.blocks.mill_stone.MillStoneBlockEntity;
 import com.bwt.utils.OrderedRecipeMatcher;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -30,6 +31,7 @@ import org.ivangeevo.bwt_hct.blocks.ModBlocks;
 import org.ivangeevo.bwt_hct.entities.ModBlockEntities;
 import org.ivangeevo.bwt_hct.recipes.mill_stone.ModernMillStoneRecipe;
 import org.ivangeevo.bwt_hct.recipes.mill_stone.SingleCountMillStoneRecipeInput;
+import org.ivangeevo.bwt_hct.util.SingleCountInventory;
 
 import java.util.*;
 
@@ -49,7 +51,33 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
 
     public ModernMillStoneBE(BlockPos pos, BlockState state) {
         super(ModBlockEntities.modernMillStoneEntity, pos, state);
+
     }
+
+    public boolean onUseByPlayer(PlayerEntity player) {
+        ItemStack held = player.getMainHandStack();
+
+        // If trying to retrieve item
+        if (held.isEmpty() && !inventory.isEmpty()) {
+            retrieveItem(world, player);
+            return true;
+        }
+
+        // Try inserting if empty and player is holding something
+        if (inventory.isEmpty() && !held.isEmpty() && getRecipeFor(held).isPresent()) {
+            ItemStack inserted = held.copyWithCount(1);
+            setStack(0, inserted);
+            held.decrement(1);
+            assert world != null;
+            world.setBlockState(pos, getCachedState().with(FULL, true));
+            markDirty();
+            world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, getCachedState()));
+            return true;
+        }
+
+        return false; // Nothing happened
+    }
+
 
     public static void tick(World world, BlockPos pos, BlockState state, ModernMillStoneBE blockEntity) {
         if (!state.isOf(ModBlocks.modernMillStoneBlock) || !state.get(MillStoneBlock.MECH_POWERED)) {
@@ -65,33 +93,6 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
             return;
         }
 
-        // Get the item currently in the millstone inventory
-        ItemStack currentStack = blockEntity.inventory.getStack(0);
-
-        // If the inventory is full (contains 1 item), don't transfer anything
-        if (currentStack.getCount() == 1) {
-            // Optionally emit a redstone signal to indicate the inventory is full
-            world.updateListeners(pos, state, state.with(FULL, true), Block.NOTIFY_LISTENERS);
-            return; // Early exit if the inventory is full
-        }
-
-        // If the inventory is empty (room for 1 item), we should try to transfer an item from the hopper
-        if (currentStack.isEmpty()) {
-            net.minecraft.inventory.Inventory inventoryUp = HopperBlockEntity.getInventoryAt(world, pos.up());
-            if (inventoryUp != null) {
-                ItemStack itemStackToTransfer = inventoryUp.getStack(0).copy();
-                if (!itemStackToTransfer.isEmpty()) {
-                    // Attempt to transfer the item from the hopper to the millstone
-                    ItemStack remainingStack = HopperBlockEntity.transfer(inventoryUp, blockEntity.inventory, itemStackToTransfer, Direction.UP);
-                    if (remainingStack.isEmpty()) {
-                        blockEntity.setStack(0, itemStackToTransfer);
-                        blockEntity.markDirty();
-                        world.updateListeners(pos, state, state.with(FULL, true), Block.NOTIFY_LISTENERS); // Inventory is now full
-                    }
-                }
-            }
-        }
-
         blockEntity.grindProgressTime += 1;
 
         world.setBlockState(pos, state.with(FULL, true));
@@ -100,8 +101,7 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
             blockEntity.grindProgressTime = 0;
             world.setBlockState(pos, state.with(FULL, false));
             blockEntity.markDirty();
-        }
-        else {
+        } else {
             return;
         }
 
@@ -109,8 +109,7 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
         OrderedRecipeMatcher.getFirstRecipe(matches, blockEntity.inventory.getHeldStacks(), match -> blockEntity.completeRecipe(match, world, pos));
     }
 
-    public Optional<RecipeEntry<ModernMillStoneRecipe>> getRecipeFor(ItemStack stack)
-    {
+    public Optional<RecipeEntry<ModernMillStoneRecipe>> getRecipeFor(ItemStack stack) {
         if (stack.isEmpty()) {
             return Optional.empty();
         }
@@ -137,6 +136,30 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
             return true;
         }
     }
+
+    public boolean addItem(PlayerEntity player, ItemStack stack) {
+        // Insert a single item (already validated)
+        try (Transaction tx = Transaction.openOuter()) {
+            if (inventoryWrapper.insert(ItemVariant.of(stack), 1L, tx) == stack.getCount()) {
+                tx.commit();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void retrieveItem(World world, PlayerEntity player) {
+        try (Transaction tx = Transaction.openOuter()) {
+            long extracted = inventoryWrapper.extract(ItemVariant.of(inventory.getStack(0)), 1, tx);
+            if (extracted != 0L) {
+                player.getInventory().offerOrDrop(inventory.getStack(0));
+                world.setBlockState(pos, world.getBlockState(pos).with(FULL, false));
+                this.updateListeners();
+            }                tx.commit();
+
+        }
+    }
+
 
     public static void ejectItem(World world, ItemStack stack, BlockPos pos) {
         // Start at the center of the block
@@ -173,21 +196,27 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
         return true;
     }
 
-
+    /**
     public void retrieveItem(World world, PlayerEntity player) {
 
         if (!inventory.isEmpty() && !world.isClient()) {
             boolean addedToInventory = player.giveItemStack(inventory.getStack(0));
+
             if (!addedToInventory) {
                 player.dropItem(inventory.getStack(0), false);
             }
             // set the inventory slot to empty
             this.setStack(0, ItemStack.EMPTY);
-            // make the blockstate full ( maybe we can move this logic all together to a separate method?)
-            world.setBlockState(pos, world.getBlockState(pos).with(FULL, false));
-            this.updateListeners();
-            this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+            // make the block state full
+            this.setFull(world);
         }
+    }
+     **/
+
+    private void setFull(World world) {
+        world.setBlockState(pos, world.getBlockState(pos).with(FULL, false));
+        this.updateListeners();
+        this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
     }
 
     private void updateListeners() {
@@ -259,42 +288,11 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
         inventory.clear();
     }
 
-    public class Inventory extends SimpleInventory {
+    public class Inventory extends SingleCountInventory {
         public Inventory(int size) {
             super(size);
         }
 
-        @Override
-        public boolean isEmpty() {
-            return inventory.getStack(0).getCount() < 1;
-        }
-
-        @Override
-        public boolean canInsert(ItemStack stack) {
-            return isEmpty();
-        }
-
-        @Override
-        public ItemStack addStack(ItemStack stack) {
-            return isEmpty() ? stack : ItemStack.EMPTY;
-        }
-
-        @Override
-        public int size() {
-            return 1;
-        }
-
-        @Override
-        public int getMaxCountPerStack() {
-            return size();
-        }
-
-        @Override
-        public int getMaxCount(ItemStack stack) {
-            return getMaxCountPerStack();
-        }
-
-        @Override
         public void markDirty() {
             ModernMillStoneBE.this.markDirty();
         }
