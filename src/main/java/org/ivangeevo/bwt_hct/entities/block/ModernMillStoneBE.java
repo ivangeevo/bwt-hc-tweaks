@@ -36,6 +36,7 @@ import java.util.*;
 import static org.ivangeevo.bwt_hct.blocks.blocks.ModernMillStoneBlock.FULL;
 
 public class ModernMillStoneBE extends BlockEntity implements Inventory {
+
     protected int grindProgressTime;
     public static final int timeToGrind = 200;
 
@@ -90,7 +91,6 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
                 }
             }
         }
-
 
         blockEntity.grindProgressTime += 1;
 

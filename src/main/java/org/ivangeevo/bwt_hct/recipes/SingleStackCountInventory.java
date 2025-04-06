@@ -3,8 +3,7 @@ package org.ivangeevo.bwt_hct.recipes;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 
-public class SingleStackCountInventory extends SimpleInventory
-{
+public class SingleStackCountInventory extends SimpleInventory {
 
     @Override
     public int size() {
@@ -20,4 +19,5 @@ public class SingleStackCountInventory extends SimpleInventory
     public int getMaxCount(ItemStack stack) {
         return getMaxCountPerStack();
     }
+
 }

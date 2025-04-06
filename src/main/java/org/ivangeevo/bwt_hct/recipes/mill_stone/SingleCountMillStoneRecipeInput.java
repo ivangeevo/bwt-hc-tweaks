@@ -6,6 +6,7 @@ import net.minecraft.recipe.input.RecipeInput;
 import java.util.List;
 
 public record SingleCountMillStoneRecipeInput(List<ItemStack> items) implements RecipeInput {
+
     @Override
     public ItemStack getStackInSlot(int slot) {
         return items.get(slot);
@@ -15,6 +16,5 @@ public record SingleCountMillStoneRecipeInput(List<ItemStack> items) implements 
     public int getSize() {
         return 1;
     }
-
 
 }

@@ -75,7 +75,6 @@ public class ModernMillStoneBlock extends MillStoneBlock {
             if (random.nextInt(4) == 0) {
                 this.playMechSound(world, pos);
             }
-
         }
     }
 
@@ -111,9 +110,7 @@ public class ModernMillStoneBlock extends MillStoneBlock {
             float smokeZ = (float)pos.getZ() + random.nextFloat();
             world.addParticle(ParticleTypes.SMOKE, smokeX, smokeY, smokeZ, 0.0, 0.0, 0.0);
         }
-
     }
-
 
     @Nullable
     protected static <A extends BlockEntity> BlockEntityTicker<A> validateTicker(World world, BlockEntityType<A> givenType) {
@@ -125,4 +122,5 @@ public class ModernMillStoneBlock extends MillStoneBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> givenType) {
         return ModernMillStoneBlock.validateTicker(world, givenType);
     }
+
 }

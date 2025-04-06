@@ -18,9 +18,13 @@ import org.ivangeevo.bwt_hct.blocks.blocks.ModernMillStoneBlock;
 public class ModBlocks
 {
 
-    public static final Block modernMillStoneBlock = registerBlock("modern_mill_stone", new ModernMillStoneBlock(AbstractBlock.Settings.copy(BwtBlocks.millStoneBlock)));
+    public static final Block modernMillStoneBlock = registerBlock("modern_mill_stone",
+            new ModernMillStoneBlock(AbstractBlock.Settings.copy(BwtBlocks.millStoneBlock))
+    );
 
-    public static final Block dormantSoulForge = registerBlock("dormant_soul_forge", new DormantSoulForgeBlock(AbstractBlock.Settings.copy(BwtBlocks.soulForgeBlock)));
+    public static final Block dormantSoulForge = registerBlock("dormant_soul_forge",
+            new DormantSoulForgeBlock(AbstractBlock.Settings.copy(BwtBlocks.soulForgeBlock))
+    );
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);

@@ -32,6 +32,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ModernMillStoneRecipe implements Recipe<SingleCountMillStoneRecipeInput> {
+
     protected final String group;
     protected final CraftingRecipeCategory category;
     final Ingredient ingredient;

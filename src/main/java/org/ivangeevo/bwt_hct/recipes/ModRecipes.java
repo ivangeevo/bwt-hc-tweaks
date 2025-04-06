@@ -6,8 +6,7 @@ import net.minecraft.util.Identifier;
 import org.ivangeevo.bwt_hct.BWT_HCTMod;
 import org.ivangeevo.bwt_hct.recipes.mill_stone.ModernMillStoneRecipe;
 
-public class ModRecipes
-{
+public class ModRecipes {
 
     public static void registerRecipes() {
 

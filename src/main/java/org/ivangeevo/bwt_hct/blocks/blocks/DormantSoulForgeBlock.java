@@ -19,4 +19,5 @@ public class DormantSoulForgeBlock extends SoulForgeBlock {
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         return ActionResult.PASS;
     }
+
 }
