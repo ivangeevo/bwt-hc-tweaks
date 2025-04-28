@@ -30,5 +30,8 @@ public class SingleCountInventory extends SimpleInventory {
         return this.isEmpty() && stack.getCount() == 1 && super.canInsert(stack);
     }
 
-
+    @Override
+    public boolean canInsert(ItemStack stack) {
+        return isEmpty();
+    }
 }

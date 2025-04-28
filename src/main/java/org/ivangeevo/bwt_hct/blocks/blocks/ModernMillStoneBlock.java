@@ -66,33 +66,13 @@ public class ModernMillStoneBlock extends MillStoneBlock {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (!world.isClient) {
-            BlockEntity be = world.getBlockEntity(pos);
-            if (be instanceof ModernMillStoneBE millStoneBE) {
+            if (world.getBlockEntity(pos) instanceof ModernMillStoneBE millStoneBE) {
                 if (millStoneBE.onUseByPlayer(player)) {
                     return ActionResult.SUCCESS;
                 }
             }
         }
         return ActionResult.PASS;
-    }
-
-    private boolean handleItemRetrieval(World world, BlockPos pos, PlayerEntity player, ModernMillStoneBE millStoneBE, Transaction transaction) {
-
-        if (millStoneBE.inventory.isEmpty()) {
-            return false;
-        }
-        millStoneBE.retrieveItem(world, player);
-        world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS);
-        return true;
-    }
-
-    private boolean handleItemInsertion(World world, PlayerEntity player, ItemStack heldStack, ModernMillStoneBE millStoneBE) {
-        if (heldStack.isEmpty() || millStoneBE.getRecipeFor(heldStack).isEmpty()) {
-            return false;
-        }
-
-        return !world.isClient() && millStoneBE.inventory.isEmpty() && millStoneBE.addItem(player,
-                player.getAbilities().creativeMode ? heldStack.copy() : heldStack);
     }
 
     private void playMechSound(World world, BlockPos pos) {

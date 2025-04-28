@@ -57,27 +57,24 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
     public boolean onUseByPlayer(PlayerEntity player) {
         ItemStack held = player.getMainHandStack();
 
-        // If trying to retrieve item
-        if (held.isEmpty() && !inventory.isEmpty()) {
+        // Trying to retrieve item
+        if (!inventory.isEmpty()) {
             retrieveItem(world, player);
             return true;
         }
 
-        // Try inserting if empty and player is holding something
+        // Try inserting if inventory is empty and player is holding something or recipe item
         if (inventory.isEmpty() && !held.isEmpty() && getRecipeFor(held).isPresent()) {
             ItemStack inserted = held.copyWithCount(1);
             setStack(0, inserted);
             held.decrement(1);
             assert world != null;
-            world.setBlockState(pos, getCachedState().with(FULL, true));
-            markDirty();
-            world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, getCachedState()));
+            this.setFull(world, true);
             return true;
         }
 
         return false; // Nothing happened
     }
-
 
     public static void tick(World world, BlockPos pos, BlockState state, ModernMillStoneBE blockEntity) {
         if (!state.isOf(ModBlocks.modernMillStoneBlock) || !state.get(MillStoneBlock.MECH_POWERED)) {
@@ -137,7 +134,7 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
         }
     }
 
-    public boolean addItem(PlayerEntity player, ItemStack stack) {
+    public boolean addItem(ItemStack stack) {
         // Insert a single item (already validated)
         try (Transaction tx = Transaction.openOuter()) {
             if (inventoryWrapper.insert(ItemVariant.of(stack), 1L, tx) == stack.getCount()) {
@@ -150,13 +147,13 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
 
     public void retrieveItem(World world, PlayerEntity player) {
         try (Transaction tx = Transaction.openOuter()) {
-            long extracted = inventoryWrapper.extract(ItemVariant.of(inventory.getStack(0)), 1, tx);
+            ItemVariant variant = ItemVariant.of(inventory.getStack(0));
+            long extracted = inventoryWrapper.extract(variant, 1, tx);
             if (extracted != 0L) {
-                player.getInventory().offerOrDrop(inventory.getStack(0));
-                world.setBlockState(pos, world.getBlockState(pos).with(FULL, false));
-                this.updateListeners();
-            }                tx.commit();
-
+                player.getInventory().offerOrDrop(variant.toStack());
+                this.setFull(world, false);
+                tx.commit();
+            }
         }
     }
 
@@ -186,42 +183,14 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
         world.spawnEntity(itemEntity);
     }
 
-    public boolean addItem(Entity user, ItemStack stack) {
-        this.setStack(0, stack);
-        this.getWorld().emitGameEvent(GameEvent.BLOCK_CHANGE, this.getPos(), GameEvent.Emitter.of(user, this.getCachedState()));
-        world.setBlockState(pos, world.getBlockState(pos).with(FULL, true));
+    private void setFull(World world, boolean value) {
+        world.setBlockState(pos, world.getBlockState(pos).with(FULL, value));
         this.updateListeners();
-        stack.decrement(1); // Decrement the original stack by 1
-
-        return true;
-    }
-
-    /**
-    public void retrieveItem(World world, PlayerEntity player) {
-
-        if (!inventory.isEmpty() && !world.isClient()) {
-            boolean addedToInventory = player.giveItemStack(inventory.getStack(0));
-
-            if (!addedToInventory) {
-                player.dropItem(inventory.getStack(0), false);
-            }
-            // set the inventory slot to empty
-            this.setStack(0, ItemStack.EMPTY);
-            // make the block state full
-            this.setFull(world);
-        }
-    }
-     **/
-
-    private void setFull(World world) {
-        world.setBlockState(pos, world.getBlockState(pos).with(FULL, false));
-        this.updateListeners();
-        this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
     }
 
     private void updateListeners() {
         this.markDirty();
-        this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), 3);
+        this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
     }
 
     @Override
@@ -263,6 +232,7 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
         return inventory.removeStack(slot);
     }
 
+
     @Override
     public int getMaxCountPerStack() {
         return inventory.getMaxCountPerStack();
@@ -297,5 +267,7 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
             ModernMillStoneBE.this.markDirty();
         }
     }
+
+
 
 }
