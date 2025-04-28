@@ -21,8 +21,7 @@ import org.ivangeevo.bwt_hct.blocks.ModBlocks;
 import java.util.concurrent.CompletableFuture;
 
 
-public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements RecipeProviderUtils
-{
+public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements RecipeProviderUtils {
 
     public BWT_HCT_RecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output, registriesFuture);
@@ -34,7 +33,6 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
         this.generateBwtRecipesOverride(exporter);
         this.generateModRecipes(exporter);
     }
-
 
     private void generateDisabledRecipes(RecipeExporter exporter) {
         disableRecipe(exporter, "bwt", "mill_stone");
@@ -74,7 +72,6 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
                 .offerTo(exporter, Identifier.of(BWT_HCTMod.MOD_ID,"dormant_soul_forge_recycling"));
 
     }
-
 
     @Override
     protected Identifier getRecipeIdentifier(Identifier identifier) {

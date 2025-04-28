@@ -26,13 +26,11 @@ import java.util.concurrent.CompletableFuture;
 
 public class BWT_HCT_LootTableProvider extends FabricBlockLootTableProvider {
 
-
     public BWT_HCT_LootTableProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
         super(dataOutput, registryLookup);
     }
 
     public static final LootCondition.Builder WITH_CONVENTIONAL_SHEARS = MatchToolLootCondition.builder(ItemPredicate.Builder.create().tag(ConventionalItemTags.SHEAR_TOOLS));
-
 
     @Override
     public void generate() {
