@@ -35,31 +35,6 @@
     },
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "block": "bwt:hemp_crop_block",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "age": "7"
-          }
-        }
-      ],
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "bwt_hct:piston_break",
-              "chance" : 1.0
-            }
-          ],
-          "name": "bwt:hemp"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -80,36 +55,6 @@
             {
               "chance": 0.5,
               "condition": "minecraft:random_chance"
-            }
-          ],
-          "name": "bwt:hemp_seeds"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "block": "bwt:hemp_crop_block",
-              "condition": "minecraft:block_state_property",
-              "properties": {
-                "age": "7"
-              }
-            },
-            {
-              "block": "bwt:hemp_crop_block",
-              "condition": "minecraft:block_state_property",
-              "properties": {
-                "is_top": "true"
-              }
-            },
-            {
-              "condition": "bwt_hct:piston_break",
-              "chance": 0.5
             }
           ],
           "name": "bwt:hemp_seeds"

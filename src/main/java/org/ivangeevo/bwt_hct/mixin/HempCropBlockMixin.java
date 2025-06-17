@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(HempCropBlock.class)
-public abstract class HempCropMixin extends CropBlock {
+public abstract class HempCropBlockMixin extends CropBlock {
 
     @Shadow @Final public static BooleanProperty CONNECTED_UP;
 
@@ -29,7 +29,7 @@ public abstract class HempCropMixin extends CropBlock {
 
     @Unique private static final float BASE_GROWTH_CHANCE = 0.1F;
 
-    public HempCropMixin(Settings settings) {
+    public HempCropBlockMixin(Settings settings) {
         super(settings);
     }
 

@@ -27,7 +27,7 @@ public abstract class PistonHandlerMixin {
 
     @Shadow @Final private Direction motionDirection;
 
-    @Inject(method = "tryMove", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;getPistonBehavior()Lnet/minecraft/block/piston/PistonBehavior;", shift = At.Shift.AFTER))
+    //@Inject(method = "tryMove", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;getPistonBehavior()Lnet/minecraft/block/piston/PistonBehavior;", shift = At.Shift.AFTER))
     private void afterPistonDestroyBlock(BlockPos pos, Direction dir, CallbackInfoReturnable<Boolean> cir) {
         World world = ((PistonHandlerAccessor) this).getWorld();
 
