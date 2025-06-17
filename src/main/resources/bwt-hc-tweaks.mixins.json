@@ -8,9 +8,6 @@
     "BwtBlocksMixin",
     "DormantSoulforgePlacer",
     "HempCropBlockMixin",
-    "PistonBlockMixin",
-    "PistonHandlerAccessor",
-    "PistonHandlerMixin",
     "SawBlockMixin"
   ],
   "injectors": {

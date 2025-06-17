@@ -25,13 +25,11 @@ public class BWT_HCTMod implements ModInitializer {
         ModEntities.registerEntities();
         ModRecipes.registerRecipes();
 
-
         // Make campfire a valid fuel for BWT FireData
         FireData.FIRE_AMOUNT_FUNCTIONS.put(
                 CampfireBlock.class,
                 ((world, blockPos, blockState) -> new FireData(CampfireBlock.isLitCampfire(blockState) ? 1 : 0))
         );
-
 
     }
 }
