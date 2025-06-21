@@ -1,6 +1,6 @@
 ## v1.2(dev)
-+ Added a new loot condition type "PISTON_BREAK" where it causes blocks that are pushed by pistons to drop their loot. Currently this only works as a normal drop only with the ability to assign a chance variable
 + Made the hemp plant block to drop loot when broken with a piston push
++ Fixed hemp plant to also drop its top part loot when the bottom is broken 
 + Changed(increased) the time it takes for a  Saw Block to break other blocks slightly in order to match the speed that's in retail BTW
 + Updated the mod to Fabric API 0.116.2, Fabric Loader 0.16.14 & BTWR Shared Library 0.55
 
