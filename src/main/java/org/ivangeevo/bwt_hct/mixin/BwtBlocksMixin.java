@@ -14,4 +14,16 @@ public abstract class BwtBlocksMixin {
     private static AbstractBlock.Settings bwt_hct$init(AbstractBlock.Settings settings) {
         return settings.strength(1).pistonBehavior(PistonBehavior.NORMAL);
     }
+
+    // Add settings to unfired urn
+    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lcom/bwt/blocks/UnfiredUrnBlock;<init>(Lnet/minecraft/block/AbstractBlock$Settings;)V"))
+    private static AbstractBlock.Settings bwt_hct$init1(AbstractBlock.Settings settings) {
+        return settings.solid();
+    }
+
+    // Add settings to mould
+    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lcom/bwt/blocks/UnfiredMouldBlock;<init>(Lnet/minecraft/block/AbstractBlock$Settings;)V"))
+    private static AbstractBlock.Settings bwt_hct$init2(AbstractBlock.Settings settings) {
+        return settings.solid();
+    }
 }
