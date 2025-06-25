@@ -3,7 +3,7 @@
 + Made soul urns and moulds to be considered solid blocks and this makes them stay in place when hit by water blocks 
 which in turn allows easy automation with a tube kiln setup.
 + Fixed hemp plant to also drop its top part loot when the bottom is broken 
-+ Changed(increased) the time it takes for a  Saw Block to break other blocks slightly in order to match the speed that's in retail BTW
++ Changed(slightly increased) the time it takes for a Saw Block to break other blocks in order to match the speed that's in retail BTW
 + Updated the mod to Fabric API 0.116.2, Fabric Loader 0.16.14 & BTWR Shared Library 0.55
 
 ## v1.1

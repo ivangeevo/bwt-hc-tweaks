@@ -73,8 +73,6 @@ public abstract class StonecutterBlockMixin extends Block implements MechPowerBl
         builder.add(FACING);
     }
 
-
-
     @Inject(method = "getPlacementState", at = @At("HEAD"), cancellable = true)
     private void onGetPlacementState(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> cir) {
         cir.setReturnValue(getDefaultState().with(FACING, ctx.getPlayerLookDirection().getOpposite()).with(MECH_POWERED, false));
