@@ -4,6 +4,7 @@ import com.bwt.blocks.BwtBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -11,6 +12,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.ivangeevo.bwt_hct.BWT_HCTMod;
+import org.ivangeevo.bwt_hct.blocks.blocks.ArcaneVesselBlock;
 import org.ivangeevo.bwt_hct.blocks.blocks.DormantSoulForgeBlock;
 import org.ivangeevo.bwt_hct.blocks.blocks.ModernMillStoneBlock;
 
@@ -23,6 +25,10 @@ public class ModBlocks
 
     public static final Block dormantSoulForge = registerBlock("dormant_soul_forge",
             new DormantSoulForgeBlock(AbstractBlock.Settings.copy(BwtBlocks.soulForgeBlock))
+    );
+
+    public static final Block arcaneVesselBlock = registerBlock("arcane_vessel",
+            new ArcaneVesselBlock(AbstractBlock.Settings.copy(Blocks.IRON_BARS))
     );
 
     private static Block registerBlock(String name, Block block) {
@@ -41,6 +47,7 @@ public class ModBlocks
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries ->
         {
             entries.add(modernMillStoneBlock.asItem());
+            entries.add(arcaneVesselBlock.asItem());
 
         });
 

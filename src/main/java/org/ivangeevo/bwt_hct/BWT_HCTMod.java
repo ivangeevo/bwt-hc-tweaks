@@ -3,6 +3,7 @@ package org.ivangeevo.bwt_hct;
 import com.bwt.utils.FireData;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.CampfireBlock;
+import net.minecraft.util.Identifier;
 import org.ivangeevo.bwt_hct.blocks.ModBlocks;
 import org.ivangeevo.bwt_hct.entities.ModBlockEntities;
 import org.ivangeevo.bwt_hct.entities.ModEntities;
@@ -15,7 +16,6 @@ public class BWT_HCTMod implements ModInitializer {
 
     public static final String MOD_ID = "bwt_hct";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
 
     @Override
     public void onInitialize() {

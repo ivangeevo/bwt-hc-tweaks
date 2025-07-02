@@ -7,7 +7,11 @@
     "AbstractBlockMixin",
     "BwtBlocksMixin",
     "DormantSoulforgePlacer",
+    "ExperienceOrbEntityMixin",
     "HempCropBlockMixin",
+    "LivingEntityMixin",
+    "MechHopperBlockEntityMixin",
+    "MechHopperBlockMixin",
     "SawBlockMixin"
   ],
   "injectors": {

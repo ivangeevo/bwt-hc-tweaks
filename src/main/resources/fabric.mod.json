@@ -38,5 +38,12 @@
     "minecraft": "${minecraft_version}",
     "bwt": "${bwt_version}",
     "btwr_sl": ">=${btwr_sl_version}"
+  },
+
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_1303": ["org/ivangeevo/bwt_hct/entities/interfaces/ExperienceOrbEntityAdded"]
+
+    }
   }
 }
