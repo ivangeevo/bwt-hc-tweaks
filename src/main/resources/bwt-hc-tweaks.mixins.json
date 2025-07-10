@@ -5,10 +5,12 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AbstractBlockMixin",
+    "BlockMixin",
     "BwtBlocksMixin",
     "DormantSoulforgePlacer",
     "HempCropBlockMixin",
-    "SawBlockMixin"
+    "SawBlockMixin",
+    "SoilPlanterBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

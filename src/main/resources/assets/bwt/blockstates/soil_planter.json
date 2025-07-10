@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "moisture=0": {
+      "model": "bwt:block/soil_planter"
+    },
+    "moisture=1": {
+      "model": "bwt:block/soil_planter"
+    },
+    "moisture=2": {
+      "model": "bwt:block/soil_planter"
+    },
+    "moisture=3": {
+      "model": "bwt:block/soil_planter"
+    },
+    "moisture=4": {
+      "model": "bwt:block/soil_planter"
+    },
+    "moisture=5": {
+      "model": "bwt:block/soil_planter"
+    },
+    "moisture=6": {
+      "model": "bwt:block/soil_planter"
+    },
+    "moisture=7": {
+      "model": "bwt:block/soil_planter_moist"
+    }
+  }
+}
