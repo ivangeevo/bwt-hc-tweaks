@@ -57,31 +57,23 @@ public abstract class MechHopperBlockEntityMixin extends BlockEntity implements 
         assert world != null;
 
         if (xpCount >= XP_EJECT_UNIT_SIZE) {
-            int targetPosX = pos.getX();
-            int targetPosY = pos.getY() - 1;
-            int targetPosZ = pos.getZ();
-
             boolean bCanEjectIntoWorld = false;
 
-            BlockPos ejectPos = new BlockPos(targetPosX, targetPosY, targetPosZ);
+            BlockPos ejectPos = pos.down();
             BlockState ejectPosState = world.getBlockState(ejectPos);
 
             if (ejectPosState.isAir()) {
                 bCanEjectIntoWorld = true;
-            }
-            else {
+            } else {
                 Block targetBlock = ejectPosState.getBlock();
 
                 if (targetBlock == BwtBlocks.hopperBlock) {
                     bShouldResetEjectCount = attemptToEjectXPIntoHopper(ejectPos);
-                }
-                else if (targetBlock == ModBlocks.arcaneVesselBlock) {
+                } else if (targetBlock == ModBlocks.arcaneVesselBlock) {
                     bShouldResetEjectCount = attemptToEjectXPIntoArcaneVessel(ejectPos);
-                }
-                else if (world.getBlockState(ejectPos).isReplaceable()) {
+                } else if (world.getBlockState(ejectPos).isReplaceable()) {
                     bCanEjectIntoWorld = true;
-                }
-                else {
+                } else {
 
                     if (!ejectPosState.isSolidBlock(world, ejectPos)) {
                         bCanEjectIntoWorld = true;

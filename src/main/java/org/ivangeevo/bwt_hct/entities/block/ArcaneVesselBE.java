@@ -183,33 +183,16 @@ public class ArcaneVesselBE extends BlockEntity
         return false;
     }
 
-    public void ejectContentsOnBlockBreak()
-    {
-        while (containedRegularExperience > 0 )
-        {
-            int iEjectSize = xpEjectUnitSize;
-
-            if (containedRegularExperience < xpEjectUnitSize)
-            {
-                iEjectSize = containedRegularExperience;
-            }
-
+    public void ejectContentsOnBlockBreak() {
+        while (containedRegularExperience > 0) {
+            int iEjectSize = Math.min(containedRegularExperience, xpEjectUnitSize);
             ejectXPOrbOnBlockBreak(iEjectSize, false);
-
             containedRegularExperience -= iEjectSize;
         }
 
-        while (containedDragonExperience > 0 )
-        {
-            int iEjectSize = xpEjectUnitSize;
-
-            if (containedDragonExperience < xpEjectUnitSize)
-            {
-                iEjectSize = containedDragonExperience;
-            }
-
+        while (containedDragonExperience > 0) {
+            int iEjectSize = Math.min(containedDragonExperience, xpEjectUnitSize);
             ejectXPOrbOnBlockBreak(iEjectSize, true);
-
             containedDragonExperience -= iEjectSize;
         }
     }
@@ -242,8 +225,7 @@ public class ArcaneVesselBE extends BlockEntity
         serverWorld.spawnEntity(orb);
     }
 
-    private void ejectXPOrbOnBlockBreak(int iXPValue, boolean bDragonOrb)
-    {
+    private void ejectXPOrbOnBlockBreak(int iXPValue, boolean bDragonOrb) {
         if (world == null) return;
         double xOffset = world.getRandom().nextDouble() * 0.7D + 0.15D;
         double yOffset = world.getRandom().nextDouble() * 0.7D + 0.15D;
