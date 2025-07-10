@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AbstractBlockMixin",
+    "BlockMixin",
     "BwtBlocksMixin",
     "DormantSoulforgePlacer",
     "ExperienceOrbEntityMixin",
@@ -12,7 +13,8 @@
     "LivingEntityMixin",
     "MechHopperBlockEntityMixin",
     "MechHopperBlockMixin",
-    "SawBlockMixin"
+    "SawBlockMixin",
+    "SoilPlanterBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

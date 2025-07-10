@@ -26,4 +26,11 @@ public abstract class BwtBlocksMixin {
     private static AbstractBlock.Settings bwt_hct$init2(AbstractBlock.Settings settings) {
         return settings.solid();
     }
+
+    // Add ticksRandomly() to SoilPlanterBlock
+    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lcom/bwt/blocks/SoilPlanterBlock;<init>(Lnet/minecraft/block/AbstractBlock$Settings;)V"))
+    private static AbstractBlock.Settings bwt_hct$init3(AbstractBlock.Settings settings) {
+        return settings.ticksRandomly();
+    }
+
 }

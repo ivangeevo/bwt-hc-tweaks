@@ -20,4 +20,5 @@ public abstract class BlockMixin {
             builder.add(MOISTURE);
         }
     }
+
 }
