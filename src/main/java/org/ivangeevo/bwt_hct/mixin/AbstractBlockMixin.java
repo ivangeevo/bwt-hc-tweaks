@@ -54,34 +54,6 @@ public abstract class AbstractBlockMixin {
 
     }
 
-    @Inject(method = "randomTick", at = @At("HEAD"))
-    private void onRandomTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
-        if (((AbstractBlock)(Object)this) instanceof SoilPlanterBlock) {
-            int i = state.get(MOISTURE);
-            if (!isWaterNearby(world, pos) && !world.hasRain(pos.up())) {
-                if (i > 0) {
-                    world.setBlockState(pos, state.with(MOISTURE, i - 1), 2);
-                }
-            } else if (i < 7) {
-                world.setBlockState(pos, state.with(MOISTURE, 7), 2);
-            }
-        }
-    }
-
-
-    @Unique
-    private static boolean isWaterNearby(WorldView world, BlockPos pos) {
-        // Original area check
-        for (BlockPos blockPos : BlockPos.iterate(pos.add(-4, 0, -4), pos.add(4, 1, 4))) {
-            if (world.getFluidState(blockPos).isIn(FluidTags.WATER) || world.getFluidState(blockPos).isOf(Fluids.WATER)) {
-                return true;
-            }
-        }
-
-        // Additional check: directly below
-        BlockPos below = pos.down();
-        return world.getFluidState(below).isIn(FluidTags.WATER) || world.getFluidState(below).isOf(Fluids.WATER);
-    }
 
 }
 
