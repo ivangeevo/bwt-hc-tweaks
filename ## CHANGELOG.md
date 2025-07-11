@@ -1,5 +1,4 @@
 ## v1.3(dev)
-+ Changed the soil planter to have a moisture property in order to grow plants (similar to how farmlands work, but with additional nearby water checks like it works in retail BTW)
 
 ## v1.2
 + Made the hemp plant block to drop loot when broken with a piston push
