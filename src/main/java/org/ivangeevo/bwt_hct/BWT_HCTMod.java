@@ -6,6 +6,7 @@ import net.minecraft.block.CampfireBlock;
 import org.ivangeevo.bwt_hct.blocks.ModBlocks;
 import org.ivangeevo.bwt_hct.entities.ModBlockEntities;
 import org.ivangeevo.bwt_hct.entities.ModEntities;
+import org.ivangeevo.bwt_hct.event.PistonBreakEventsHandler;
 import org.ivangeevo.bwt_hct.items.ModItems;
 import org.ivangeevo.bwt_hct.recipes.ModRecipes;
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ public class BWT_HCTMod implements ModInitializer {
         ModBlockEntities.registerBlockEntities();
         ModEntities.registerEntities();
         ModRecipes.registerRecipes();
+        PistonBreakEventsHandler.init();
 
         // Make campfire a valid fuel for BWT FireData
         FireData.FIRE_AMOUNT_FUNCTIONS.put(

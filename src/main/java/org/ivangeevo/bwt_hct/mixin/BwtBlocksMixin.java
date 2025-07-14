@@ -12,7 +12,7 @@ public abstract class BwtBlocksMixin {
     // Add settings to hemp blocks - some strength and destroy on piston push to allow automation
     @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lcom/bwt/blocks/HempCropBlock;<init>(Lnet/minecraft/block/AbstractBlock$Settings;)V"))
     private static AbstractBlock.Settings bwt_hct$init(AbstractBlock.Settings settings) {
-        return settings.strength(1).pistonBehavior(PistonBehavior.NORMAL);
+        return settings.strength(1);
     }
 
     // Add settings to unfired urn

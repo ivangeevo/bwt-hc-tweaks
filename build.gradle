@@ -64,6 +64,7 @@ repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/"}
     maven { url "https://api.modrinth.com/maven" }
+    mavenCentral()
 }
 
 dependencies {
@@ -75,7 +76,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     // BTWR: Shared Library
-    modImplementation("org.ivangeevo:btwr-shared-lib:${project.btwr_sl_version}")
+    //modImplementation("org.ivangeevo:btwr-shared-lib:${project.btwr_sl_version}")
+    modImplementation "maven.modrinth:btwr-shared-library:${project.btwr_sl_version}"
 
     // Better With Time
     modImplementation "maven.modrinth:better-with-time:${project.bwt_version}"
@@ -137,6 +139,10 @@ jar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}" }
     }
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/bwt_hct.accesswidener")
 }
 
 // configure the maven publication
