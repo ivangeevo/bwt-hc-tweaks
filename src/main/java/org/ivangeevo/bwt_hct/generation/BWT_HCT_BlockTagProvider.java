@@ -30,7 +30,12 @@ public class BWT_HCT_BlockTagProvider extends FabricTagProvider.BlockTagProvider
         ;
 
         getOrCreateTagBuilder(BTWRConventionalTags.Blocks.SHEARS_EFFICIENT)
-                .add(BwtBlocks.hempCropBlock);
+                .add(BwtBlocks.hempCropBlock)
+        ;
+
+        getOrCreateTagBuilder(BTWRConventionalTags.Blocks.ALWAYS_FERTILE_SOIL)
+                .add(BwtBlocks.soilPlanterBlock)
+        ;
 
     }
 }

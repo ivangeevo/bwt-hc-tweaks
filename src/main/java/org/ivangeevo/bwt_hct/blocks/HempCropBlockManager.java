@@ -1,5 +1,6 @@
 package org.ivangeevo.bwt_hct.blocks;
 
+import btwr.btwr_sl.tag.BTWRConventionalTags;
 import com.bwt.blocks.BwtBlocks;
 import com.bwt.blocks.HempCropBlock;
 import net.minecraft.block.Block;
@@ -30,13 +31,16 @@ public class HempCropBlockManager
 
         // The block that the crop is planted on
         Block soilBlock = world.getBlockState(pos.down()).getBlock();
-        if (soilBlock == null || !soilBlock.isBlockHydratedForPlantGrowthOn(world, pos.down())) return;
+        if (soilBlock == null) return;
 
-        if (state.get(AGE) < 7) {
-            attemptGrowth(world, pos, state, random, soilBlock, hemp);
-        } else if (world.isAir(pos.up())) {
-            attemptTopGrowth(world, pos, state, random, soilBlock, hemp);
+        if (soilBlock.isBlockHydratedForPlantGrowthOn(world, pos.down()) || soilBlock.getDefaultState().isIn(BTWRConventionalTags.Blocks.ALWAYS_FERTILE_SOIL)) {
+            if (state.get(AGE) < 7) {
+                attemptGrowth(world, pos, state, random, soilBlock, hemp);
+            } else if (world.isAir(pos.up())) {
+                attemptTopGrowth(world, pos, state, random, soilBlock, hemp);
+            }
         }
+
 
     }
 
