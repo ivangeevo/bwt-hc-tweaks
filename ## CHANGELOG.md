@@ -1,4 +1,7 @@
-## v1.3(dev)
+## v1.4(next)
++ Fixed the hemp plant to drop its top part when the bottom one is broken with a piston push.
+
+## v1.3
 + Added a PistonBreakEvent & callbacks that hook when a block is broken by a piston push.
 + Changed drops for a hemp block to work better and fixed the top block to get destroyed instead of pushed.
 + Fixed hemp crop block to be able to grow on blocks that do not require a moisture like the soil planter (ALWAYS_FERTILE_SOIL)
