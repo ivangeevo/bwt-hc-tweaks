@@ -1,4 +1,4 @@
-## v1.4(next)
+## v1.4(dev)
 + Fixed the hemp plant to drop its top part when the bottom one is broken with a piston push.
 
 ## v1.3

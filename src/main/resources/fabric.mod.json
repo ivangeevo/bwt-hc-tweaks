@@ -13,7 +13,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "org.ivangeevo.bwt_hct.client.BWT_HCTModClient"
+      "org.ivangeevo.bwt_hct.BWT_HCTModClient"
     ],
     "main": [
       "org.ivangeevo.bwt_hct.BWT_HCTMod"

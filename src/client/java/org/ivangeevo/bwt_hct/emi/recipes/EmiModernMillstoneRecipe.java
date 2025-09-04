@@ -1,4 +1,4 @@
-package org.ivangeevo.bwt_hct.client.emi.recipes;
+package org.ivangeevo.bwt_hct.emi.recipes;
 
 import com.bwt.blocks.abstract_cooking_pot.AbstractCookingPotBlockEntity;
 import dev.emi.emi.api.recipe.EmiRecipe;
