@@ -1,8 +1,7 @@
-package org.ivangeevo.bwt_hct.mixin;
+package org.ivangeevo.bwt_hct.mixin.bwt;
 
 import com.bwt.blocks.BwtBlocks;
 import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.piston.PistonBehavior;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
 
@@ -16,14 +15,8 @@ public abstract class BwtBlocksMixin {
     }
 
     // Add settings to unfired urn
-    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lcom/bwt/blocks/UnfiredUrnBlock;<init>(Lnet/minecraft/block/AbstractBlock$Settings;)V"))
+    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lcom/bwt/blocks/unfired_pottery/UnfiredUrnBlock;<init>(Lnet/minecraft/block/AbstractBlock$Settings;)V"))
     private static AbstractBlock.Settings bwt_hct$init1(AbstractBlock.Settings settings) {
-        return settings.solid();
-    }
-
-    // Add settings to mould
-    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lcom/bwt/blocks/UnfiredMouldBlock;<init>(Lnet/minecraft/block/AbstractBlock$Settings;)V"))
-    private static AbstractBlock.Settings bwt_hct$init2(AbstractBlock.Settings settings) {
         return settings.solid();
     }
 
