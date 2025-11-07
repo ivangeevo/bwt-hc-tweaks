@@ -1,4 +1,4 @@
-package org.ivangeevo.bwt_hct.mixin;
+package org.ivangeevo.bwt_hct.mixin.bwt;
 
 import com.bwt.blocks.HempCropBlock;
 import net.minecraft.block.*;

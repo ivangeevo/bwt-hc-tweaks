@@ -1,4 +1,4 @@
-package org.ivangeevo.bwt_hct.emi.recipes;
+package org.ivangeevo.bwt_hct.emi;
 
 import com.bwt.blocks.BwtBlocks;
 import com.bwt.recipes.BlockIngredient;
@@ -16,6 +16,7 @@ import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.util.Identifier;
 import org.ivangeevo.bwt_hct.blocks.ModBlocks;
+import org.ivangeevo.bwt_hct.emi.recipes.EmiModernMillstoneRecipe;
 import org.ivangeevo.bwt_hct.recipes.mill_stone.ModernMillStoneRecipe;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class ModEmiPlugin implements EmiPlugin {
+public class BWT_HCTEmiPlugin implements EmiPlugin {
     public static final Identifier WIDGETS = Id.of("textures/gui/container/emiwidgets.png");
 
     public static EmiRecipeCategory MILL_STONE = category("mill_stone", EmiStack.of(ModBlocks.modernMillStoneBlock));
