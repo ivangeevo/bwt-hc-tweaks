@@ -1,5 +1,10 @@
 ## v1.4(dev)
++ Updated the mod to Better With Time 2.0!
++ Added the following changes and configuration options via Mod Menu for:
+1. Revert Buddy Block neighbor update logic to the original BTW behavior
+2. Block Dispensers requiring strong redstone power
 + Fixed the hemp plant to drop its top part when the bottom one is broken with a piston push.
++ Also updated the mod to Fabric API 0.116.7, Fabric Loader 0.17.3 & BTWR Shared Library 0.62
 
 ## v1.3
 + Added a PistonBreakEvent & callbacks that hook when a block is broken by a piston push.
