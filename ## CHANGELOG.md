@@ -1,4 +1,6 @@
-## v1.4(dev)
+## v1.x(dev)
+
+## v1.4
 + Updated the mod to Better With Time 2.0!
 + Added the following changes and configuration options via Mod Menu for:
 1. Revert Buddy Block neighbor update logic to the original BTW behavior
