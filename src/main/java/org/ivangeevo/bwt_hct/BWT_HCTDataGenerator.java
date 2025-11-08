@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import org.ivangeevo.bwt_hct.generation.*;
 
-public class BWT_HCT_DataGenerator implements DataGeneratorEntrypoint {
+public class BWT_HCTDataGenerator implements DataGeneratorEntrypoint {
 
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
@@ -14,6 +14,7 @@ public class BWT_HCT_DataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(BWT_HCT_LootTableProvider::new);
         pack.addProvider(BWT_HCT_BlockTagProvider::new);
         pack.addProvider(BWT_HCT_ItemTagProvider::new);
+        pack.addProvider(BWT_HCT_LangGenerator::new);
 
     }
 

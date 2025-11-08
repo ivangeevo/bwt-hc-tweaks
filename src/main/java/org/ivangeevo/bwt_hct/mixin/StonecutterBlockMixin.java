@@ -9,7 +9,6 @@ import com.bwt.recipes.saw.SawRecipe;
 import com.bwt.recipes.saw.SawRecipeInput;
 import com.bwt.sounds.BwtSoundEvents;
 import com.bwt.tags.BwtBlockTags;
-import com.bwt.utils.CustomItemScatterer;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.entity.LivingEntity;
@@ -221,7 +220,7 @@ public abstract class StonecutterBlockMixin extends Block implements MechPowerBl
             results.forEach(stack -> stack.setCount(stack.getCount() * 2));
         }
 
-        CustomItemScatterer.spawn(world, targetPos, DefaultedList.copyOf(ItemStack.EMPTY, results.toArray(new ItemStack[0])));
+        ItemScatterer.spawn(world, targetPos, DefaultedList.copyOf(ItemStack.EMPTY, results.toArray(new ItemStack[0])));
     }
 
     public void breakSaw(World world, BlockPos pos) {

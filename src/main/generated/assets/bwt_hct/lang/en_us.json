@@ -1,0 +1,10 @@
+{
+  "block.bwt_hct.dormant_soul_forge": "Dormant Soul Forge",
+  "block.bwt_hct.modern_mill_stone": "Modern Millstone",
+  "config.bwt_hct.blockDispenserRequiringStrongPower": "Block Dispenser Requires Strong Power",
+  "config.bwt_hct.category.general": "General",
+  "config.bwt_hct.oldSchoolBuddyBlockNeighborUpdate": "Old School Buddy Block Neighbor Update",
+  "config.bwt_hct.tooltip.blockDispenserRequiringStrongPower": "Changes Block Dispensers to require strong redstone power in order to activate",
+  "config.bwt_hct.tooltip.oldSchoolBuddyBlockNeighborUpdate": "Reverts Buddy Block neighbor update behavior so that it works in the same way as it does in the original Better Than Wolves mod.",
+  "title.bwt_hct.config": "BWT: HC Tweaks Configuration Menu"
+}

@@ -21,7 +21,6 @@ public class PistonBreakEventsHandler {
                 } else {
                     getHempBottomDrops(world, pos, state);
                 }
-
             }
         });
     }
@@ -30,8 +29,7 @@ public class PistonBreakEventsHandler {
         if (state.get(HempCropBlock.AGE) == HempCropBlock.MAX_AGE) {
             Block.dropStack(world, pos, new ItemStack(BwtItems.hempItem));
             if (world.getRandom().nextFloat() < 0.5f) {
-                Block.dropStack(world, pos, new ItemStack((BwtItems.hempSeedsItem)));
-                System.out.println("Dropping from TOP: " + pos);
+                Block.dropStack(world, pos, new ItemStack(BwtItems.hempSeedsItem));
             }
         }
     }
@@ -40,7 +38,12 @@ public class PistonBreakEventsHandler {
         if (state.get(HempCropBlock.AGE) == HempCropBlock.MAX_AGE) {
             Block.dropStack(world, pos, new ItemStack(BwtItems.hempItem));
         }
+
+        BlockPos posUp = pos.up();
+        BlockState stateAbove = world.getBlockState(posUp);
+
+        if (stateAbove.isOf(BwtBlocks.hempCropBlock) && stateAbove.get(IS_TOP)) {
+            getHempTopDrops(world, posUp, stateAbove);
+        }
     }
-
-
 }

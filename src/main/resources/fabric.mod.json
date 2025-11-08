@@ -13,16 +13,19 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "org.ivangeevo.bwt_hct.client.BWT_HCTModClient"
+      "org.ivangeevo.bwt_hct.BWT_HCTModClient"
     ],
     "main": [
       "org.ivangeevo.bwt_hct.BWT_HCTMod"
     ],
     "fabric-datagen": [
-      "org.ivangeevo.bwt_hct.BWT_HCT_DataGenerator"
+      "org.ivangeevo.bwt_hct.BWT_HCTDataGenerator"
+    ],
+    "modmenu": [
+      "org.ivangeevo.bwt_hct.config.BWT_HCTModMenu"
     ],
     "emi": [
-      "org.ivangeevo.bwt_hct.client.emi.recipes.ModEmiPlugin"
+      "org.ivangeevo.bwt_hct.emi.BWT_HCTEmiPlugin"
     ]
   },
   "mixins": [

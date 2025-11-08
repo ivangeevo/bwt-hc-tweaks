@@ -1,4 +1,4 @@
-package org.ivangeevo.bwt_hct.client.emi.recipes;
+package org.ivangeevo.bwt_hct.emi.recipes;
 
 import com.bwt.blocks.abstract_cooking_pot.AbstractCookingPotBlockEntity;
 import dev.emi.emi.api.recipe.EmiRecipe;
@@ -11,6 +11,7 @@ import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.ivangeevo.bwt_hct.emi.BWT_HCTEmiPlugin;
 import org.ivangeevo.bwt_hct.recipes.mill_stone.ModernMillStoneRecipe;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,8 +20,8 @@ import java.util.stream.IntStream;
 
 public class EmiModernMillstoneRecipe implements EmiRecipe {
 
-    public static final EmiTexture EMPTY_GEAR = new EmiTexture(ModEmiPlugin.WIDGETS, 0, 0, 14, 14);
-    public static final EmiTexture FULL_GEAR = new EmiTexture(ModEmiPlugin.WIDGETS, 14, 0, 14, 14);
+    public static final EmiTexture EMPTY_GEAR = new EmiTexture(BWT_HCTEmiPlugin.WIDGETS, 0, 0, 14, 14);
+    public static final EmiTexture FULL_GEAR = new EmiTexture(BWT_HCTEmiPlugin.WIDGETS, 14, 0, 14, 14);
 
     private final EmiRecipeCategory category;
     private final Identifier id;
@@ -35,7 +36,7 @@ public class EmiModernMillstoneRecipe implements EmiRecipe {
     public EmiModernMillstoneRecipe(EmiRecipeCategory category, Identifier id, ModernMillStoneRecipe recipe) {
         this.category = category;
         this.id = id;
-        this.ingredients = recipe.getIngredients().stream().map(ModEmiPlugin::from).toList();
+        this.ingredients = recipe.getIngredients().stream().map(BWT_HCTEmiPlugin::from).toList();
         this.results = recipe.getResults().stream().map(EmiStack::of).toList();
         this.displayRows = IntStream.of((int) Math.ceil(this.ingredients.size() / 3.0), (int) Math.ceil(this.results.size() / 3.0), 1).max().orElse(1);
     }
