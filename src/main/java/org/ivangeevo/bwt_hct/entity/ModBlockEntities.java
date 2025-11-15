@@ -1,4 +1,4 @@
-package org.ivangeevo.bwt_hct.entities;
+package org.ivangeevo.bwt_hct.entity;
 
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
@@ -6,8 +6,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.ivangeevo.bwt_hct.BWT_HCTMod;
 import org.ivangeevo.bwt_hct.blocks.ModBlocks;
-import org.ivangeevo.bwt_hct.entities.block.ArcaneVesselBE;
-import org.ivangeevo.bwt_hct.entities.block.ModernMillStoneBE;
+import org.ivangeevo.bwt_hct.entity.block.ArcaneVesselBE;
+import org.ivangeevo.bwt_hct.entity.block.ModernMillStoneBE;
 
 public class ModBlockEntities {
 

@@ -9,11 +9,13 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.ivangeevo.bwt_hct.entities.interfaces.ExperienceOrbEntityAdded;
+import org.ivangeevo.bwt_hct.entity.interfaces.ExperienceOrbEntityAdded;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -26,11 +28,9 @@ public abstract class ExperienceOrbEntityMixin extends Entity implements Experie
 {
 
     @Shadow private int amount;
+
     @Unique
-    private static final TrackedData<Boolean> DRAGON = DataTracker.registerData(
-            ExperienceOrbEntity.class,
-            TrackedDataHandlerRegistry.BOOLEAN
-    );
+    private static final TrackedData<Boolean> DRAGON = DataTracker.registerData(ExperienceOrbEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     public ExperienceOrbEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -88,9 +88,10 @@ public abstract class ExperienceOrbEntityMixin extends Entity implements Experie
         this.dataTracker.set(DRAGON, nbt.getBoolean("IsDragonOrb"));
     }
 
-
+    @Override
     public void setDragon(boolean flag) { this.dataTracker.set(DRAGON, flag); }
 
+    @Override
     public boolean isDragon() { return this.dataTracker.get(DRAGON); }
 
     @Override

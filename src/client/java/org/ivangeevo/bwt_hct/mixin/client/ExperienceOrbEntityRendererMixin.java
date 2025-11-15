@@ -10,14 +10,13 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.util.math.MathHelper;
-import org.ivangeevo.bwt_hct.entities.interfaces.ExperienceOrbEntityAdded;
+import org.ivangeevo.bwt_hct.entity.interfaces.ExperienceOrbEntityAdded;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ExperienceOrbEntityRenderer.class)

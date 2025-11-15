@@ -12,8 +12,8 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-import org.ivangeevo.bwt_hct.entities.interfaces.ExperienceOrbEntityAdded;
-import org.ivangeevo.bwt_hct.entities.interfaces.MechHopperBlockEntityAdded;
+import org.ivangeevo.bwt_hct.entity.interfaces.ExperienceOrbEntityAdded;
+import org.ivangeevo.bwt_hct.entity.interfaces.MechHopperBlockEntityAdded;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -47,7 +47,6 @@ public abstract class MechHopperBlockMixin extends BlockWithEntity
         }
 
         // check if item is within the collection zone
-
         final float fHopperHeight = 1F;
 
         Box collectionZone = new Box(pos.getX(), pos.getY() + fHopperHeight, pos.getZ(),

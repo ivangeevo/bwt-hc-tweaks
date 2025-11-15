@@ -23,9 +23,9 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import org.ivangeevo.bwt_hct.entities.ModBlockEntities;
-import org.ivangeevo.bwt_hct.entities.block.ArcaneVesselBE;
-import org.ivangeevo.bwt_hct.entities.interfaces.ExperienceOrbEntityAdded;
+import org.ivangeevo.bwt_hct.entity.ModBlockEntities;
+import org.ivangeevo.bwt_hct.entity.block.ArcaneVesselBE;
+import org.ivangeevo.bwt_hct.entity.interfaces.ExperienceOrbEntityAdded;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
@@ -38,9 +38,7 @@ public class ArcaneVesselBlock extends BlockWithEntity implements MechPowerBlock
 
     public ArcaneVesselBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(
-                this.getStateManager().getDefaultState().with(FACING, Direction.UP).with(MECH_POWERED, false)
-        );
+        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.UP).with(MECH_POWERED, false));
     }
 
     @Override

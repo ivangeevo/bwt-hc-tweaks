@@ -1,4 +1,4 @@
-package org.ivangeevo.bwt_hct.entities.interfaces;
+package org.ivangeevo.bwt_hct.entity.interfaces;
 
 public interface ExperienceOrbEntityAdded
 {

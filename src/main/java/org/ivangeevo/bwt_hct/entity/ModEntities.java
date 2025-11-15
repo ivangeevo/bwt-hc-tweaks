@@ -1,4 +1,4 @@
-package org.ivangeevo.bwt_hct.entities;
+package org.ivangeevo.bwt_hct.entity;
 
 public class ModEntities
 {

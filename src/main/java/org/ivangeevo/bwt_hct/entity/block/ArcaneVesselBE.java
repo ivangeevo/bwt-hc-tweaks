@@ -1,4 +1,4 @@
-package org.ivangeevo.bwt_hct.entities.block;
+package org.ivangeevo.bwt_hct.entity.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,8 +11,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.ivangeevo.bwt_hct.blocks.blocks.ArcaneVesselBlock;
-import org.ivangeevo.bwt_hct.entities.ModBlockEntities;
-import org.ivangeevo.bwt_hct.entities.interfaces.ExperienceOrbEntityAdded;
+import org.ivangeevo.bwt_hct.entity.ModBlockEntities;
+import org.ivangeevo.bwt_hct.entity.interfaces.ExperienceOrbEntityAdded;
 import org.ivangeevo.bwt_hct.util.MiscUtils;
 
 import static com.bwt.blocks.MechPowerBlockBase.MECH_POWERED;

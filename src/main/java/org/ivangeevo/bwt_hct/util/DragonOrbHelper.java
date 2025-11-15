@@ -3,7 +3,7 @@ package org.ivangeevo.bwt_hct.util;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
-import org.ivangeevo.bwt_hct.entities.interfaces.ExperienceOrbEntityAdded;
+import org.ivangeevo.bwt_hct.entity.interfaces.ExperienceOrbEntityAdded;
 
 public class DragonOrbHelper {
 
