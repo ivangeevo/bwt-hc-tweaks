@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BuddyBlock.class)
@@ -26,19 +27,9 @@ public abstract class BuddyBlockMixin extends SimpleFacingBlock {
         super(settings);
     }
 
-    // Overrides the original buddy block behavior from BTW to make it not apply
-    @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"), cancellable = true)
-    private void disableCurrentNeighborUpdateState(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
-        if (BWT_HCTMod.getInstance().settings.isOldSchoolBuddyBlockNeighborUpdate())  {
-            cir.setReturnValue(super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos));
-        }
-    }
-
     // Overrides buddy block neighbor update behavior to make it work the same way as it does in BTW CE
-    @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos,
-                               Block neighborBlock, BlockPos neighborPos, boolean moved) {
-
+    @Inject(method = "neighborUpdate", at = @At("HEAD"), cancellable = true)
+    private void onNeighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify, CallbackInfo ci) {
         if (!BWT_HCTMod.getInstance().settings.isOldSchoolBuddyBlockNeighborUpdate()) return;
 
         if (world.isClient) return;
@@ -51,15 +42,17 @@ public abstract class BuddyBlockMixin extends SimpleFacingBlock {
         if (world.getReceivedRedstonePower(pos) > 0)
             return;
 
-        BlockState neighborState = world.getBlockState(neighborPos);
+        BlockState neighborState = world.getBlockState(sourcePos);
 
         // ignore redstone-related components by tag
         if (neighborState.isIn(BwtBlockTags.DOES_NOT_TRIGGER_BUDDY)
-                || neighborBlock.getDefaultState().emitsRedstonePower())
+                || sourceBlock.getDefaultState().emitsRedstonePower())
             return;
 
         // finally, schedule a 1-tick update
         world.scheduleBlockTick(pos, this, 1);
+
+        ci.cancel();
     }
 
 }

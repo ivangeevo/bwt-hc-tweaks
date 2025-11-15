@@ -1,3 +1,6 @@
+## v1.4.1(dev)
++ Updated the mod to Better With Time 2.0.1
+
 ## v1.4
 + Updated the mod to Better With Time 2.0!
 + Added the following changes and configuration options via Mod Menu for:
@@ -9,15 +12,15 @@
 ## v1.3
 + Added a PistonBreakEvent & callbacks that hook when a block is broken by a piston push.
 + Changed drops for a hemp block to work better and fixed the top block to get destroyed instead of pushed.
-+ Fixed hemp crop block to be able to grow on blocks that do not require moisture like the soil planter (ALWAYS_FERTILE_SOIL)
++ Fixed hemp crop block to be able to grow on blocks that do not require a moisture like the soil planter (ALWAYS_FERTILE_SOIL)
 + Updated the mod to Fabric API 0.116.4 & BTWR Shared Library 0.56
 
 ## v1.2
 + Made the hemp plant block to drop loot when broken with a piston push
-+ Made soul urns and moulds to be considered solid blocks, and this makes them stay in place when hit by water blocks,  
++ Made soul urns and moulds to be considered solid blocks and this makes them stay in place when hit by water blocks 
 which in turn allows easy automation with a tube kiln setup.
 + Fixed hemp plant to also drop its top part loot when the bottom is broken 
-+ Changed(slightly increased) the time it takes for a Saw Block to break other blocks to match the speed that's in retail BTW
++ Changed(slightly increased) the time it takes for a Saw Block to break other blocks in order to match the speed that's in retail BTW
 + Updated the mod to Fabric API 0.116.2, Fabric Loader 0.16.14 & BTWR Shared Library 0.55
 
 ## v1.1
