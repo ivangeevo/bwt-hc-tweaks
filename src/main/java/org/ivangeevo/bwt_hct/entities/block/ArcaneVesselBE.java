@@ -1,6 +1,5 @@
 package org.ivangeevo.bwt_hct.entities.block;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ExperienceOrbEntity;
