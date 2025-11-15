@@ -1,4 +1,4 @@
-## v1.4.1(dev)
+## v1.4.1
 + Updated the mod to Better With Time 2.0.1
 
 ## v1.4
