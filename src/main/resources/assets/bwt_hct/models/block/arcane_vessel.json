@@ -1,0 +1,9 @@
+{
+	"parent": "bwt_hct:block/arcane_vessel_base",
+	"textures": {
+		"0": "bwt_hct:block/dragon_vessel",
+		"1": "bwt_hct:block/dragon_vessel_bottom",
+		"2": "bwt_hct:block/dragon_vessel_top",
+		"3": "bwt_hct:block/dragon_vessel_top_band"
+	}
+}

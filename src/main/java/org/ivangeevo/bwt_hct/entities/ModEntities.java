@@ -1,12 +1,5 @@
 package org.ivangeevo.bwt_hct.entities;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
-import org.ivangeevo.bwt_hct.BWT_HCTMod;
-
 public class ModEntities
 {
 
@@ -20,9 +13,6 @@ public class ModEntities
                         //.build(null));
 
     }
-
-
-
 
 
 }

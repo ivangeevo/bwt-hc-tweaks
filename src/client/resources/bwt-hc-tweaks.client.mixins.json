@@ -4,6 +4,7 @@
   "package": "org.ivangeevo.bwt_hct.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "ExperienceOrbEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

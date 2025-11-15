@@ -75,6 +75,17 @@ public class ModernMillStoneBlock extends MillStoneBlock {
         return ActionResult.PASS;
     }
 
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> givenType) {
+        return validateTicker(world, givenType);
+    }
+
+    @Nullable
+    protected static <A extends BlockEntity> BlockEntityTicker<A> validateTicker(World world, BlockEntityType<A> givenType) {
+        return world.isClient ? null : BlockWithEntity.validateTicker(givenType, ModBlockEntities.modernMillStoneEntity, ModernMillStoneBE::tick);
+    }
+
     private void playMechSound(World world, BlockPos pos) {
         world.playSoundAtBlockCenter(pos, BwtSoundEvents.MILL_STONE_GRIND, SoundCategory.BLOCKS,
                 1.5F + ( world.random.nextFloat() * 0.1F ),
@@ -89,17 +100,6 @@ public class ModernMillStoneBlock extends MillStoneBlock {
             float smokeZ = (float)pos.getZ() + random.nextFloat();
             world.addParticle(ParticleTypes.SMOKE, smokeX, smokeY, smokeZ, 0.0, 0.0, 0.0);
         }
-    }
-
-    @Nullable
-    protected static <A extends BlockEntity> BlockEntityTicker<A> validateTicker(World world, BlockEntityType<A> givenType) {
-        return world.isClient ? null : BlockWithEntity.validateTicker(givenType, ModBlockEntities.modernMillStoneEntity, ModernMillStoneBE::tick);
-    }
-
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> givenType) {
-        return ModernMillStoneBlock.validateTicker(world, givenType);
     }
 
 }
