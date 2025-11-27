@@ -7,7 +7,6 @@ import net.minecraft.block.CampfireBlock;
 import org.ivangeevo.bwt_hct.blocks.ModBlocks;
 import org.ivangeevo.bwt_hct.config.BWT_HCTSettings;
 import org.ivangeevo.bwt_hct.entity.ModBlockEntities;
-import org.ivangeevo.bwt_hct.entity.ModEntities;
 import org.ivangeevo.bwt_hct.event.PistonBreakEventsHandler;
 import org.ivangeevo.bwt_hct.items.ModItems;
 import org.ivangeevo.bwt_hct.recipes.ModRecipes;
@@ -33,13 +32,11 @@ public class BWT_HCTMod implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("Initializing Better With Time: HC Tweaks.");
-        loadSettings();
         instance = this;
 
         ModBlocks.registerModBlocks();
         ModItems.registerModItems();
         ModBlockEntities.registerBlockEntities();
-        ModEntities.registerEntities();
         ModRecipes.registerRecipes();
         PistonBreakEventsHandler.init();
 
@@ -49,37 +46,6 @@ public class BWT_HCTMod implements ModInitializer {
                 ((world, blockPos, blockState) -> new FireData(CampfireBlock.isLitCampfire(blockState) ? 1 : 0))
         );
 
-    }
-
-    public void loadSettings() {
-        File file = new File("./config/btwr/bwtHctCommon.json");
-        Gson gson = new Gson();
-        if (file.exists()) {
-            try {
-                FileReader fileReader = new FileReader(file);
-                settings = gson.fromJson(fileReader, BWT_HCTSettings.class);
-                fileReader.close();
-            } catch (IOException e) {
-                LOGGER.warn("Could not load Better With Time: HC Tweaks settings: " + e.getLocalizedMessage());
-            }
-        } else {
-            settings = new BWT_HCTSettings();
-        }
-    }
-
-    public void saveSettings() {
-        Gson gson = new Gson();
-        File file = new File("./config/btwr/bwtHctCommon.json");
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdir();
-        }
-        try {
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(gson.toJson(settings));
-            fileWriter.close();
-        } catch (IOException e) {
-            LOGGER.warn("Could not save Better With Time: HC Tweaks settings: " + e.getLocalizedMessage());
-        }
     }
 
 }

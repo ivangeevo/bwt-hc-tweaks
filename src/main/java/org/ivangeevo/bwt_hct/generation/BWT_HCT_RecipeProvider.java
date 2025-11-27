@@ -78,5 +78,4 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
         return identifier;
     }
 
-
 }

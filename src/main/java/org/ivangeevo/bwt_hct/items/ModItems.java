@@ -24,6 +24,6 @@ public class ModItems {
             content.add(ModBlocks.dormantSoulForge);
 
         });
-
     }
+
 }

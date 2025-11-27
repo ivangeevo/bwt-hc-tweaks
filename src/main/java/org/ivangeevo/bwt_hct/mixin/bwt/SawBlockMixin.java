@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(SawBlock.class)
-public abstract class SawBlockMixin extends SimpleFacingBlock
-{
+public abstract class SawBlockMixin extends SimpleFacingBlock {
+
     // The original value from BWT
     @Unique
     private static final int sawTimeBaseTickRate = 15;
@@ -32,6 +32,5 @@ public abstract class SawBlockMixin extends SimpleFacingBlock
     private int modifySawBreakSpeed(int par3) {
         return retailSawTimeBaseTickRate;
     }
-
 
 }

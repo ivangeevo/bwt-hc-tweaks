@@ -1,3 +1,7 @@
+## v1.4.2
++ Changed all configuration options setting to be handled with Supermartijn642's Config Lib internally instead of Cloth Config API, which is used only for client side config options.
++ Updated the mod  BTWR Shared Library 0.6.4
+
 ## v1.4.1
 + Updated the mod to Better With Time 2.0.1
 

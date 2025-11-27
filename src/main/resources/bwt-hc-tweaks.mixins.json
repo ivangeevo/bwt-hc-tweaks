@@ -7,13 +7,14 @@
     "DormantSoulforgePlacer",
     "ExperienceOrbEntityMixin",
     "LivingEntityMixin",
-    "MechHopperBlockEntityMixin",
-    "MechHopperBlockMixin",
     "PistonBlockMixin",
     "bwt.BlockDispenserBlockMixin",
     "bwt.BuddyBlockMixin",
     "bwt.BwtBlocksMixin",
     "bwt.HempCropBlockMixin",
+    "bwt.MechHopperBlockEntityAccessor",
+    "bwt.MechHopperBlockEntityMixin",
+    "bwt.MechHopperBlockMixin",
     "bwt.SawBlockMixin"
   ],
   "injectors": {

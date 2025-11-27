@@ -15,9 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(SoulUrnProjectileEntity.class)
-public abstract class SoulUrnProjectileEntityMixin extends ThrownItemEntity
-{
-
+public abstract class SoulUrnProjectileEntityMixin extends ThrownItemEntity {
 
     public SoulUrnProjectileEntityMixin(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);

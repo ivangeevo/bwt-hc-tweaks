@@ -276,4 +276,5 @@ public class ModernMillStoneRecipe implements Recipe<SingleCountMillStoneRecipeI
             }
         }
     }
+
 }

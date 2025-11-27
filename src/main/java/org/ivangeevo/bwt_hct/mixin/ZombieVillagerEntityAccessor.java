@@ -10,17 +10,11 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 import java.util.UUID;
 
 @Mixin(ZombieVillagerEntity.class)
-public interface ZombieVillagerEntityAccessor extends VillagerDataContainer
-{
-    @Accessor("converter")
-    void setConverter(@Nullable UUID uuid);
+public interface ZombieVillagerEntityAccessor extends VillagerDataContainer {
 
-    @Accessor("conversionTimer")
-    void setConversionTimer(int time);
+    @Accessor("converter") void setConverter(@Nullable UUID uuid);
+    @Accessor("conversionTimer") void setConversionTimer(int time);
+    @Accessor("conversionTimer") int getConversionTime();
+    @Invoker("setConverting") void setConverting(@Nullable UUID uuid, int delay);
 
-    @Accessor("conversionTimer")
-    int getConversionTime();
-
-    @Invoker("setConverting")
-    void setConverting(@Nullable UUID uuid, int delay);
 }

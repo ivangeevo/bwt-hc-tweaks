@@ -13,18 +13,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
-public class HempCropBlockManager
-{
+public class HempCropBlockManager {
+
+    private static final float BASE_GROWTH_CHANCE = 0.1F;
+    private static final IntProperty AGE = HempCropBlock.AGE;
+    public static final BooleanProperty IS_TOP = BooleanProperty.of("is_top");
 
     private static final HempCropBlockManager INSTANCE = new HempCropBlockManager();
     private HempCropBlockManager() {}
     public static HempCropBlockManager getInstance() {
         return INSTANCE;
     }
-
-    private static final float BASE_GROWTH_CHANCE = 0.1F;
-    private static final IntProperty AGE = HempCropBlock.AGE;
-    public static final BooleanProperty IS_TOP = BooleanProperty.of("is_top");
 
     public void onRandomTick(BlockState state, ServerWorld world, BlockPos pos, Random random, Block hemp) {
         if (!world.isSkyVisible(pos) && world.getLightLevel(pos) < 15 && !isValidAlternateLightSourceAbove(world, pos)) return;
@@ -40,8 +39,6 @@ public class HempCropBlockManager
                 attemptTopGrowth(world, pos, state, random, soilBlock, hemp);
             }
         }
-
-
     }
 
     private void attemptGrowth(World world, BlockPos pos, BlockState state, Random random, Block soilBlock, Block hemp) {

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public interface SawLikeBlockConstants {
+
     int powerChangeTickRate = 10;
 
     int sawTimeBaseTickRate = 15;

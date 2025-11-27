@@ -17,4 +17,5 @@ public class ModRecipes {
                 ModernMillStoneRecipe.Type.INSTANCE);
 
     }
+
 }

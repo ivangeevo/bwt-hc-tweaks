@@ -93,7 +93,8 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
             blockEntity.grindProgressTime = 0;
             world.setBlockState(pos, state.with(FULL, false));
             blockEntity.markDirty();
-        } else {
+        }
+        else {
             return;
         }
 
@@ -262,7 +263,5 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
             ModernMillStoneBE.this.markDirty();
         }
     }
-
-
 
 }

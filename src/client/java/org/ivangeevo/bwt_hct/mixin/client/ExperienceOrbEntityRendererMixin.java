@@ -10,7 +10,6 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.util.math.MathHelper;
-import org.ivangeevo.bwt_hct.entity.interfaces.ExperienceOrbEntityAdded;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

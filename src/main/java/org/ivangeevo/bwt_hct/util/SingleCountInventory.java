@@ -34,4 +34,5 @@ public class SingleCountInventory extends SimpleInventory {
     public boolean canInsert(ItemStack stack) {
         return isEmpty();
     }
+
 }

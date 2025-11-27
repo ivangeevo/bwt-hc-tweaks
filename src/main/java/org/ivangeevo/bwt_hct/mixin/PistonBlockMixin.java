@@ -18,7 +18,6 @@ import java.util.List;
 @Mixin(PistonBlock.class)
 public abstract class PistonBlockMixin {
 
-
     @Inject(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z"))
     private void onMove(World world, BlockPos pos, Direction dir, boolean retract, CallbackInfoReturnable<Boolean> cir) {
         // Create a new PistonHandler with the same args as the original method

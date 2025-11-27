@@ -24,5 +24,4 @@ public abstract class BlockDispenserBlockMixin extends DispenserBlock {
         cir.setReturnValue(world.getReceivedStrongRedstonePower(pos) > 0 || world.getReceivedStrongRedstonePower(pos.up()) > 0);
     }
 
-
 }

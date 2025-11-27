@@ -47,10 +47,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Mixin(StonecutterBlock.class)
-public abstract class StonecutterBlockMixin extends Block implements MechPowerBlockBase, SawLikeBlockConstants
-{
-    @Unique
-    private static DirectionProperty FACING = Properties.FACING;
+public abstract class StonecutterBlockMixin extends Block implements MechPowerBlockBase, SawLikeBlockConstants {
+
+    @Unique private static DirectionProperty FACING = Properties.FACING;
 
     public StonecutterBlockMixin(Settings settings) {
         super(settings);
@@ -245,6 +244,7 @@ public abstract class StonecutterBlockMixin extends Block implements MechPowerBl
             world.scheduleBlockTick(pos, this, powerChangeTickRate);
             return;
         }
+
         if (!isMechPowered(state)) {
             return;
         }
@@ -256,6 +256,5 @@ public abstract class StonecutterBlockMixin extends Block implements MechPowerBl
             world.scheduleBlockTick(pos, this, sawTimeBaseTickRate + world.random.nextInt(sawTimeTickRateVariance));
         }
     }
-
 
 }

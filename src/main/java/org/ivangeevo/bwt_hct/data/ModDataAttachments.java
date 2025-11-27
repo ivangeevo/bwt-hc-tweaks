@@ -19,4 +19,5 @@ public class ModDataAttachments {
         // Technically this method can stay empty, but some developers like to notify
         // the console, that certain parts of the mod have been successfully initialized
     }
+
 }

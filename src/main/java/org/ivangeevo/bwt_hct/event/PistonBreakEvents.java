@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PistonBreakEvents {
+
     private static final List<PistonBreakCallback> CALLBACKS = new ArrayList<>();
 
     public static void register(PistonBreakCallback callback) {
@@ -17,4 +18,5 @@ public class PistonBreakEvents {
     public static void fire(World world, BlockPos pos, BlockState state) {
         for (var cb : CALLBACKS) cb.onPistonBreak(world, pos, state);
     }
+
 }
