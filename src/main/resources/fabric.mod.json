@@ -12,21 +12,11 @@
   "icon": "assets/bwt_hct/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "org.ivangeevo.bwt_hct.BWT_HCTModClient"
-    ],
-    "main": [
-      "org.ivangeevo.bwt_hct.BWT_HCTMod"
-    ],
-    "fabric-datagen": [
-      "org.ivangeevo.bwt_hct.BWT_HCTDataGenerator"
-    ],
-    "modmenu": [
-      "org.ivangeevo.bwt_hct.config.BWT_HCTModMenu"
-    ],
-    "emi": [
-      "org.ivangeevo.bwt_hct.emi.BWT_HCTEmiPlugin"
-    ]
+    "client": ["org.ivangeevo.bwt_hct.BWT_HCTModClient"],
+    "main": ["org.ivangeevo.bwt_hct.BWT_HCTMod"],
+    "fabric-datagen": ["org.ivangeevo.bwt_hct.BWT_HCTDataGenerator"],
+    "modmenu": ["org.ivangeevo.bwt_hct.config.BWT_HCTModMenu"],
+    "emi": ["org.ivangeevo.bwt_hct.emi.BWT_HCTEmiPlugin"]
   },
   "mixins": [
     "bwt-hc-tweaks.mixins.json",
@@ -42,6 +32,5 @@
     "bwt": "${bwt_version}",
     "btwr_sl": ">=${btwr_sl_version}"
   },
-
   "accessWidener" : "bwt_hct.accesswidener"
 }

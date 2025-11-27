@@ -1,6 +1,5 @@
 package org.ivangeevo.bwt_hct.generation;
 
-import btwr.btwr_sl.lib.util.utils.RecipeProviderUtils;
 import com.bwt.blocks.BwtBlocks;
 import com.bwt.items.BwtItems;
 import com.bwt.recipes.cooking_pots.StokedCrucibleRecipe;
@@ -15,13 +14,15 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
+import org.btwr.shared_library.util.utils.IdUtils;
+import org.btwr.shared_library.util.utils.RecipeUtils;
 import org.ivangeevo.bwt_hct.BWT_HCTMod;
 import org.ivangeevo.bwt_hct.blocks.ModBlocks;
 
 import java.util.concurrent.CompletableFuture;
 
 
-public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements RecipeProviderUtils {
+public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements RecipeUtils {
 
     public BWT_HCT_RecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output, registriesFuture);
@@ -43,7 +44,7 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
                 .input(ModBlocks.dormantSoulForge)
                 .input(Items.NETHER_STAR)
                 .criterion("has_dormant_soul_forge", conditionsFromItem(ModBlocks.dormantSoulForge))
-                .offerTo(exporter, ID.ofBWT("soul_forge"));
+                .offerTo(exporter, IdUtils.ofBWT("soul_forge"));
 
     }
 
@@ -77,6 +78,5 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
     protected Identifier getRecipeIdentifier(Identifier identifier) {
         return identifier;
     }
-
 
 }

@@ -20,13 +20,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.UUID;
 
 @Mixin(ZombieVillagerEntity.class)
-public abstract class ZombieVillagerEntityMixin extends ZombieEntity implements VillagerDataContainer
-{
+public abstract class ZombieVillagerEntityMixin extends ZombieEntity implements VillagerDataContainer {
 
     @Shadow private @Nullable UUID converter;
-
     @Shadow private int conversionTimer;
-
     @Shadow @Final private static TrackedData<Boolean> CONVERTING;
 
     public ZombieVillagerEntityMixin(EntityType<? extends ZombieEntity> entityType, World world) {

@@ -3,21 +3,14 @@ package org.ivangeevo.bwt_hct.mixin.bwt;
 
 import com.bwt.blocks.SawBlock;
 import com.bwt.blocks.SimpleFacingBlock;
+import org.ivangeevo.bwt_hct.config.BWTHCTConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(SawBlock.class)
-public abstract class SawBlockMixin extends SimpleFacingBlock
-{
-    // The original value from BWT
-    @Unique
-    private static final int sawTimeBaseTickRate = 15;
-
-    // The updated value from retail BTW
-    @Unique
-    private static final int retailSawTimeBaseTickRate = 20;
+public abstract class SawBlockMixin extends SimpleFacingBlock {
 
     protected SawBlockMixin(Settings settings) {
         super(settings);
@@ -30,8 +23,7 @@ public abstract class SawBlockMixin extends SimpleFacingBlock
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;scheduleBlockTick(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/Block;I)V", ordinal = 1), index = 2)
     private int modifySawBreakSpeed(int par3) {
-        return retailSawTimeBaseTickRate;
+        return BWTHCTConfig.Settings.sawBlockBreakSpeed.get();
     }
-
 
 }

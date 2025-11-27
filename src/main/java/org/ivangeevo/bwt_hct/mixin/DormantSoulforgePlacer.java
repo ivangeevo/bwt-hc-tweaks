@@ -28,4 +28,5 @@ public abstract class DormantSoulforgePlacer extends StructurePiece {
     private void placeDormantSoulforge(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox chunkBox, ChunkPos chunkPos, BlockPos pivot, CallbackInfo ci) {
         this.addBlock(world, ModBlocks.dormantSoulForge.getDefaultState(), 7, 6, 6, chunkBox);
     }
+
 }

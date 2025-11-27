@@ -81,4 +81,5 @@ public class BWT_HCT_LootTableProvider extends FabricBlockLootTableProvider {
     public String getName() {
         return null;
     }
+
 }

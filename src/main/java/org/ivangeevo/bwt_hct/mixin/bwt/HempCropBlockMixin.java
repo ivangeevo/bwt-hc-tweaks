@@ -46,5 +46,4 @@ public abstract class HempCropBlockMixin extends CropBlock {
         ci.cancel();
     }
 
-
 }

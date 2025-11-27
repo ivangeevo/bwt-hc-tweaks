@@ -1,7 +1,6 @@
-package org.ivangeevo.bwt_hct.entities.block;
+package org.ivangeevo.bwt_hct.entity.block;
 
 import com.bwt.blocks.mill_stone.MillStoneBlock;
-import com.bwt.blocks.mill_stone.MillStoneBlockEntity;
 import com.bwt.utils.OrderedRecipeMatcher;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -10,12 +9,9 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.HopperBlockEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -26,9 +22,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 import org.ivangeevo.bwt_hct.blocks.ModBlocks;
-import org.ivangeevo.bwt_hct.entities.ModBlockEntities;
+import org.ivangeevo.bwt_hct.entity.ModBlockEntities;
 import org.ivangeevo.bwt_hct.recipes.mill_stone.ModernMillStoneRecipe;
 import org.ivangeevo.bwt_hct.recipes.mill_stone.SingleCountMillStoneRecipeInput;
 import org.ivangeevo.bwt_hct.util.SingleCountInventory;
@@ -98,7 +93,8 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
             blockEntity.grindProgressTime = 0;
             world.setBlockState(pos, state.with(FULL, false));
             blockEntity.markDirty();
-        } else {
+        }
+        else {
             return;
         }
 
@@ -267,7 +263,5 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
             ModernMillStoneBE.this.markDirty();
         }
     }
-
-
 
 }

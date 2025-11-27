@@ -4,12 +4,12 @@
   "package": "org.ivangeevo.bwt_hct.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "DormantSoulforgePlacer",
+    "PistonBlockMixin",
     "bwt.BlockDispenserBlockMixin",
     "bwt.BuddyBlockMixin",
     "bwt.BwtBlocksMixin",
-    "DormantSoulforgePlacer",
     "bwt.HempCropBlockMixin",
-    "PistonBlockMixin",
     "bwt.SawBlockMixin"
   ],
   "injectors": {

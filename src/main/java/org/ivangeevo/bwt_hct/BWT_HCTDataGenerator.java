@@ -15,7 +15,6 @@ public class BWT_HCTDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(BWT_HCT_BlockTagProvider::new);
         pack.addProvider(BWT_HCT_ItemTagProvider::new);
         pack.addProvider(BWT_HCT_LangGenerator::new);
-
     }
 
 }
