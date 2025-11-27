@@ -16,24 +16,39 @@ public class BWT_HCT_LangGenerator extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder tb) {
-        this.addBlockTranslations(tb);
+        this.generateBlockTranslations(tb);
+        this.generateConfigTranslations(tb);
 
-        this.addConfigMenuTitle("BWT: HC Tweaks Configuration Menu", tb);
-        this.addConfigCategory("general", "General", tb);
-
-        this.addConfig("oldSchoolBuddyBlockNeighborUpdate", "Old School Buddy Block Neighbor Update", tb);
-        this.addConfig("blockDispenserRequiringStrongPower", "Block Dispenser Requires Strong Power", tb);
-
-        this.addConfigTooltip("oldSchoolBuddyBlockNeighborUpdate", "Reverts Buddy Block neighbor update behavior so that it works in the same way as it does in the original Better Than Wolves mod", tb);
-        this.addConfigTooltip("blockDispenserRequiringStrongPower", "Changes Block Dispensers to require strong redstone power in order to activate", tb);
+        //this.addConfig("oldSchoolBuddyBlockNeighborUpdate", "Old School Buddy Block Neighbor Update", tb);
+        //this.addConfig("blockDispenserRequiringStrongPower", "Block Dispenser Requires Strong Power", tb);
+        //this.addConfig("sawBlockBreakSpeed", "Saw Block Break Speed", tb);
+        //this.addConfigTooltip("oldSchoolBuddyBlockNeighborUpdate", "Reverts Buddy Block neighbor update behavior so that it works in the same way as it does in the original Better Than Wolves mod", tb);
+        //this.addConfigTooltip("blockDispenserRequiringStrongPower", "Changes Block Dispensers to require strong redstone power in order to activate", tb);
+        //this.addConfigTooltip("sawBlockBreakSpeed", "Set a custom sawing speed for the Saw Block (in ticks). Default 20. Vanilla - 15", tb);
     }
 
-    private void addBlockTranslations(TranslationBuilder tb) {
+    private void generateBlockTranslations(TranslationBuilder tb) {
         tb.add(ModBlocks.modernMillStoneBlock, "Modern Millstone");
         tb.add(ModBlocks.dormantSoulForge, "Dormant Soul Forge");
     }
 
+    private void generateConfigTranslations(TranslationBuilder tb) {
+        this.addConfigMenuDefaults(tb);
+        this.addConfigMenuTitle("BWT: HC Tweaks Configuration Menu", tb);
+        this.addConfigCategory("general", "General", tb);
+    }
+
+    private void addConfigMenuDefaults(TranslationBuilder tb) {
+        this.addSimpleText("clientSettingsText", "Client Settings:", tb);
+        this.addSimpleText("emptyClientConfigText", "§eNote:§r There are currently no client config settings.", tb);
+        this.addSimpleText("serverSettingsText", "Server Settings:", tb);
+        this.addSimpleText("serverSettingsNoAccessText", "§eNote:§r Server settings are not accessible in menus." +
+                "\nThey can only be changed by editing the config file manually and require a world reload to take effect.", tb
+        );
+    }
+
     private void addItemTranslations(TranslationBuilder tb) {
+
     }
 
     private void addItemGroup(String entryPath, String translation, TranslationBuilder tb) {
@@ -41,19 +56,27 @@ public class BWT_HCT_LangGenerator extends FabricLanguageProvider {
     }
 
     private void addConfigMenuTitle(String translation, TranslationBuilder tb) {
-        tb.add("title." + BWT_HCTMod.MOD_ID + ".config", translation);
+        tb.add(configBasePath() + "config", translation);
     }
 
     private void addConfigCategory(String categoryPath, String translation, TranslationBuilder tb) {
-        tb.add("config." + BWT_HCTMod.MOD_ID + ".category." + categoryPath, translation);
+        tb.add(configBasePath() + "category." + categoryPath, translation);
+    }
+
+    private void addSimpleText(String path, String translation, TranslationBuilder tb) {
+        tb.add(configBasePath() + "text." + path, translation);
     }
 
     private void addConfig(String configPath, String translation, TranslationBuilder tb) {
-        tb.add("config." + BWT_HCTMod.MOD_ID + "." + configPath, translation);
+        tb.add(configBasePath() + configPath, translation);
     }
 
     private void addConfigTooltip(String configPath, String translation, TranslationBuilder tb) {
-        tb.add("config." + BWT_HCTMod.MOD_ID + ".tooltip." + configPath, translation);
+        tb.add(configBasePath() + "tooltip." + configPath, translation);
+    }
+
+    private String configBasePath() {
+        return "config." + BWT_HCTMod.MOD_ID + ".";
     }
 
 }

@@ -5,16 +5,11 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "DormantSoulforgePlacer",
-    "ExperienceOrbEntityMixin",
-    "LivingEntityMixin",
     "PistonBlockMixin",
     "bwt.BlockDispenserBlockMixin",
     "bwt.BuddyBlockMixin",
     "bwt.BwtBlocksMixin",
     "bwt.HempCropBlockMixin",
-    "bwt.MechHopperBlockEntityAccessor",
-    "bwt.MechHopperBlockEntityMixin",
-    "bwt.MechHopperBlockMixin",
     "bwt.SawBlockMixin"
   ],
   "injectors": {

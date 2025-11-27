@@ -12,7 +12,6 @@ public class BWT_HCTModClient implements ClientModInitializer {
     public void onInitializeClient() {
         this.registerCutout(ModBlocks.modernMillStoneBlock);
         this.registerCutout(ModBlocks.dormantSoulForge);
-        this.registerCutout(ModBlocks.arcaneVesselBlock);
     }
 
     private void registerCutout(Block block)  {

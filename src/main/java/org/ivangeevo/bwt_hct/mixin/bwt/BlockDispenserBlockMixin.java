@@ -6,6 +6,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.ivangeevo.bwt_hct.BWT_HCTMod;
+import org.ivangeevo.bwt_hct.config.BWTHCTConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,8 +21,9 @@ public abstract class BlockDispenserBlockMixin extends DispenserBlock {
 
     @Inject(method = "isReceivingPower", at = @At("HEAD"), cancellable = true)
     private void setRequringStrongPower(World world, BlockPos pos, Direction facing, CallbackInfoReturnable<Boolean> cir) {
-        if (!BWT_HCTMod.getInstance().settings.isBlockDispenserRequiringStrongPower()) return;
-        cir.setReturnValue(world.getReceivedStrongRedstonePower(pos) > 0 || world.getReceivedStrongRedstonePower(pos.up()) > 0);
+        if (BWTHCTConfig.Settings.blockDispenserRequiringStrongPower.get()) {
+            cir.setReturnValue(world.getReceivedStrongRedstonePower(pos) > 0 || world.getReceivedStrongRedstonePower(pos.up()) > 0);
+        }
     }
 
 }

@@ -1,6 +1,5 @@
 package org.ivangeevo.bwt_hct.blocks;
 
-import btwr.btwr_sl.tag.BTWRConventionalTags;
 import com.bwt.blocks.BwtBlocks;
 import com.bwt.blocks.HempCropBlock;
 import net.minecraft.block.Block;
@@ -12,6 +11,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import org.btwr.shared_library.tag.BTWRConventionalTags;
 
 public class HempCropBlockManager {
 
@@ -32,7 +32,7 @@ public class HempCropBlockManager {
         Block soilBlock = world.getBlockState(pos.down()).getBlock();
         if (soilBlock == null) return;
 
-        if (soilBlock.isBlockHydratedForPlantGrowthOn(world, pos.down()) || soilBlock.getDefaultState().isIn(BTWRConventionalTags.Blocks.ALWAYS_FERTILE_SOIL)) {
+        if (soilBlock.btwr$isBlockHydratedForPlantGrowthOn(world, pos.down()) || soilBlock.getDefaultState().isIn(BTWRConventionalTags.Blocks.ALWAYS_FERTILE_SOIL)) {
             if (state.get(AGE) < 7) {
                 attemptGrowth(world, pos, state, random, soilBlock, hemp);
             } else if (world.isAir(pos.up())) {
@@ -42,17 +42,17 @@ public class HempCropBlockManager {
     }
 
     private void attemptGrowth(World world, BlockPos pos, BlockState state, Random random, Block soilBlock, Block hemp) {
-        float chance = BASE_GROWTH_CHANCE * soilBlock.getPlantGrowthOnMultiplier(world, pos.down(), hemp);
+        float chance = BASE_GROWTH_CHANCE * soilBlock.btwr$getPlantGrowthOnMultiplier(world, pos.down(), hemp);
         if (random.nextFloat() <= chance) {
             incrementGrowthLevel(world, pos, state, hemp);
         }
     }
 
     private void attemptTopGrowth(World world, BlockPos pos, BlockState state, Random random, Block soilBlock, Block hemp) {
-        float topGrowthChance = (BASE_GROWTH_CHANCE / 4F) * soilBlock.getPlantGrowthOnMultiplier(world, pos.down(), hemp);
+        float topGrowthChance = (BASE_GROWTH_CHANCE / 4F) * soilBlock.btwr$getPlantGrowthOnMultiplier(world, pos.down(), hemp);
         if (random.nextFloat() <= topGrowthChance) {
             world.setBlockState(pos.up(), state.with(IS_TOP, true).with(AGE, 7), Block.NOTIFY_LISTENERS);
-            soilBlock.notifyOfFullStagePlantGrowthOn(world, pos.down(), hemp);
+            soilBlock.btwr$notifyOfFullStagePlantGrowthOn(world, pos.down(), hemp);
         }
     }
 
@@ -62,7 +62,7 @@ public class HempCropBlockManager {
         if (newAge == 7) {
             Block blockBelow = world.getBlockState(pos.down()).getBlock();
             if (blockBelow != null) {
-                blockBelow.notifyOfFullStagePlantGrowthOn(world, pos.down(), hemp);
+                blockBelow.btwr$notifyOfFullStagePlantGrowthOn(world, pos.down(), hemp);
             }
         }
     }

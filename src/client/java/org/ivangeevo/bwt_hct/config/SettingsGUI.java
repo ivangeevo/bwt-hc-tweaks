@@ -7,34 +7,35 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import org.ivangeevo.bwt_hct.BWT_HCTMod;
 
-public class SettingsGUI
-{
-    static BWT_HCTSettings settingsCommon = BWT_HCTMod.getInstance().settings;
+public class SettingsGUI {
 
     public static Screen createConfigScreen(Screen parent) {
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent).setTitle(Text.translatable("title.bwt_hct.config"));
-        builder.setSavingRunnable(() -> { BWT_HCTMod.getInstance().saveSettings(); });
+        //builder.setSavingRunnable(() -> { BWT_HCTMod.getInstance().saveSettings(); });
 
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
         ConfigCategory general = builder.getOrCreateCategory(Text.translatable("config.bwt_hct.category.general"));
 
-        /** General Category **/
+        // Client Settings
         general.addEntry(entryBuilder
-                .startBooleanToggle(Text.translatable("config.bwt_hct.oldSchoolBuddyBlockNeighborUpdate"), settingsCommon.oldSchoolBuddyBlockNeighborUpdate)
-                .setDefaultValue(true)
-                .setSaveConsumer(newValue -> settingsCommon.oldSchoolBuddyBlockNeighborUpdate = newValue)
-                .setTooltip(Text.translatable("config.bwt_hct.tooltip.oldSchoolBuddyBlockNeighborUpdate"))
-                .build());
+                .startTextDescription(Text.translatable("config.bwt_hct.text.clientSettingsText"))
+                .build()
+        );
+        general.addEntry(entryBuilder
+                .startTextDescription(Text.translatable("config.bwt_hct.text.emptyClientConfigText"))
+                .build()
+        );
 
+        // Server Settings
         general.addEntry(entryBuilder
-                .startBooleanToggle(Text.translatable("config.bwt_hct.blockDispenserRequiringStrongPower"), settingsCommon.blockDispenserRequiringStrongPower)
-                .setDefaultValue(true)
-                .setSaveConsumer(newValue -> settingsCommon.blockDispenserRequiringStrongPower = newValue)
-                .setTooltip(Text.translatable("config.bwt_hct.tooltip.blockDispenserRequiringStrongPower"))
-                .build());
+                .startTextDescription(Text.translatable("config.bwt_hct.text.serverSettingsNoAccessText"))
+                //.setDisplayRequirement(displayWhenRemoteOrLAN())
+                .build()
+        );
 
         return builder.build();
     }
+
 }
