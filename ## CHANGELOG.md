@@ -1,3 +1,8 @@
+## v1.4.3
++ Changed all configuration options in the mod to use the custom config library added by BTWR: Shared Library. This fixes the bug from last version that crashed the game without any warnings of the missing library that created the configurations
++ Removed Supermartijn642's config lib as the one creating configuration setting as it requires itself as a dependency to work properly
++ Updated the mod to BTWR: Shared Library 0.6.5
+
 ## v1.4.2
 + Added a new configuration option for setting the sawing speed of the Saw Block. It defaults to 20 ticks which is the increased amount from retail BTW. 
 + Changed all configuration options setting to be handled with Supermartijn642's Config Lib internally instead of Cloth Config API, which is used only for client side config options.

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "bwt_hct",
   "version": "${version}",
-  "name": "BWT: HC Tweaks",
+  "name": "Better With Time: HC Tweaks",
   "description": "Hardcore tweaks and features for Better With Time",
   "authors": [
     "ivangeevo"
@@ -12,11 +12,11 @@
   "icon": "assets/bwt_hct/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": ["org.ivangeevo.bwt_hct.BWT_HCTModClient"],
-    "main": ["org.ivangeevo.bwt_hct.BWT_HCTMod"],
-    "fabric-datagen": ["org.ivangeevo.bwt_hct.BWT_HCTDataGenerator"],
-    "modmenu": ["org.ivangeevo.bwt_hct.config.BWT_HCTModMenu"],
-    "emi": ["org.ivangeevo.bwt_hct.emi.BWT_HCTEmiPlugin"]
+    "client": ["org.btwr.bwt_hct.BWT_HCTModClient"],
+    "main": ["org.btwr.bwt_hct.BWT_HCTMod"],
+    "fabric-datagen": ["org.btwr.bwt_hct.BWT_HCTDataGenerator"],
+    "modmenu": ["org.btwr.bwt_hct.config.BWT_HCTModMenu"],
+    "emi": ["org.btwr.bwt_hct.emi.BWT_HCTEmiPlugin"]
   },
   "mixins": [
     "bwt-hc-tweaks.mixins.json",

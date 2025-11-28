@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.ivangeevo.bwt_hct.mixin",
+  "package": "org.btwr.bwt_hct.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "DormantSoulforgePlacer",
