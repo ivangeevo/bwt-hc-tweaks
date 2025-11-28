@@ -1,3 +1,5 @@
+## v???(dev)
+
 ## v1.4.3
 + Changed all configuration options in the mod to use the custom config library added by BTWR: Shared Library. This fixes the bug from last version that crashed the game without any warnings of the missing library that created the configurations
 + Removed Supermartijn642's config lib as the one creating configuration setting as it requires itself as a dependency to work properly
