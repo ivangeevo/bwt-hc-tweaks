@@ -1,4 +1,4 @@
-package org.btwr.bwt_hct.generation;
+package org.btwr.bwt_hct.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;

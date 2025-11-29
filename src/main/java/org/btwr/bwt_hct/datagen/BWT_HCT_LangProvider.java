@@ -1,4 +1,4 @@
-package org.btwr.bwt_hct.generation;
+package org.btwr.bwt_hct.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -8,9 +8,9 @@ import org.btwr.bwt_hct.blocks.ModBlocks;
 
 import java.util.concurrent.CompletableFuture;
 
-public class BWT_HCT_LangGenerator extends FabricLanguageProvider {
+public class BWT_HCT_LangProvider extends FabricLanguageProvider {
 
-    public BWT_HCT_LangGenerator(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+    public BWT_HCT_LangProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
         super(dataOutput, registryLookup);
     }
 

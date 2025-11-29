@@ -1,4 +1,4 @@
-package org.btwr.bwt_hct.generation;
+package org.btwr.bwt_hct.datagen;
 
 import com.bwt.blocks.BwtBlocks;
 import com.bwt.items.BwtItems;
