@@ -2,9 +2,9 @@
   "block.bwt_hct.dormant_soul_forge": "Dormant Soul Forge",
   "block.bwt_hct.modern_mill_stone": "Modern Millstone",
   "config.bwt_hct.category.general": "General",
-  "config.bwt_hct.config": "BWT: HC Tweaks Configuration Menu",
   "config.bwt_hct.text.clientSettingsText": "Client Settings:",
   "config.bwt_hct.text.emptyClientConfigText": "§eNote:§r There are currently no client config settings.",
   "config.bwt_hct.text.serverSettingsNoAccessText": "§eNote:§r Server settings are not accessible in menus.\nThey can only be changed by editing the config file manually and require a world reload to take effect.",
-  "config.bwt_hct.text.serverSettingsText": "Server Settings:"
+  "config.bwt_hct.text.serverSettingsText": "Server Settings:",
+  "title.bwt_hct.config": "BWT: HC Tweaks Configuration Menu"
 }

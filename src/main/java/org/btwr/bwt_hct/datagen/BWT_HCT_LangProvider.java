@@ -56,7 +56,7 @@ public class BWT_HCT_LangProvider extends FabricLanguageProvider {
     }
 
     private void addConfigMenuTitle(String translation, TranslationBuilder tb) {
-        tb.add(configBasePath() + "config", translation);
+        tb.add("title." + BWT_HCTMod.MOD_ID + ".config", translation);
     }
 
     private void addConfigCategory(String categoryPath, String translation, TranslationBuilder tb) {
