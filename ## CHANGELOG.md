@@ -1,4 +1,4 @@
-## v???(dev)
+## v1.4.4
 + Fixed missing translations for text in Mod Menu
 + Changed the mod internally so that now newer versions of BWT should normally work with the mod if they are compatible
 + Updated the mod to Better With Time 2.0.2
