@@ -29,7 +29,7 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}",
-    "bwt": "${bwt_version}",
+    "bwt": ">=${bwt_version}",
     "btwr_sl": ">=${btwr_sl_version}"
   },
   "accessWidener" : "bwt_hct.accesswidener"
