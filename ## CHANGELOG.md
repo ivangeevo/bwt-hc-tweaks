@@ -1,4 +1,6 @@
-## v???(dev)
+## v1.4.5
++ Fixed the game crashing when planting hemp crop blocks while using older versions of BTWR: Shared Library
++ Updated the mod to Fabric API 0.116.9, Fabric Loader 0.18.4 & BTWR: Shared Library 0.8.2
 
 ## v1.4.4
 + Fixed missing translations for text in Mod Menu
