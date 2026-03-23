@@ -62,14 +62,13 @@ public abstract class StonecutterBlockMixin extends Block implements MechPowerBl
 
     @Inject(method = "appendProperties", at = @At("HEAD"), cancellable = true)
     private void onAppendProperties(StateManager.Builder<Block, BlockState> builder, CallbackInfo ci) {
+        MechPowerBlockBase.super.appendProperties(builder);
+        builder.add(FACING);
         ci.cancel();
     }
 
     @Override
-    public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        MechPowerBlockBase.super.appendProperties(builder);
-        builder.add(FACING);
-    }
+    public void appendProperties(StateManager.Builder<Block, BlockState> builder) {}
 
     @Inject(method = "getPlacementState", at = @At("HEAD"), cancellable = true)
     private void onGetPlacementState(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> cir) {
