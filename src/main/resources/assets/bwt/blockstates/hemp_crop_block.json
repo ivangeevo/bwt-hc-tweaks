@@ -28,7 +28,7 @@
       "model": "bwt:block/hemp_crop8"
     },
     "age=7,connected_up=false,is_top=true": {
-      "model": "bwt_hct:block/hemp_crop_top"
+      "model": "bwt:block/hemp_crop8"
     }
   }
 }
