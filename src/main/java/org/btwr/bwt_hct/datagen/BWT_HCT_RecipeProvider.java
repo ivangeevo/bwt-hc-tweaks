@@ -45,7 +45,6 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
                 .input(Items.NETHER_STAR)
                 .criterion("has_dormant_soul_forge", conditionsFromItem(ModBlocks.dormantSoulForge))
                 .offerTo(exporter, IdUtils.ofBWT("soul_forge"));
-
     }
 
     private void generateModRecipes(RecipeExporter exporter) {
@@ -71,7 +70,6 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
                 .ingredient(ModBlocks.dormantSoulForge.asItem())
                 .criterion("has_dormant_soul_forge", conditionsFromItem(ModBlocks.dormantSoulForge.asItem()))
                 .offerTo(exporter, Identifier.of(BWT_HCTMod.MOD_ID,"dormant_soul_forge_recycling"));
-
     }
 
     @Override

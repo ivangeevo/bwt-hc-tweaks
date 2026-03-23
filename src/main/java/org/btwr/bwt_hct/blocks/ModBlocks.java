@@ -14,8 +14,7 @@ import org.btwr.bwt_hct.BWT_HCTMod;
 import org.btwr.bwt_hct.blocks.blocks.DormantSoulForgeBlock;
 import org.btwr.bwt_hct.blocks.blocks.ModernMillStoneBlock;
 
-public class ModBlocks
-{
+public class ModBlocks {
 
     public static final Block modernMillStoneBlock = registerBlock("modern_mill_stone",
             new ModernMillStoneBlock(AbstractBlock.Settings.copy(BwtBlocks.millStoneBlock))
@@ -49,4 +48,5 @@ public class ModBlocks
         });
 
     }
+
 }

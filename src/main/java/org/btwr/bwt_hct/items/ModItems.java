@@ -16,13 +16,11 @@ public class ModItems {
     }
 
     public static void registerModItems() {
-
         BWT_HCTMod.LOGGER.info("Registering Mod Items for " + BWT_HCTMod.MOD_ID);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(content -> {
             //content.add(ModBlocks.modernMillStoneBlock);
             content.add(ModBlocks.dormantSoulForge);
-
         });
     }
 

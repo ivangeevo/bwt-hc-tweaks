@@ -5,7 +5,5 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public interface PistonBreakCallback {
-
     void onPistonBreak(World world, BlockPos pos, BlockState state);
-
 }

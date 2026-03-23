@@ -15,7 +15,6 @@ public abstract class SawBlockMixin extends SimpleFacingBlock {
         super(settings);
     }
 
-
     // Modifying the tick rate argument to the retail BTW value
     @ModifyArg(method = "scheduleUpdateIfRequired",
             at = @At(

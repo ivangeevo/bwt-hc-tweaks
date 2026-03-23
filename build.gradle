@@ -78,7 +78,6 @@ processResources {
                 "loader_version": project.loader_version,
                 "bwt_version": project.bwt_version,
                 "btwr_sl_version": project.btwr_sl_version
-
     }
 }
 

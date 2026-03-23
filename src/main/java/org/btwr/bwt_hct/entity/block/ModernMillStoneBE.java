@@ -46,7 +46,6 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
 
     public ModernMillStoneBE(BlockPos pos, BlockState state) {
         super(ModBlockEntities.modernMillStoneEntity, pos, state);
-
     }
 
     public boolean onUseByPlayer(PlayerEntity player) {
@@ -153,7 +152,6 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
         }
     }
 
-
     public static void ejectItem(World world, ItemStack stack, BlockPos pos) {
         // Start at the center of the block
         Vec3d centerPos = pos.toCenterPos();
@@ -227,7 +225,6 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
     public ItemStack removeStack(int slot) {
         return inventory.removeStack(slot);
     }
-
 
     @Override
     public int getMaxCountPerStack() {

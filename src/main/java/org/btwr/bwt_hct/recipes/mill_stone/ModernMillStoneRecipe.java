@@ -115,8 +115,7 @@ public class ModernMillStoneRecipe implements Recipe<SingleCountMillStoneRecipeI
         return results.getFirst();
     }
 
-    public static class Type implements RecipeType<ModernMillStoneRecipe>
-    {
+    public static class Type implements RecipeType<ModernMillStoneRecipe> {
         public static final Type INSTANCE = new Type();
         public static final String ID = "mill_stone";
     }
@@ -145,8 +144,7 @@ public class ModernMillStoneRecipe implements Recipe<SingleCountMillStoneRecipeI
                 Serializer::write, Serializer::read
         );
 
-        public Serializer() {
-        }
+        public Serializer() {}
 
         @Override
         public MapCodec<ModernMillStoneRecipe> codec() {
@@ -205,7 +203,6 @@ public class ModernMillStoneRecipe implements Recipe<SingleCountMillStoneRecipeI
             return this.ingredient(new ItemStack(item));
         }
 
-
         public ModernMillStoneRecipe.JsonBuilder results(ItemStack... itemStacks) {
             this.results.addAll(Arrays.asList(itemStacks));
             return this;
@@ -224,7 +221,6 @@ public class ModernMillStoneRecipe implements Recipe<SingleCountMillStoneRecipeI
         public ModernMillStoneRecipe.JsonBuilder result(Item item) {
             return this.result(item, 1);
         }
-
 
         @Override
         public JsonBuilder criterion(String string, AdvancementCriterion<?> advancementCriterion) {
@@ -253,7 +249,6 @@ public class ModernMillStoneRecipe implements Recipe<SingleCountMillStoneRecipeI
         public Item getOutputItem() {
             return results.getFirst().getItem();
         }
-
 
         @Override
         public void offerTo(RecipeExporter exporter, Identifier recipeId) {

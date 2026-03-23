@@ -22,7 +22,9 @@ public class BWT_HCT_LootTableProvider extends FabricBlockLootTableProvider {
         super(dataOutput, registryLookup);
     }
 
-    public static final LootCondition.Builder WITH_CONVENTIONAL_SHEARS = MatchToolLootCondition.builder(ItemPredicate.Builder.create().tag(ConventionalItemTags.SHEAR_TOOLS));
+    public static final LootCondition.Builder WITH_CONVENTIONAL_SHEARS = MatchToolLootCondition.builder(
+            ItemPredicate.Builder.create().tag(ConventionalItemTags.SHEAR_TOOLS)
+    );
 
     public static final BlockStatePropertyLootCondition.Builder MAX_AGE_HEMP_CROP =
             BlockStatePropertyLootCondition.builder(BwtBlocks.hempCropBlock)
