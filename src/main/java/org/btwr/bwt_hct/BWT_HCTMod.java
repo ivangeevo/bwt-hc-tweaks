@@ -9,6 +9,7 @@ import org.btwr.bwt_hct.entity.ModBlockEntities;
 import org.btwr.bwt_hct.event.PistonBreakEventsHandler;
 import org.btwr.bwt_hct.items.ModItems;
 import org.btwr.bwt_hct.recipes.ModRecipes;
+import org.btwr.bwt_hct.util.BlastingOilHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +28,8 @@ public class BWT_HCTMod implements ModInitializer {
         ModBlockEntities.registerBlockEntities();
         ModRecipes.registerRecipes();
         PistonBreakEventsHandler.init();
+
+        BlastingOilHelper.registerTickEvents();
 
         // Make campfire a valid fuel for BWT FireData
         FireData.FIRE_AMOUNT_FUNCTIONS.put(

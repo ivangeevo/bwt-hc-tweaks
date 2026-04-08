@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.registry.RegistryWrapper;
 import org.btwr.bwt_hct.BWT_HCTMod;
 import org.btwr.bwt_hct.blocks.ModBlocks;
+import org.btwr.bwt_hct.items.ModItems;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -17,7 +18,9 @@ public class BWT_HCT_LangProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder tb) {
         this.generateBlockTranslations(tb);
+        this.generateItemTranslations(tb);
         this.generateConfigTranslations(tb);
+        this.generateDeathMessages(tb);
 
         //this.addConfig("oldSchoolBuddyBlockNeighborUpdate", "Old School Buddy Block Neighbor Update", tb);
         //this.addConfig("blockDispenserRequiringStrongPower", "Block Dispenser Requires Strong Power", tb);
@@ -32,10 +35,20 @@ public class BWT_HCT_LangProvider extends FabricLanguageProvider {
         tb.add(ModBlocks.dormantSoulForge, "Dormant Soul Forge");
     }
 
+    private void generateItemTranslations(TranslationBuilder tb) {
+        tb.add(ModItems.blastingOil, "Blasting Oil");
+        tb.add(ModItems.fuse, "Fuse");
+    }
+
     private void generateConfigTranslations(TranslationBuilder tb) {
         this.addConfigMenuDefaults(tb);
         this.addConfigMenuTitle("BWT: HC Tweaks Configuration Menu", tb);
         this.addConfigCategory("general", "General", tb);
+    }
+
+    private void generateDeathMessages(TranslationBuilder tb) {
+        tb.add("death.attack.blasting_oil", "%1$s was obliterated by Blasting Oil");
+        tb.add("death.attack.blasting_oil.player", "%1$s was obliterated by Blasting Oil whilst fighting %2$s");
     }
 
     private void addConfigMenuDefaults(TranslationBuilder tb) {

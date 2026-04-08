@@ -2,10 +2,13 @@ package org.btwr.bwt_hct.datagen;
 
 import com.bwt.blocks.BwtBlocks;
 import com.bwt.items.BwtItems;
+import com.bwt.recipes.cooking_pots.CauldronRecipe;
 import com.bwt.recipes.cooking_pots.StokedCrucibleRecipe;
 import com.bwt.recipes.soul_forge.SoulForgeShapedRecipe;
+import com.bwt.tags.BwtItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
@@ -14,6 +17,7 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
+import org.btwr.bwt_hct.items.ModItems;
 import org.btwr.shared_library.util.utils.IdUtils;
 import org.btwr.shared_library.util.utils.RecipeUtils;
 import org.btwr.bwt_hct.BWT_HCTMod;
@@ -33,6 +37,17 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
         //this.generateDisabledRecipes(exporter);
         this.generateBwtRecipesOverride(exporter);
         this.generateModRecipes(exporter);
+
+        // Override vanilla recipe for TNT
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Items.TNT)
+                .input('f', ModItems.fuse)
+                .input('g', Items.GUNPOWDER)
+                .input('b', Items.BARREL)
+                .pattern("gfg")
+                .pattern("gbg")
+                .pattern("ggg")
+                .criterion(hasItem(Items.GUNPOWDER), conditionsFromItem(Items.GUNPOWDER))
+                .offerTo(exporter, IdUtils.ofMC("tnt"));
     }
 
     private void generateDisabledRecipes(RecipeExporter exporter) {
@@ -40,14 +55,33 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
     }
 
     private void generateBwtRecipesOverride(RecipeExporter exporter) {
+        // Override soulforge recipe to require nether star
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, BwtBlocks.soulForgeBlock)
                 .input(ModBlocks.dormantSoulForge)
                 .input(Items.NETHER_STAR)
                 .criterion("has_dormant_soul_forge", conditionsFromItem(ModBlocks.dormantSoulForge))
                 .offerTo(exporter, IdUtils.ofBWT("soul_forge"));
+
+        // Override dynamite recipe to require fuse and blasting oil
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, BwtItems.dynamiteItem, 2)
+                .pattern("pf")
+                .pattern("pb")
+                .pattern("ps")
+                .input('p', Items.PAPER)
+                .input('f', ModItems.fuse)
+                .input('b', ModItems.blastingOil)
+                .input('s', BwtItemTags.SAW_DUSTS)
+                .criterion(hasItem(ModItems.blastingOil), conditionsFromItem(ModItems.blastingOil))
+                .offerTo(exporter, IdUtils.ofBWT("dynamite"));
     }
 
     private void generateModRecipes(RecipeExporter exporter) {
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.fuse, 2)
+                .input(Items.GUNPOWDER)
+                .input(ConventionalItemTags.STRINGS)
+                .criterion(hasItem(Items.GUNPOWDER), conditionsFromItem(Items.GUNPOWDER))
+                .offerTo(exporter);
+
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.modernMillStoneBlock)
                 .input('G', BwtItems.gearItem)
                 .input('S', Blocks.STONE)
@@ -70,6 +104,12 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
                 .ingredient(ModBlocks.dormantSoulForge.asItem())
                 .criterion("has_dormant_soul_forge", conditionsFromItem(ModBlocks.dormantSoulForge.asItem()))
                 .offerTo(exporter, Identifier.of(BWT_HCTMod.MOD_ID,"dormant_soul_forge_recycling"));
+
+        CauldronRecipe.JsonBuilder.create().result(ModItems.blastingOil, 2)
+                .ingredient(BwtItems.hellfireDustItem)
+                .ingredient(BwtItems.tallowItem)
+                .criterion(hasItem(BwtItems.tallowItem), conditionsFromItem(BwtItems.tallowItem))
+                .offerTo(exporter);
     }
 
     @Override

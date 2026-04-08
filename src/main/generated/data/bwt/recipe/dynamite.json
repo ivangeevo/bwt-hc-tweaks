@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "bwt_hct:blasting_oil"
+    },
+    "f": {
+      "item": "bwt_hct:fuse"
+    },
+    "p": {
+      "item": "minecraft:paper"
+    },
+    "s": {
+      "tag": "bwt:saw_dusts"
+    }
+  },
+  "pattern": [
+    "pf",
+    "pb",
+    "ps"
+  ],
+  "result": {
+    "count": 2,
+    "id": "bwt:dynamite"
+  }
+}

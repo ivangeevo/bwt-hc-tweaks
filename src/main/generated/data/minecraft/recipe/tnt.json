@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "minecraft:barrel"
+    },
+    "f": {
+      "item": "bwt_hct:fuse"
+    },
+    "g": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "pattern": [
+    "gfg",
+    "gbg",
+    "ggg"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:tnt"
+  }
+}

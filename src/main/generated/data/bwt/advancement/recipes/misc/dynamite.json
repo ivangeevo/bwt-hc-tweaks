@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_blasting_oil": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bwt_hct:blasting_oil"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bwt:dynamite"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_blasting_oil"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bwt:dynamite"
+    ]
+  }
+}

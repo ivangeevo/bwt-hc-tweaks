@@ -1,0 +1,23 @@
+{
+  "type": "bwt:cauldron",
+  "category": "misc",
+  "group": "",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "bwt:hellfire_dust"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "bwt:tallow"
+      }
+    }
+  ],
+  "results": [
+    {
+      "count": 2,
+      "id": "bwt_hct:blasting_oil"
+    }
+  ]
+}

@@ -6,5 +6,9 @@
   "config.bwt_hct.text.emptyClientConfigText": "§eNote:§r There are currently no client config settings.",
   "config.bwt_hct.text.serverSettingsNoAccessText": "§eNote:§r Server settings are not accessible in menus.\nThey can only be changed by editing the config file manually and require a world reload to take effect.",
   "config.bwt_hct.text.serverSettingsText": "Server Settings:",
+  "death.attack.blasting_oil": "%1$s was obliterated by Blasting Oil",
+  "death.attack.blasting_oil.player": "%1$s was obliterated by Blasting Oil whilst fighting %2$s",
+  "item.bwt_hct.blasting_oil": "Blasting Oil",
+  "item.bwt_hct.fuse": "Fuse",
   "title.bwt_hct.config": "BWT: HC Tweaks Configuration Menu"
 }
