@@ -2,12 +2,17 @@ package org.btwr.bwt_hct.datagen;
 
 import com.bwt.blocks.BwtBlocks;
 import com.bwt.blocks.HempCropBlock;
+import com.bwt.items.BwtItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
 import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.condition.MatchToolLootCondition;
+import net.minecraft.loot.condition.RandomChanceLootCondition;
+import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.predicate.StatePredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.registry.RegistryWrapper;
@@ -34,7 +39,6 @@ public class BWT_HCT_LootTableProvider extends FabricBlockLootTableProvider {
             BlockStatePropertyLootCondition.builder(BwtBlocks.hempCropBlock)
                     .properties(StatePredicate.Builder.create().exactMatch(BooleanProperty.of("is_top"), true));
 
-
     @Override
     public void generate() {
         addDrop(ModBlocks.modernMillStoneBlock, drops(ModBlocks.modernMillStoneBlock));
@@ -43,7 +47,6 @@ public class BWT_HCT_LootTableProvider extends FabricBlockLootTableProvider {
         //this.addHempDrops();
     }
 
-    /**
     private void addHempDrops() {
         LootPool.Builder shearsHempPool = LootPool.builder()
                 .conditionally(WITH_CONVENTIONAL_SHEARS)
@@ -54,30 +57,17 @@ public class BWT_HCT_LootTableProvider extends FabricBlockLootTableProvider {
                 .with(ItemEntry.builder(BwtItems.hempSeedsItem)
                         .conditionally(MAX_AGE_HEMP_CROP)
                         .conditionally(IS_HEMP_CROP_TOP)
-                        .conditionally(RandomChanceLootCondition.builder(0.5f)));
-
-        LootPool.Builder pistonHempPool = LootPool.builder()
-                .conditionally(OGPistonBreakLootCondition.builder())
-                .with(ItemEntry.builder(BwtItems.hempItem).conditionally(MAX_AGE_HEMP_CROP));
-
-        LootPool.Builder pistonSeedPool = LootPool.builder()
-                .conditionally(OGPistonBreakLootCondition.builder())
-                .with(ItemEntry.builder(BwtItems.hempSeedsItem)
-                        .conditionally(MAX_AGE_HEMP_CROP)
-                        .conditionally(IS_HEMP_CROP_TOP)
-                        .conditionally(RandomChanceLootCondition.builder(0.5f)));
+                        .conditionally(RandomChanceLootCondition.builder(0.5f))
+                );
 
         addDrop(BwtBlocks.hempCropBlock,
                 applyExplosionDecay(BwtBlocks.hempCropBlock,
                         LootTable.builder()
                                 .pool(shearsHempPool)
                                 .pool(shearsSeedPool)
-                                .pool(pistonHempPool)
-                                .pool(pistonSeedPool)
                 )
         );
     }
-     **/
 
     @Override
     public String getName() {
