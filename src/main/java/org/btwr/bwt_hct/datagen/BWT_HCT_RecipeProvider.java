@@ -82,6 +82,8 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
                 .criterion(hasItem(Items.GUNPOWDER), conditionsFromItem(Items.GUNPOWDER))
                 .offerTo(exporter);
 
+        // Modern millstone is not implemented yet
+        /**
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.modernMillStoneBlock)
                 .input('G', BwtItems.gearItem)
                 .input('S', Blocks.STONE)
@@ -90,6 +92,7 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
                 .pattern("SGS")
                 .criterion("has_gear", conditionsFromItem(BwtItems.gearItem))
                 .offerTo(exporter, Identifier.of("bwt_hct", "modern_mill_stone"));
+         **/
 
         SoulForgeShapedRecipe.JsonBuilder.create(RecipeCategory.MISC, ModBlocks.dormantSoulForge)
                 .input('g', Items.GOLD_INGOT)

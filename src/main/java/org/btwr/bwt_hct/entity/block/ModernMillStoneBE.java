@@ -2,8 +2,8 @@ package org.btwr.bwt_hct.entity.block;
 
 import com.bwt.blocks.mill_stone.MillStoneBlock;
 import com.bwt.utils.OrderedRecipeMatcher;
-import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.Block;
@@ -19,7 +19,6 @@ import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.btwr.bwt_hct.blocks.ModBlocks;
@@ -27,6 +26,7 @@ import org.btwr.bwt_hct.entity.ModBlockEntities;
 import org.btwr.bwt_hct.recipes.mill_stone.ModernMillStoneRecipe;
 import org.btwr.bwt_hct.recipes.mill_stone.SingleCountMillStoneRecipeInput;
 import org.btwr.bwt_hct.util.SingleCountInventory;
+import org.btwr.bwt_hct.util.SingleCountStorage;
 
 import java.util.*;
 
@@ -37,9 +37,9 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
     protected int grindProgressTime;
     public static final int timeToGrind = 200;
 
-    public final ModernMillStoneBE.Inventory inventory = new ModernMillStoneBE.Inventory(1);
-
-    public final InventoryStorage inventoryWrapper = InventoryStorage.of(inventory, Direction.UP);
+    public final ModernMillStoneBE.Inventory inventory = new Inventory();
+    //public final InventoryStorage inventoryWrapper = InventoryStorage.of(inventory, Direction.UP);
+    public final Storage<ItemVariant> inventoryWrapper = new SingleCountStorage(inventory);
 
     final RecipeManager.MatchGetter<SingleCountMillStoneRecipeInput, ModernMillStoneRecipe> matchGetter =
             RecipeManager.createCachedMatchGetter(ModernMillStoneRecipe.Type.INSTANCE);
@@ -252,8 +252,8 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
     }
 
     public class Inventory extends SingleCountInventory {
-        public Inventory(int size) {
-            super(size);
+        public Inventory() {
+            super();
         }
 
         public void markDirty() {

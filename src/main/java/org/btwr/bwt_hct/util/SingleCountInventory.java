@@ -6,18 +6,13 @@ import net.minecraft.item.ItemStack;
 
 public class SingleCountInventory extends SimpleInventory {
 
-    public SingleCountInventory(int size) {
-        super(size);
+    public SingleCountInventory() {
+        super(1);
     }
 
     @Override
     public int getMaxCountPerStack() {
         return 1;
-    }
-
-    @Override
-    public int getMaxCount(ItemStack stack) {
-        return super.getMaxCount(stack);
     }
 
     @Override
@@ -27,7 +22,7 @@ public class SingleCountInventory extends SimpleInventory {
 
     @Override
     public boolean canTransferTo(Inventory hopperInventory, int slot, ItemStack stack) {
-        return this.isEmpty() && stack.getCount() == 1 && super.canInsert(stack);
+        return this.isEmpty() && stack.getCount() == 1 && canInsert(stack);
     }
 
     @Override
