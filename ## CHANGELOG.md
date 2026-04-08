@@ -1,4 +1,8 @@
-## v???(dev)
+## v1.5(dev)
++ Added new items: Fuse & Blasting Oil
++ Changed the Dynamite recipe from BWT to require fuse and blasting oil
++ Changed the vanilla recipe for TNT to require a barrrel, fuse and more gunpowder (no sand)
++ Fixed/removed the old texture for the top part of the hemp to only use the new textures that were added since BWT 2.0
 
 ## v1.4.5
 + Fixed the game crashing when planting hemp crop blocks while using older versions of BTWR: Shared Library
