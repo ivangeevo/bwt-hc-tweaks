@@ -11,7 +11,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.btwr.bwt_hct.blocks.ModBlocks;
 import org.btwr.bwt_hct.tag.ModTags;
-import org.btwr.shared_library.util.HeadDropRegistry;
+import org.btwr.shared_library.api.registry.HeadDropRegistry;
 
 public class ChoppingBlockHelper {
 
