@@ -1,8 +1,11 @@
 ## v1.5(dev)
++ Added the chopping block! It allows increasing head drop rates for mobs/players when one is suffocated in it in front of a saw block
++ Added chopping blocks and a hand crank generating in Jungle temples. Later on when the Dragon Vessel is added to BWT, it will also generate next to the hand crank
 + Added new items: Fuse & Blasting Oil
 + Changed the Dynamite recipe from BWT to require fuse and blasting oil
-+ Changed the vanilla recipe for TNT to require a barrrel, fuse and more gunpowder (no sand)
++ Changed the vanilla recipe for TNT to require a barrel, fuse and more gunpowder (no sand)
 + Fixed/removed the old texture for the top part of the hemp to only use the new textures that were added since BWT 2.0
++ Updated the mod to Fabric API 0.116.11, Fabric Loader 0.19.2 & BTWR: Shared Library 0.8.4
 
 ## v1.4.5
 + Fixed the game crashing when planting hemp crop blocks while using older versions of BTWR: Shared Library
