@@ -45,7 +45,7 @@ public class ModBlocks {
                 new BlockItem(block, new Item.Settings()));
     }
 
-    public static void registerModBlocks() {
+    public static void register() {
         BWT_HCTMod.LOGGER.debug("Registering ModBlocks for " + BWT_HCTMod.MOD_ID);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> {

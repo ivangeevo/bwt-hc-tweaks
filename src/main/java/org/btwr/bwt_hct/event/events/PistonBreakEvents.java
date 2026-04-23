@@ -1,4 +1,4 @@
-package org.btwr.bwt_hct.event;
+package org.btwr.bwt_hct.event.events;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;

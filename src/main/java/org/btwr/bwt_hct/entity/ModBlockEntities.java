@@ -12,7 +12,7 @@ public class ModBlockEntities {
 
     public static BlockEntityType<ModernMillStoneBE> modernMillStoneEntity;
 
-    public static void registerBlockEntities() {
+    public static void register() {
         modernMillStoneEntity = Registry.register(
                 Registries.BLOCK_ENTITY_TYPE,
                 Identifier.of(BWT_HCTMod.MOD_ID, "modern_mill_stone"),

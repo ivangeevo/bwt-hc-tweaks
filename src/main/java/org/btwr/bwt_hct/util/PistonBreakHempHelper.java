@@ -1,4 +1,4 @@
-package org.btwr.bwt_hct.event;
+package org.btwr.bwt_hct.util;
 
 import com.bwt.blocks.BwtBlocks;
 import com.bwt.blocks.HempCropBlock;
@@ -11,18 +11,16 @@ import net.minecraft.world.World;
 
 import static org.btwr.bwt_hct.blocks.HempCropBlockManager.IS_TOP;
 
-public class PistonBreakEventsHandler {
+public class PistonBreakHempHelper {
 
-    public static void init() {
-        PistonBreakEvents.register((world, pos, state) -> {
-            if (state.isOf(BwtBlocks.hempCropBlock)) {
-                if (state.get(IS_TOP)) {
-                    getHempTopDrops(world, pos, state);
-                } else {
-                    getHempBottomDrops(world, pos, state);
-                }
+    public static void tryBreakingHemp(World world, BlockPos pos, BlockState state) {
+        if (state.isOf(BwtBlocks.hempCropBlock)) {
+            if (state.get(IS_TOP)) {
+                getHempTopDrops(world, pos, state);
+            } else {
+                getHempBottomDrops(world, pos, state);
             }
-        });
+        }
     }
 
     private static void getHempTopDrops(World world, BlockPos pos, BlockState state) {

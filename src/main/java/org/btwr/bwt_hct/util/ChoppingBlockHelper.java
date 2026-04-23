@@ -4,6 +4,7 @@ import com.bwt.blocks.BwtBlocks;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -15,26 +16,25 @@ import org.btwr.shared_library.api.registry.HeadDropRegistry;
 
 public class ChoppingBlockHelper {
 
-    public static void registerEntityEvents() {
-        ServerLivingEntityEvents.ALLOW_DEATH.register(((entity, damageSource, damageAmount) -> {
-            if (!(entity.getWorld() instanceof ServerWorld serverWorld)) return true;
+    @SuppressWarnings("SameReturnValue")
+    public static boolean tryDroppingSkull(LivingEntity entity, DamageSource damageSource, float damageAmount) {
+        if (!(entity.getWorld() instanceof ServerWorld serverWorld)) return true;
 
-            if (!entity.getType().isIn(ModTags.EntityTypes.INCREASED_SKULL_DROP_RATE_FROM_CHOPPING_BLOCK)) return true;
+        if (!entity.getType().isIn(ModTags.EntityTypes.INCREASED_SKULL_DROP_RATE_FROM_CHOPPING_BLOCK)) return true;
 
-            BlockPos pos = entity.getBlockPos();
+        BlockPos pos = entity.getBlockPos();
 
-            boolean hasSawAdjacent = isSawAdjacent(serverWorld, pos);
-            boolean hasChoppingBlock = isChoppingBlockAdjacent(serverWorld, pos);
+        boolean hasSawAdjacent = isSawAdjacent(serverWorld, pos);
+        boolean hasChoppingBlock = isChoppingBlockAdjacent(serverWorld, pos);
 
-            if (hasSawAdjacent && hasChoppingBlock) {
-                dropSkull(entity, serverWorld);
-            }
+        if (hasSawAdjacent && hasChoppingBlock) {
+            dropSkull(entity, serverWorld);
+        }
 
-            return true; // don't cancel death
-        }));
+        return true; // don't cancel death
     }
 
-    public static boolean isSawAdjacent(World world, BlockPos pos) {
+    private static boolean isSawAdjacent(World world, BlockPos pos) {
         for (Direction direction : Direction.Type.HORIZONTAL) {
             BlockPos neighbor = pos.offset(direction);
 
@@ -51,7 +51,7 @@ public class ChoppingBlockHelper {
         return false;
     }
 
-    public static boolean isChoppingBlockAdjacent(World world, BlockPos pos) {
+    private static boolean isChoppingBlockAdjacent(World world, BlockPos pos) {
         // Check the block itself and directly above (mob could be standing on it)
         return world.getBlockState(pos).isOf(ModBlocks.choppingBlock)
                 || world.getBlockState(pos.up()).isOf(ModBlocks.choppingBlock)

@@ -19,7 +19,7 @@ public class ModItems {
         return Registry.register(Registries.ITEM, Identifier.of(BWT_HCTMod.MOD_ID, name), item);
     }
 
-    public static void registerModItems() {
+    public static void register() {
         BWT_HCTMod.LOGGER.info("Registering Mod Items for " + BWT_HCTMod.MOD_ID);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(content -> {

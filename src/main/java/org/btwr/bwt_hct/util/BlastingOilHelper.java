@@ -1,13 +1,14 @@
 package org.btwr.bwt_hct.util;
 
 import com.bwt.items.BwtItems;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -25,13 +26,56 @@ public class BlastingOilHelper {
     private static final float FALL_THRESHOLD = 3.0f; // Blocks
     private static final Map<UUID, Float> lastHealth = new ConcurrentHashMap<>();
 
+    // Tick handler to detect fall, fire, and damage
+    public static void tickBlastingOil(LivingEntity entity, DamageSource damageSource, float baseDamageTaken, float damageTaken, boolean blocked) {
+        if (!(entity instanceof PlayerEntity player)) return;
+
+        World world = player.getWorld();
+
+        DamageSource blastingOilSource = new DamageSource(
+                world.getRegistryManager()
+                        .getWrapperOrThrow(RegistryKeys.DAMAGE_TYPE)
+                        .getOrThrow(ModDamageTypes.BLASTING_OIL)
+        );
+
+        // --- Fall damage ---
+        if (entity.fallDistance > FALL_THRESHOLD && hasBlastingOil(player)) {
+            explodeFromInventory(player);
+            clearInventoryContents(world, player);
+            player.damage(blastingOilSource, Float.MAX_VALUE);
+        }
+
+        // --- Fire or lava ---
+        if ((player.isOnFire() || player.getBlockStateAtPos().isOf(Blocks.LAVA)) && hasBlastingOil(player)) {
+            explodeFromInventory(player);
+            clearInventoryContents(world, player);
+            player.damage(blastingOilSource, Float.MAX_VALUE);
+        }
+
+        // --- Damage detection ---
+        float prevHealth = lastHealth.getOrDefault(player.getUuid(), player.getHealth());
+        if (player.getHealth() < prevHealth && hasBlastingOil(player)) {
+            explodeFromInventory(player);
+            clearInventoryContents(world, player);
+            player.damage(blastingOilSource, Float.MAX_VALUE);
+        }
+        lastHealth.put(player.getUuid(), player.getHealth());
+    }
+
+    // Clear map on server tick to avoid memory leaks for offline players
+    public static void clearBlastingOilMap(MinecraftServer server) {
+        lastHealth.keySet().removeIf(
+                uuid -> server.getPlayerManager().getPlayer(uuid) == null
+        );
+    }
+
     // Checks if player has any blasting oil
-    public static boolean hasBlastingOil(PlayerEntity player) {
+    private static boolean hasBlastingOil(PlayerEntity player) {
         return countBlastingOil(player) > 0;
     }
 
     // Counts total blasting oil stacks in inventory
-    public static int countBlastingOil(PlayerEntity player) {
+    private static int countBlastingOil(PlayerEntity player) {
         int total = 0;
         for (ItemStack stack : player.getInventory().main) {
             if (stack.isOf(ModItems.blastingOil)) {
@@ -42,7 +86,7 @@ public class BlastingOilHelper {
     }
 
     // Remove all blasting oil from player's inventory
-    public static void removeAllBlastingOil(PlayerEntity player) {
+    private static void removeAllBlastingOil(PlayerEntity player) {
         for (int i = 0; i < player.getInventory().size(); i++) {
             ItemStack stack = player.getInventory().getStack(i);
             if (stack.isOf(ModItems.blastingOil)) {
@@ -52,7 +96,7 @@ public class BlastingOilHelper {
     }
 
     // Perform explosion using BTW-style formula
-    public static void explodeFromInventory(PlayerEntity player) {
+    private static void explodeFromInventory(PlayerEntity player) {
         World world = player.getWorld();
 
         // Count ingredients
@@ -89,8 +133,12 @@ public class BlastingOilHelper {
         return total;
     }
 
-    public static void clearInventoryContents(PlayerEntity player) {
+    private static void clearInventoryContents(World world, PlayerEntity player) {
         PlayerInventory inventory = player.getInventory();
+
+        // Don't clear if keep inventory is enabled
+        if (world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY)) return;
+
         for (int slot = 0; slot < inventory.size(); slot++) {
             ItemStack itemstack = inventory.getStack(slot);
 
@@ -100,44 +148,4 @@ public class BlastingOilHelper {
         }
     }
 
-    // Tick handler to detect fall, fire, and damage
-    public static void registerTickEvents() {
-        ServerLivingEntityEvents.AFTER_DAMAGE.register((entity, source, baseDamageTaken, damageTaken, blocked) -> {
-            if (!(entity instanceof PlayerEntity player)) return;
-
-            World world = player.getWorld();
-
-            DamageSource blastingOilSource = new DamageSource(
-                    world.getRegistryManager()
-                            .getWrapperOrThrow(RegistryKeys.DAMAGE_TYPE)
-                            .getOrThrow(ModDamageTypes.BLASTING_OIL)
-            );
-
-            // --- Fall damage ---
-            if (entity.fallDistance > FALL_THRESHOLD && hasBlastingOil(player)) {
-                explodeFromInventory(player);
-                clearInventoryContents(player);
-                player.damage(blastingOilSource, Float.MAX_VALUE);
-            }
-
-            // --- Fire or lava ---
-            if ((player.isOnFire() || player.getBlockStateAtPos().isOf(Blocks.LAVA)) && hasBlastingOil(player)) {
-                explodeFromInventory(player);
-                clearInventoryContents(player);
-                player.damage(blastingOilSource, Float.MAX_VALUE);
-            }
-
-            // --- Damage detection ---
-            float prevHealth = lastHealth.getOrDefault(player.getUuid(), player.getHealth());
-            if (player.getHealth() < prevHealth && hasBlastingOil(player)) {
-                explodeFromInventory(player);
-                clearInventoryContents(player);
-                player.damage(blastingOilSource, Float.MAX_VALUE);
-            }
-            lastHealth.put(player.getUuid(), player.getHealth());
-        });
-
-        // Clear map on server tick to avoid memory leaks for offline players
-        ServerTickEvents.END_SERVER_TICK.register(server -> lastHealth.keySet().removeIf(uuid -> server.getPlayerManager().getPlayer(uuid) == null));
-    }
 }

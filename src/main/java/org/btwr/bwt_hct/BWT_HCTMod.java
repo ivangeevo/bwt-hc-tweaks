@@ -7,11 +7,9 @@ import org.btwr.bwt_hct.blocks.ModBlocks;
 import org.btwr.bwt_hct.config.BWT_HCTConfig;
 import org.btwr.bwt_hct.data.ModDataAttachments;
 import org.btwr.bwt_hct.entity.ModBlockEntities;
-import org.btwr.bwt_hct.event.PistonBreakEventsHandler;
+import org.btwr.bwt_hct.event.ModEvents;
 import org.btwr.bwt_hct.items.ModItems;
 import org.btwr.bwt_hct.recipes.ModRecipes;
-import org.btwr.bwt_hct.util.BlastingOilHelper;
-import org.btwr.bwt_hct.util.ChoppingBlockHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,15 +23,12 @@ public class BWT_HCTMod implements ModInitializer {
         LOGGER.info("Initializing Better With Time: HC Tweaks");
 
         BWT_HCTConfig.register();
-        ModBlocks.registerModBlocks();
-        ModItems.registerModItems();
-        ModBlockEntities.registerBlockEntities();
+        ModBlocks.register();
+        ModItems.register();
+        ModBlockEntities.register();
         ModDataAttachments.register();
-        ModRecipes.registerRecipes();
-        PistonBreakEventsHandler.init();
-
-        BlastingOilHelper.registerTickEvents();
-        ChoppingBlockHelper.registerEntityEvents();
+        ModRecipes.register();
+        ModEvents.register();
 
         // Make campfire a valid fuel for BWT FireData
         FireData.FIRE_AMOUNT_FUNCTIONS.put(
