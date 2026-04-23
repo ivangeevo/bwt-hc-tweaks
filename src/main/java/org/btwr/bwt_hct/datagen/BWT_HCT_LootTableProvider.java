@@ -43,6 +43,7 @@ public class BWT_HCT_LootTableProvider extends FabricBlockLootTableProvider {
     public void generate() {
         addDrop(ModBlocks.modernMillStoneBlock, drops(ModBlocks.modernMillStoneBlock));
         addDrop(ModBlocks.dormantSoulForge, drops(ModBlocks.dormantSoulForge));
+        addDrop(ModBlocks.choppingBlock, drops(ModBlocks.choppingBlock));
 
         //this.addHempDrops();
     }

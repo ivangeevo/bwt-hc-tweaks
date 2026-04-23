@@ -21,17 +21,23 @@ public class BWT_HCT_BlockTagProvider extends FabricTagProvider.BlockTagProvider
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
                 .add(ModBlocks.modernMillStoneBlock)
-                .add(ModBlocks.dormantSoulForge);
+                .add(ModBlocks.dormantSoulForge)
+                .add(ModBlocks.choppingBlock);
 
         getOrCreateTagBuilder(BwtBlockTags.MATTOCK_MINEABLE)
                 .add(ModBlocks.modernMillStoneBlock)
-                .add(ModBlocks.dormantSoulForge);
+                .add(ModBlocks.dormantSoulForge)
+                .add(ModBlocks.choppingBlock);
+
+        getOrCreateTagBuilder(BwtBlockTags.SURVIVES_SAW_BLOCK)
+                .add(ModBlocks.choppingBlock);
 
         getOrCreateTagBuilder(BTWRConventionalTags.Blocks.SHEARS_EFFICIENT)
                 .add(BwtBlocks.hempCropBlock);
 
         getOrCreateTagBuilder(BTWRConventionalTags.Blocks.ALWAYS_FERTILE_SOIL)
                 .add(BwtBlocks.soilPlanterBlock);
+
     }
 
 }

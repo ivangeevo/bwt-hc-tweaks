@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "dirty=false": { "model": "bwt_hct:block/chopping_block"},
+    "dirty=true": { "model": "bwt_hct:block/chopping_block_dirty"}
+  }
+}

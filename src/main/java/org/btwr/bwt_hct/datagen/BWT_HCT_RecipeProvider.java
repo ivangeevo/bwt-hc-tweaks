@@ -9,13 +9,13 @@ import com.bwt.tags.BwtItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 import org.btwr.bwt_hct.items.ModItems;
 import org.btwr.shared_library.util.utils.IdUtils;
@@ -112,6 +112,14 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
                 .ingredient(BwtItems.hellfireDustItem)
                 .ingredient(BwtItems.tallowItem)
                 .criterion(hasItem(BwtItems.tallowItem), conditionsFromItem(BwtItems.tallowItem))
+                .offerTo(exporter);
+
+        SoulForgeShapedRecipe.JsonBuilder.create(RecipeCategory.MISC, ModBlocks.choppingBlock)
+                .input('s', ItemTags.STONE_CRAFTING_MATERIALS)
+                .pattern("s  s")
+                .pattern("s  s")
+                .pattern("ssss")
+                .criterion("has_stone_crafting_material", conditionsFromTag(ItemTags.STONE_CRAFTING_MATERIALS))
                 .offerTo(exporter);
     }
 

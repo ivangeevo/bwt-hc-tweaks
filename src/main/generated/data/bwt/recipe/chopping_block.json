@@ -1,0 +1,18 @@
+{
+  "type": "bwt:soul_forge_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "tag": "minecraft:stone_crafting_materials"
+    }
+  },
+  "pattern": [
+    "s  s",
+    "s  s",
+    "ssss"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bwt_hct:chopping_block"
+  }
+}

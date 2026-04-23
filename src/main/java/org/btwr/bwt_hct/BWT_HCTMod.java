@@ -5,11 +5,13 @@ import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.CampfireBlock;
 import org.btwr.bwt_hct.blocks.ModBlocks;
 import org.btwr.bwt_hct.config.BWT_HCTConfig;
+import org.btwr.bwt_hct.data.ModDataAttachments;
 import org.btwr.bwt_hct.entity.ModBlockEntities;
 import org.btwr.bwt_hct.event.PistonBreakEventsHandler;
 import org.btwr.bwt_hct.items.ModItems;
 import org.btwr.bwt_hct.recipes.ModRecipes;
 import org.btwr.bwt_hct.util.BlastingOilHelper;
+import org.btwr.bwt_hct.util.ChoppingBlockHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,10 +28,12 @@ public class BWT_HCTMod implements ModInitializer {
         ModBlocks.registerModBlocks();
         ModItems.registerModItems();
         ModBlockEntities.registerBlockEntities();
+        ModDataAttachments.register();
         ModRecipes.registerRecipes();
         PistonBreakEventsHandler.init();
 
         BlastingOilHelper.registerTickEvents();
+        ChoppingBlockHelper.registerEntityEvents();
 
         // Make campfire a valid fuel for BWT FireData
         FireData.FIRE_AMOUNT_FUNCTIONS.put(

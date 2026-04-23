@@ -33,6 +33,7 @@ public class BWT_HCT_LangProvider extends FabricLanguageProvider {
     private void generateBlockTranslations(TranslationBuilder tb) {
         tb.add(ModBlocks.modernMillStoneBlock, "Modern Millstone");
         tb.add(ModBlocks.dormantSoulForge, "Dormant Soul Forge");
+        tb.add(ModBlocks.choppingBlock, "Chopping Block");
     }
 
     private void generateItemTranslations(TranslationBuilder tb) {
@@ -49,6 +50,8 @@ public class BWT_HCT_LangProvider extends FabricLanguageProvider {
     private void generateDeathMessages(TranslationBuilder tb) {
         tb.add("death.attack.blasting_oil", "%1$s was obliterated by Blasting Oil");
         tb.add("death.attack.blasting_oil.player", "%1$s was obliterated by Blasting Oil whilst fighting %2$s");
+        tb.add("death.attack.chopping_block", "%1$s was put on the chopping block");
+        tb.add("death.attack.chopping_block.player", "%1$s was was put on the chopping block whilst fighting %2$s");
     }
 
     private void addConfigMenuDefaults(TranslationBuilder tb) {

@@ -9,8 +9,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import org.btwr.bwt_hct.BWT_HCTMod;
+import org.btwr.bwt_hct.blocks.blocks.ChoppingBlock;
 import org.btwr.bwt_hct.blocks.blocks.DormantSoulForgeBlock;
 import org.btwr.bwt_hct.blocks.blocks.ModernMillStoneBlock;
 
@@ -22,6 +24,14 @@ public class ModBlocks {
 
     public static final Block dormantSoulForge = registerBlock("dormant_soul_forge",
             new DormantSoulForgeBlock(AbstractBlock.Settings.copy(BwtBlocks.soulForgeBlock))
+    );
+
+    public static final Block choppingBlock = registerBlock("chopping_block",
+            new ChoppingBlock(AbstractBlock.Settings.create()
+                    .strength(2.0f)
+                    .requiresTool()
+                    .sounds(BlockSoundGroup.STONE)
+            )
     );
 
     private static Block registerBlock(String name, Block block) {

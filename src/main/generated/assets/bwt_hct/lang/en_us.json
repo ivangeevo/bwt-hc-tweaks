@@ -1,4 +1,5 @@
 {
+  "block.bwt_hct.chopping_block": "Chopping Block",
   "block.bwt_hct.dormant_soul_forge": "Dormant Soul Forge",
   "block.bwt_hct.modern_mill_stone": "Modern Millstone",
   "config.bwt_hct.category.general": "General",
@@ -8,6 +9,8 @@
   "config.bwt_hct.text.serverSettingsText": "Server Settings:",
   "death.attack.blasting_oil": "%1$s was obliterated by Blasting Oil",
   "death.attack.blasting_oil.player": "%1$s was obliterated by Blasting Oil whilst fighting %2$s",
+  "death.attack.chopping_block": "%1$s was put on the chopping block",
+  "death.attack.chopping_block.player": "%1$s was was put on the chopping block whilst fighting %2$s",
   "item.bwt_hct.blasting_oil": "Blasting Oil",
   "item.bwt_hct.fuse": "Fuse",
   "title.bwt_hct.config": "BWT: HC Tweaks Configuration Menu"
