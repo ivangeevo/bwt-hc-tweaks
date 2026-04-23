@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "DormantSoulforgePlacer",
+    "JungleTempleGeneratorMixin",
     "PistonBlockMixin",
+    "StructurePieceAccessor",
     "bwt.BlockDispenserBlockMixin",
     "bwt.BuddyBlockMixin",
     "bwt.BwtBlocksMixin",
