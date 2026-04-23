@@ -15,7 +15,7 @@ public class ModDataAttachments {
     public static final AttachmentType<RecentlyOnChoppingBlockCountdownData> RECENTLY_ON_CHOPPING_BLOCK_COUNTDOWN = AttachmentRegistry.create(
             Identifier.of(BWT_HCTMod.MOD_ID, "recently_on_chopping_block_countdown"),
             builder -> builder
-                    .initializer(() -> new RecentlyOnChoppingBlockCountdownData(0))
+                    .initializer(RecentlyOnChoppingBlockCountdownData::initialize)
                     .persistent(RecentlyOnChoppingBlockCountdownData.CODEC)
                     .syncWith(RecentlyOnChoppingBlockCountdownData.PACKET_CODEC, AttachmentSyncPredicate.all())
     );

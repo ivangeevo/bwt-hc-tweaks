@@ -2,16 +2,16 @@ package org.btwr.bwt_hct.util;
 
 import com.bwt.blocks.BwtBlocks;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.minecraft.entity.EntityType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.btwr.bwt_hct.blocks.ModBlocks;
 import org.btwr.bwt_hct.tag.ModTags;
+import org.btwr.shared_library.util.HeadDropRegistry;
 
 public class ChoppingBlockHelper {
 
@@ -34,7 +34,7 @@ public class ChoppingBlockHelper {
         }));
     }
 
-    private static boolean isSawAdjacent(World world, BlockPos pos) {
+    public static boolean isSawAdjacent(World world, BlockPos pos) {
         for (Direction direction : Direction.Type.HORIZONTAL) {
             BlockPos neighbor = pos.offset(direction);
 
@@ -51,7 +51,7 @@ public class ChoppingBlockHelper {
         return false;
     }
 
-    private static boolean isChoppingBlockAdjacent(World world, BlockPos pos) {
+    public static boolean isChoppingBlockAdjacent(World world, BlockPos pos) {
         // Check the block itself and directly above (mob could be standing on it)
         return world.getBlockState(pos).isOf(ModBlocks.choppingBlock)
                 || world.getBlockState(pos.up()).isOf(ModBlocks.choppingBlock)
@@ -59,26 +59,15 @@ public class ChoppingBlockHelper {
     }
 
     private static void dropSkull(LivingEntity entity, ServerWorld world) {
-        ItemStack skull = getSkullForEntity(entity);
-        if (skull == null) return;
+        boolean isBTWRCoreLoaded = FabricLoader.getInstance().isModLoaded("bwtr");
 
-        // ~25% chance, same as BTW behavior
-        if (world.getRandom().nextFloat() < 0.25f) {
+        ItemStack skull = HeadDropRegistry.getHeadForEntity(entity);
+        if (skull.isEmpty()) return;
+
+        // ~25% chance when BTWR:Core is not loaded. If it is, then we use its own dropping logic
+        if (!isBTWRCoreLoaded && world.getRandom().nextFloat() < 0.25f) {
             entity.dropStack(skull);
         }
-    }
-
-    private static ItemStack getSkullForEntity(LivingEntity entity) {
-        if (!entity.getType().isIn(ModTags.EntityTypes.INCREASED_SKULL_DROP_RATE_FROM_CHOPPING_BLOCK)) {
-            return ItemStack.EMPTY;
-        }
-
-        if (entity.getType() == EntityType.CREEPER) return new ItemStack(Items.CREEPER_HEAD);
-        if (entity.getType() == EntityType.SKELETON) return new ItemStack(Items.SKELETON_SKULL);
-        if (entity.getType() == EntityType.ZOMBIE) return new ItemStack(Items.ZOMBIE_HEAD);
-        if (entity.getType() == EntityType.WITHER_SKELETON) return new ItemStack(Items.WITHER_SKELETON_SKULL);
-
-        return null;
     }
 
 }

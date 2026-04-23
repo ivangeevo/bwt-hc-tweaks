@@ -6,6 +6,7 @@
   "mixins": [
     "DormantSoulforgePlacer",
     "JungleTempleGeneratorMixin",
+    "LivingEntityMixin",
     "PistonBlockMixin",
     "StructurePieceAccessor",
     "bwt.BlockDispenserBlockMixin",

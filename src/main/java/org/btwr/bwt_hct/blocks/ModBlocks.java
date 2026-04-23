@@ -4,6 +4,7 @@ import com.bwt.blocks.BwtBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -47,9 +48,10 @@ public class ModBlocks {
     public static void registerModBlocks() {
         BWT_HCTMod.LOGGER.debug("Registering ModBlocks for " + BWT_HCTMod.MOD_ID);
 
-        //ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> {
             //entries.add(modernMillStoneBlock.asItem());
-        //});
+            entries.addAfter(Blocks.BARREL, ModBlocks.choppingBlock.asItem());
+        });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries ->
         {
@@ -57,6 +59,9 @@ public class ModBlocks {
 
         });
 
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(content -> {
+            content.addAfter(Blocks.BARREL, ModBlocks.choppingBlock);
+        });
     }
 
 }

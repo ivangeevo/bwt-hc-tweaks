@@ -19,8 +19,14 @@ public class RecentlyOnChoppingBlockCountdownData extends UpdateRequiringData<Li
 
     private int countdown;
 
+    public static final int maxCountDown = 40;
+
     public RecentlyOnChoppingBlockCountdownData(int cooldown) {
         this.countdown = cooldown;
+    }
+
+    public static RecentlyOnChoppingBlockCountdownData initialize() {
+       return new RecentlyOnChoppingBlockCountdownData(0);
     }
 
     public int getCountdown() {
