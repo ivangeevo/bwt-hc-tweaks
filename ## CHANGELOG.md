@@ -1,4 +1,4 @@
-## v1.5(dev)
+## v1.5
 + Added new items: Fuse & Blasting Oil
 + Added the chopping block! It allows increasing head drop rates for mobs/players when one is suffocated in it in front of a saw block
 + Added chopping blocks and a hand crank generating in Jungle temples. Later on when the Dragon Vessel is added to BWT, it will also generate next to the hand crank
