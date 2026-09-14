@@ -1,7 +1,6 @@
 package org.btwr.bwt_hct.util;
 
 import com.bwt.blocks.BwtBlocks;
-import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -59,7 +58,7 @@ public class ChoppingBlockHelper {
     }
 
     private static void dropSkull(LivingEntity entity, ServerWorld world) {
-        boolean isBTWRCoreLoaded = FabricLoader.getInstance().isModLoaded("bwtr");
+        boolean isBTWRCoreLoaded = FabricLoader.getInstance().isModLoaded("btwr");
 
         ItemStack skull = HeadDropRegistry.getHeadForEntity(entity);
         if (skull.isEmpty()) return;

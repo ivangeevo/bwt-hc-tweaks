@@ -29,7 +29,6 @@ loom {
 
 repositories {
     mavenCentral()
-    maven { url "https://ivangeevo.github.io/btwr-shared-lib/" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/"}
     maven { url "https://api.modrinth.com/maven" }
