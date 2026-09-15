@@ -1,4 +1,5 @@
 ## v???(dev)
++ Changed boats so they're much slower unless the player is holding a sail item
 + Updated the mod to Fabric API 0.116.17, Fabric Loader 0.19.5 & BTWR: Shared Library 0.8.5
 
 ## v1.5
