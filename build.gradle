@@ -32,6 +32,10 @@ repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/"}
     maven { url "https://api.modrinth.com/maven" }
+
+    maven {
+        url = "https://maven.midnightdust.eu/releases"
+    }
 }
 
 dependencies {
@@ -50,6 +54,12 @@ dependencies {
     modImplementation "maven.modrinth:better-with-time:${project.bwt_version}"
     //modImplementation files("libs/better_with_time-${project.bwt_version}.jar")
 
+    // Nothing to Worry About - for possession compatibility
+    //modCompileOnly "maven.modrinth:nothing-to-worry-about:${project.ntwa_version}"
+    //modCompileOnly files("libs/nothing-to-worry-about-${project.ntwa_version}.jar")
+    //modLocalRuntime "maven.modrinth:nothing-to-worry-about:${project.ntwa_version}"
+    //modLocalRuntime files("libs/nothing-to-worry-about-${project.ntwa_version}.jar")
+
     // Mod Menu
     modApi "com.terraformersmc:modmenu:${project.mod_menu_version}"
 
@@ -61,6 +71,7 @@ dependencies {
     // EMI
     modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
     modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
+
 }
 
 processResources {
