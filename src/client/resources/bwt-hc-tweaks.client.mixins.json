@@ -4,6 +4,9 @@
   "package": "org.btwr.bwt_hct.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "BoatModelMixin",
+    "LocalPlayerMixin",
+    "RaftModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1

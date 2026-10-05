@@ -34,11 +34,18 @@ public class BWT_HCTConfig {
                     .comment("Set a custom sawing speed for the Saw Block (in ticks). Default 20. BWT default - 15")
                     .build();
 
+    public static final ConfigSetting<Boolean> hcBoatRework =
+            ConfigBuilder.booleanSetting("hcBoatRework")
+                    .defaultValue(true)
+                    .comment("Changes boats to only move fast if holding a sail in hand and rework paddle positions")
+                    .build();
+
     static {
         CONFIG = new ConfigGroup(String.format("%s/%s_common.toml", MOD_ID, MOD_ID));
         CONFIG.add(oldSchoolBuddyBlockNeighborUpdate);
         CONFIG.add(blockDispenserRequiringStrongPower);
         CONFIG.add(sawBlockBreakSpeed);
+        CONFIG.add(hcBoatRework);
         TomlConfigManager.registerGroup(CONFIG); // auto init/load/save
     }
 

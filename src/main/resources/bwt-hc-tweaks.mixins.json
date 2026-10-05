@@ -4,6 +4,8 @@
   "package": "org.btwr.bwt_hct.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BoatEntityAccessor",
+    "BoatEntityMixin",
     "DormantSoulforgePlacer",
     "JungleTempleGeneratorMixin",
     "LivingEntityMixin",
