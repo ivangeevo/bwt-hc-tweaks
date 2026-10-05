@@ -9,14 +9,14 @@ import com.bwt.tags.BwtItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
 import org.btwr.bwt_hct.items.ModItems;
 import org.btwr.shared_library.util.utils.IdUtils;
 import org.btwr.shared_library.util.utils.RecipeUtils;
@@ -28,59 +28,59 @@ import java.util.concurrent.CompletableFuture;
 
 public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements RecipeUtils {
 
-    public BWT_HCT_RecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public BWT_HCT_RecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
     @Override
-    public void generate(RecipeExporter exporter) {
+    public void buildRecipes(RecipeOutput exporter) {
         //this.generateDisabledRecipes(exporter);
         this.generateBwtRecipesOverride(exporter);
         this.generateModRecipes(exporter);
 
         // Override vanilla recipe for TNT
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Items.TNT)
-                .input('f', ModItems.fuse)
-                .input('g', Items.GUNPOWDER)
-                .input('b', Items.BARREL)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.TNT)
+                .define('f', ModItems.fuse)
+                .define('g', Items.GUNPOWDER)
+                .define('b', Items.BARREL)
                 .pattern("gfg")
                 .pattern("gbg")
                 .pattern("ggg")
-                .criterion(hasItem(Items.GUNPOWDER), conditionsFromItem(Items.GUNPOWDER))
-                .offerTo(exporter, IdUtils.ofMC("tnt"));
+                .unlockedBy(getHasName(Items.GUNPOWDER), has(Items.GUNPOWDER))
+                .save(exporter, IdUtils.ofMC("tnt"));
     }
 
-    private void generateDisabledRecipes(RecipeExporter exporter) {
+    private void generateDisabledRecipes(RecipeOutput exporter) {
         disableRecipe(exporter, "bwt", "mill_stone");
     }
 
-    private void generateBwtRecipesOverride(RecipeExporter exporter) {
+    private void generateBwtRecipesOverride(RecipeOutput exporter) {
         // Override soulforge recipe to require nether star
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, BwtBlocks.soulForgeBlock)
-                .input(ModBlocks.dormantSoulForge)
-                .input(Items.NETHER_STAR)
-                .criterion("has_dormant_soul_forge", conditionsFromItem(ModBlocks.dormantSoulForge))
-                .offerTo(exporter, IdUtils.ofBWT("soul_forge"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, BwtBlocks.soulForgeBlock)
+                .requires(ModBlocks.dormantSoulForge)
+                .requires(Items.NETHER_STAR)
+                .unlockedBy("has_dormant_soul_forge", has(ModBlocks.dormantSoulForge))
+                .save(exporter, IdUtils.ofBWT("soul_forge"));
 
         // Override dynamite recipe to require fuse and blasting oil
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, BwtItems.dynamiteItem, 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BwtItems.dynamiteItem, 2)
                 .pattern("pf")
                 .pattern("pb")
                 .pattern("ps")
-                .input('p', Items.PAPER)
-                .input('f', ModItems.fuse)
-                .input('b', ModItems.blastingOil)
-                .input('s', BwtItemTags.SAW_DUSTS)
-                .criterion(hasItem(ModItems.blastingOil), conditionsFromItem(ModItems.blastingOil))
-                .offerTo(exporter, IdUtils.ofBWT("dynamite"));
+                .define('p', Items.PAPER)
+                .define('f', ModItems.fuse)
+                .define('b', ModItems.blastingOil)
+                .define('s', BwtItemTags.SAW_DUSTS)
+                .unlockedBy(getHasName(ModItems.blastingOil), has(ModItems.blastingOil))
+                .save(exporter, IdUtils.ofBWT("dynamite"));
     }
 
-    private void generateModRecipes(RecipeExporter exporter) {
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.fuse, 2)
-                .input(Items.GUNPOWDER)
-                .input(ConventionalItemTags.STRINGS)
-                .criterion(hasItem(Items.GUNPOWDER), conditionsFromItem(Items.GUNPOWDER))
-                .offerTo(exporter);
+    private void generateModRecipes(RecipeOutput exporter) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.fuse, 2)
+                .requires(Items.GUNPOWDER)
+                .requires(ConventionalItemTags.STRINGS)
+                .unlockedBy(getHasName(Items.GUNPOWDER), has(Items.GUNPOWDER))
+                .save(exporter);
 
         // Modern millstone is not implemented yet
         /**
@@ -94,37 +94,37 @@ public class BWT_HCT_RecipeProvider extends FabricRecipeProvider implements Reci
                 .offerTo(exporter, Identifier.of("bwt_hct", "modern_mill_stone"));
          **/
 
-        SoulForgeShapedRecipe.JsonBuilder.create(RecipeCategory.MISC, ModBlocks.dormantSoulForge)
-                .input('g', Items.GOLD_INGOT)
+        SoulForgeShapedRecipe.JsonBuilder.shaped(RecipeCategory.MISC, ModBlocks.dormantSoulForge)
+                .define('g', Items.GOLD_INGOT)
                 .pattern("gggg")
                 .pattern(" g  ")
                 .pattern(" g  ")
                 .pattern("gggg")
-                .criterion("has_soul_forge", conditionsFromItem(BwtBlocks.soulForgeBlock))
-                .offerTo(exporter, Identifier.of(BWT_HCTMod.MOD_ID, "dormant_soul_forge"));
+                .unlockedBy("has_soul_forge", has(BwtBlocks.soulForgeBlock))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(BWT_HCTMod.MOD_ID, "dormant_soul_forge"));
 
         StokedCrucibleRecipe.JsonBuilder.create().result(Items.GOLD_NUGGET, 60)
                 .ingredient(ModBlocks.dormantSoulForge.asItem())
-                .criterion("has_dormant_soul_forge", conditionsFromItem(ModBlocks.dormantSoulForge.asItem()))
-                .offerTo(exporter, Identifier.of(BWT_HCTMod.MOD_ID,"dormant_soul_forge_recycling"));
+                .unlockedBy("has_dormant_soul_forge", has(ModBlocks.dormantSoulForge.asItem()))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(BWT_HCTMod.MOD_ID,"dormant_soul_forge_recycling"));
 
         CauldronRecipe.JsonBuilder.create().result(ModItems.blastingOil, 2)
                 .ingredient(BwtItems.hellfireDustItem)
                 .ingredient(BwtItems.tallowItem)
-                .criterion(hasItem(BwtItems.tallowItem), conditionsFromItem(BwtItems.tallowItem))
-                .offerTo(exporter);
+                .unlockedBy(getHasName(BwtItems.tallowItem), has(BwtItems.tallowItem))
+                .save(exporter);
 
-        SoulForgeShapedRecipe.JsonBuilder.create(RecipeCategory.MISC, ModBlocks.choppingBlock)
-                .input('s', ItemTags.STONE_CRAFTING_MATERIALS)
+        SoulForgeShapedRecipe.JsonBuilder.shaped(RecipeCategory.MISC, ModBlocks.choppingBlock)
+                .define('s', ItemTags.STONE_CRAFTING_MATERIALS)
                 .pattern("s  s")
                 .pattern("s  s")
                 .pattern("ssss")
-                .criterion("has_stone_crafting_material", conditionsFromTag(ItemTags.STONE_CRAFTING_MATERIALS))
-                .offerTo(exporter);
+                .unlockedBy("has_stone_crafting_material", has(ItemTags.STONE_CRAFTING_MATERIALS))
+                .save(exporter);
     }
 
     @Override
-    protected Identifier getRecipeIdentifier(Identifier identifier) {
+    protected ResourceLocation getRecipeIdentifier(ResourceLocation identifier) {
         return identifier;
     }
 

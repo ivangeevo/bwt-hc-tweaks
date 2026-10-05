@@ -3,9 +3,9 @@ package org.btwr.bwt_hct.data;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.entity.LivingEntity;
 import org.btwr.shared_library.api.data.UpdateRequiringData;
 
 public class RecentlyOnChoppingBlockCountdownData extends UpdateRequiringData<LivingEntity> {
@@ -15,7 +15,7 @@ public class RecentlyOnChoppingBlockCountdownData extends UpdateRequiringData<Li
             ).apply(instance, RecentlyOnChoppingBlockCountdownData::new)
     );
 
-    public static PacketCodec<ByteBuf, RecentlyOnChoppingBlockCountdownData> PACKET_CODEC = PacketCodecs.codec(CODEC);
+    public static StreamCodec<ByteBuf, RecentlyOnChoppingBlockCountdownData> PACKET_CODEC = ByteBufCodecs.fromCodec(CODEC);
 
     private int countdown;
 

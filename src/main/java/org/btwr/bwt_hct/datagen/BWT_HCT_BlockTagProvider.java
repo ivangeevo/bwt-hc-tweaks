@@ -4,8 +4,8 @@ import com.bwt.blocks.BwtBlocks;
 import com.bwt.tags.BwtBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.tags.BlockTags;
 import org.btwr.shared_library.api.tag.BTWRConventionalTags;
 import org.btwr.bwt_hct.blocks.ModBlocks;
 
@@ -13,13 +13,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class BWT_HCT_BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
-    public BWT_HCT_BlockTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public BWT_HCT_BlockTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
+    protected void addTags(HolderLookup.Provider wrapperLookup) {
+        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.modernMillStoneBlock)
                 .add(ModBlocks.dormantSoulForge)
                 .add(ModBlocks.choppingBlock);

@@ -2,8 +2,8 @@ package org.btwr.bwt_hct;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.minecraft.block.Block;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.level.block.Block;
 import org.btwr.bwt_hct.blocks.ModBlocks;
 
 public class BWT_HCTModClient implements ClientModInitializer {
@@ -15,6 +15,7 @@ public class BWT_HCTModClient implements ClientModInitializer {
     }
 
     private void registerCutout(Block block)  {
-        BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(block, RenderType.cutout());
     }
+
 }

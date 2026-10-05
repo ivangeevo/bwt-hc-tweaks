@@ -2,7 +2,7 @@ package org.btwr.bwt_hct;
 
 import com.bwt.utils.FireData;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.block.CampfireBlock;
+import net.minecraft.world.level.block.CampfireBlock;
 import org.btwr.bwt_hct.blocks.ModBlocks;
 import org.btwr.bwt_hct.config.BWT_HCTConfig;
 import org.btwr.bwt_hct.data.ModDataAttachments;

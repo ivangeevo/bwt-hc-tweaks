@@ -1,14 +1,13 @@
 package org.btwr.bwt_hct.util;
 
 import com.bwt.utils.BlockUtils;
-import net.minecraft.block.Block;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public interface SawLikeBlockConstants {
 
@@ -28,22 +27,22 @@ public interface SawLikeBlockConstants {
     float bladeHalfWidth = bladeWidth * 0.5F;
     float bladeHeight = 16F - baseHeight;
 
-    Box UPWARD_BASE_BOX = new Box(0f, 0f, 0f, 16f, baseHeight, 16F);
-    Box UPWARD_BLADE_BOX = new Box(8f - bladeHalfLength, baseHeight, 8f - bladeHalfWidth, 8f + bladeHalfLength, baseHeight + bladeHeight, 8f + bladeHalfWidth);
-    Box DOWNWARD_BLADE_BOX = new Box(8f - bladeHalfLength, 0, 8f - bladeHalfWidth, 8f + bladeHalfLength, bladeHeight, 8f + bladeHalfWidth);
-    Box NORTH_BLADE_BOX = new Box(
+    AABB UPWARD_BASE_BOX = new AABB(0f, 0f, 0f, 16f, baseHeight, 16F);
+    AABB UPWARD_BLADE_BOX = new AABB(8f - bladeHalfLength, baseHeight, 8f - bladeHalfWidth, 8f + bladeHalfLength, baseHeight + bladeHeight, 8f + bladeHalfWidth);
+    AABB DOWNWARD_BLADE_BOX = new AABB(8f - bladeHalfLength, 0, 8f - bladeHalfWidth, 8f + bladeHalfLength, bladeHeight, 8f + bladeHalfWidth);
+    AABB NORTH_BLADE_BOX = new AABB(
             8f - bladeHalfLength, 8f - bladeHalfWidth, 16f - baseHeight,
             8f + bladeHalfLength, 8f + bladeHalfWidth, 16f - baseHeight - bladeHeight
     );
-    Box SOUTH_BLADE_BOX = new Box(
+    AABB SOUTH_BLADE_BOX = new AABB(
             8f - bladeHalfLength, 8f - bladeHalfWidth, baseHeight,
             8f + bladeHalfLength, 8f + bladeHalfWidth, baseHeight + bladeHeight
     );
-    Box EAST_BLADE_BOX = new Box(
+    AABB EAST_BLADE_BOX = new AABB(
             16f - baseHeight, 8f - bladeHalfWidth, 8f - bladeHalfLength,
             16f - baseHeight - bladeHeight, 8f + bladeHalfWidth, 8f + bladeHalfLength
     );
-    Box WEST_BLADE_BOX = new Box(
+    AABB WEST_BLADE_BOX = new AABB(
             (baseHeight), 8f - bladeHalfWidth, 8f - bladeHalfLength,
             baseHeight + bladeHeight, 8f + bladeHalfWidth, 8f + bladeHalfLength
     );
@@ -59,7 +58,7 @@ public interface SawLikeBlockConstants {
             SOUTH_BLADE_BOX,
             EAST_BLADE_BOX,
             WEST_BLADE_BOX
-    ).map(box -> Block.createCuboidShape(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ)).toList();
+    ).map(box -> Block.box(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ)).toList();
 
     List<VoxelShape> OUTLINE_SHAPES = Arrays.stream(Direction.values())
             .map(direction -> BlockUtils.rotateCuboidFromUp(direction, UPWARD_BASE_BOX)).toList();

@@ -1,32 +1,32 @@
 package org.btwr.bwt_hct.util;
 
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
 
-public class SingleCountInventory extends SimpleInventory {
+public class SingleCountInventory extends SimpleContainer {
 
     public SingleCountInventory() {
         super(1);
     }
 
     @Override
-    public int getMaxCountPerStack() {
+    public int getMaxStackSize() {
         return 1;
     }
 
     @Override
     public boolean isEmpty() {
-        return this.getStack(0).getCount() < 1;
+        return this.getItem(0).getCount() < 1;
     }
 
     @Override
-    public boolean canTransferTo(Inventory hopperInventory, int slot, ItemStack stack) {
-        return this.isEmpty() && stack.getCount() == 1 && canInsert(stack);
+    public boolean canTakeItem(Container hopperInventory, int slot, ItemStack stack) {
+        return this.isEmpty() && stack.getCount() == 1 && canAddItem(stack);
     }
 
     @Override
-    public boolean canInsert(ItemStack stack) {
+    public boolean canAddItem(ItemStack stack) {
         return isEmpty();
     }
 

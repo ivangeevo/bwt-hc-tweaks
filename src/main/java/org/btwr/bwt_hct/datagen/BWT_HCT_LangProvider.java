@@ -2,7 +2,7 @@ package org.btwr.bwt_hct.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.core.HolderLookup;
 import org.btwr.bwt_hct.BWT_HCTMod;
 import org.btwr.bwt_hct.blocks.ModBlocks;
 import org.btwr.bwt_hct.items.ModItems;
@@ -11,12 +11,12 @@ import java.util.concurrent.CompletableFuture;
 
 public class BWT_HCT_LangProvider extends FabricLanguageProvider {
 
-    public BWT_HCT_LangProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+    public BWT_HCT_LangProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
 
     @Override
-    public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder tb) {
+    public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder tb) {
         this.generateBlockTranslations(tb);
         this.generateItemTranslations(tb);
         this.generateConfigTranslations(tb);

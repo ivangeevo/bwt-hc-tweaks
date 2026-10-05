@@ -6,21 +6,21 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.RecipeManager;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.btwr.bwt_hct.blocks.ModBlocks;
 import org.btwr.bwt_hct.entity.ModBlockEntities;
 import org.btwr.bwt_hct.recipes.mill_stone.ModernMillStoneRecipe;
@@ -32,7 +32,7 @@ import java.util.*;
 
 import static org.btwr.bwt_hct.blocks.blocks.ModernMillStoneBlock.FULL;
 
-public class ModernMillStoneBE extends BlockEntity implements Inventory {
+public class ModernMillStoneBE extends BlockEntity implements Container {
 
     protected int grindProgressTime;
     public static final int timeToGrind = 200;
@@ -41,75 +41,75 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
     //public final InventoryStorage inventoryWrapper = InventoryStorage.of(inventory, Direction.UP);
     public final Storage<ItemVariant> inventoryWrapper = new SingleCountStorage(inventory);
 
-    final RecipeManager.MatchGetter<SingleCountMillStoneRecipeInput, ModernMillStoneRecipe> matchGetter =
-            RecipeManager.createCachedMatchGetter(ModernMillStoneRecipe.Type.INSTANCE);
+    final RecipeManager.CachedCheck<SingleCountMillStoneRecipeInput, ModernMillStoneRecipe> matchGetter =
+            RecipeManager.createCheck(ModernMillStoneRecipe.Type.INSTANCE);
 
     public ModernMillStoneBE(BlockPos pos, BlockState state) {
         super(ModBlockEntities.modernMillStoneEntity, pos, state);
     }
 
-    public boolean onUseByPlayer(PlayerEntity player) {
-        ItemStack held = player.getMainHandStack();
+    public boolean onUseByPlayer(Player player) {
+        ItemStack held = player.getMainHandItem();
 
         // Trying to retrieve item
         if (!inventory.isEmpty()) {
-            retrieveItem(world, player);
+            retrieveItem(level, player);
             return true;
         }
 
         // Try inserting if inventory is empty and player is holding something or recipe item
         if (inventory.isEmpty() && !held.isEmpty() && getRecipeFor(held).isPresent()) {
             ItemStack inserted = held.copyWithCount(1);
-            setStack(0, inserted);
-            held.decrement(1);
-            assert world != null;
-            this.setFull(world, true);
+            setItem(0, inserted);
+            held.shrink(1);
+            assert level != null;
+            this.setFull(level, true);
             return true;
         }
 
         return false; // Nothing happened
     }
 
-    public static void tick(World world, BlockPos pos, BlockState state, ModernMillStoneBE blockEntity) {
-        if (!state.isOf(ModBlocks.modernMillStoneBlock) || !state.get(MillStoneBlock.MECH_POWERED)) {
+    public static void tick(Level world, BlockPos pos, BlockState state, ModernMillStoneBE blockEntity) {
+        if (!state.is(ModBlocks.modernMillStoneBlock) || !state.getValue(MillStoneBlock.MECH_POWERED)) {
             return;
         }
-        SingleCountMillStoneRecipeInput recipeInput = new SingleCountMillStoneRecipeInput(blockEntity.inventory.getHeldStacks());
-        List<RecipeEntry<ModernMillStoneRecipe>> matches = world.getRecipeManager().getAllMatches(ModernMillStoneRecipe.Type.INSTANCE, recipeInput, world);
+        SingleCountMillStoneRecipeInput recipeInput = new SingleCountMillStoneRecipeInput(blockEntity.inventory.getItems());
+        List<RecipeHolder<ModernMillStoneRecipe>> matches = world.getRecipeManager().getRecipesFor(ModernMillStoneRecipe.Type.INSTANCE, recipeInput, world);
         if (matches.isEmpty()) {
             if (blockEntity.grindProgressTime != 0) {
                 blockEntity.grindProgressTime = 0;
-                blockEntity.markDirty();
+                blockEntity.setChanged();
             }
             return;
         }
 
         blockEntity.grindProgressTime += 1;
 
-        world.setBlockState(pos, state.with(FULL, true));
+        world.setBlockAndUpdate(pos, state.setValue(FULL, true));
 
         if (blockEntity.grindProgressTime >= timeToGrind) {
             blockEntity.grindProgressTime = 0;
-            world.setBlockState(pos, state.with(FULL, false));
-            blockEntity.markDirty();
+            world.setBlockAndUpdate(pos, state.setValue(FULL, false));
+            blockEntity.setChanged();
         }
         else {
             return;
         }
 
         // Get the first recipe and grind it
-        OrderedRecipeMatcher.getFirstRecipe(matches, blockEntity.inventory.getHeldStacks(), match -> blockEntity.completeRecipe(match, world, pos));
+        OrderedRecipeMatcher.getFirstRecipe(matches, blockEntity.inventory.getItems(), match -> blockEntity.completeRecipe(match, world, pos));
     }
 
-    public Optional<RecipeEntry<ModernMillStoneRecipe>> getRecipeFor(ItemStack stack) {
+    public Optional<RecipeHolder<ModernMillStoneRecipe>> getRecipeFor(ItemStack stack) {
         if (stack.isEmpty()) {
             return Optional.empty();
         }
 
-        return this.matchGetter.getFirstMatch(new SingleCountMillStoneRecipeInput(Collections.singletonList(stack)), this.world);
+        return this.matchGetter.getRecipeFor(new SingleCountMillStoneRecipeInput(Collections.singletonList(stack)), this.level);
     }
 
-    public boolean completeRecipe(ModernMillStoneRecipe recipe, World world, BlockPos pos) {
+    public boolean completeRecipe(ModernMillStoneRecipe recipe, Level world, BlockPos pos) {
         try (Transaction transaction = Transaction.openOuter()) {
             // Spend ingredients
                 ItemVariant itemVariant = StorageUtil.findStoredResource(inventoryWrapper, input -> recipe.getIngredients().getFirst().test(input.toStack()));
@@ -140,70 +140,70 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
         return false;
     }
 
-    public void retrieveItem(World world, PlayerEntity player) {
+    public void retrieveItem(Level world, Player player) {
         try (Transaction tx = Transaction.openOuter()) {
-            ItemVariant variant = ItemVariant.of(inventory.getStack(0));
+            ItemVariant variant = ItemVariant.of(inventory.getItem(0));
             long extracted = inventoryWrapper.extract(variant, 1, tx);
             if (extracted != 0L) {
-                player.getInventory().offerOrDrop(variant.toStack());
+                player.getInventory().placeItemBackInInventory(variant.toStack());
                 this.setFull(world, false);
                 tx.commit();
             }
         }
     }
 
-    public static void ejectItem(World world, ItemStack stack, BlockPos pos) {
+    public static void ejectItem(Level world, ItemStack stack, BlockPos pos) {
         // Start at the center of the block
-        Vec3d centerPos = pos.toCenterPos();
-        Vec3d horizontalUnitVector = new Vec3d(1, 0, 1);
+        Vec3 centerPos = pos.getCenter();
+        Vec3 horizontalUnitVector = new Vec3(1, 0, 1);
 
         // Pick a random direction
-        double angle = Math.toRadians(world.random.nextBetween(0, 359));
+        double angle = Math.toRadians(world.random.nextIntBetweenInclusive(0, 359));
         // Get distance from the center to the edge of a square, using the angle
         double distToEdge = Math.min(0.5 / Math.abs(Math.cos(angle)), 0.5 / Math.abs(Math.sin(angle)));
         // Apply that distance to get our item spawn position
-        Vec3d itemPos = horizontalUnitVector
-                .rotateY((float) angle)
-                .multiply(distToEdge + 0.01)
+        Vec3 itemPos = horizontalUnitVector
+                .yRot((float) angle)
+                .scale(distToEdge + 0.01)
                 .add(centerPos);
         // Velocity is in the same X/Z direction as position, but with random strength and y offset
-        Vec3d itemVelocity = horizontalUnitVector
-                .rotateY((float) angle)
-                .multiply(world.random.nextFloat() * 0.0125D + 0.1F)
+        Vec3 itemVelocity = horizontalUnitVector
+                .yRot((float) angle)
+                .scale(world.random.nextFloat() * 0.0125D + 0.1F)
                 .add(0, world.random.nextGaussian() * 0.0125D + 0.05F, 0);
 
-        ItemEntity itemEntity = new ItemEntity(world, itemPos.getX(), itemPos.getY(), itemPos.getZ(), stack);
-        itemEntity.setVelocity(itemVelocity);
-        world.spawnEntity(itemEntity);
+        ItemEntity itemEntity = new ItemEntity(world, itemPos.x(), itemPos.y(), itemPos.z(), stack);
+        itemEntity.setDeltaMovement(itemVelocity);
+        world.addFreshEntity(itemEntity);
     }
 
-    private void setFull(World world, boolean value) {
-        world.setBlockState(pos, world.getBlockState(pos).with(FULL, value));
+    private void setFull(Level world, boolean value) {
+        world.setBlockAndUpdate(worldPosition, world.getBlockState(worldPosition).setValue(FULL, value));
         this.updateListeners();
     }
 
     private void updateListeners() {
-        this.markDirty();
-        this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+        this.setChanged();
+        this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
     }
 
     @Override
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
-        this.inventory.readNbtList(nbt.getList("Inventory", NbtElement.COMPOUND_TYPE), registryLookup);
+    protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider registryLookup) {
+        super.loadAdditional(nbt, registryLookup);
+        this.inventory.fromTag(nbt.getList("Inventory", Tag.TAG_COMPOUND), registryLookup);
         this.grindProgressTime = nbt.getInt("grindProgressTime");
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
-        nbt.put("Inventory", this.inventory.toNbtList(registryLookup));
+    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registryLookup) {
+        super.saveAdditional(nbt, registryLookup);
+        nbt.put("Inventory", this.inventory.createTag(registryLookup));
         nbt.putInt("grindProgressTime", this.grindProgressTime);
     }
 
     @Override
-    public int size() {
-        return inventory.size();
+    public int getContainerSize() {
+        return inventory.getContainerSize();
     }
 
     @Override
@@ -212,43 +212,43 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
     }
 
     @Override
-    public ItemStack getStack(int slot) {
-        return inventory.getStack(slot);
+    public ItemStack getItem(int slot) {
+        return inventory.getItem(slot);
     }
 
     @Override
-    public ItemStack removeStack(int slot, int amount) {
-        return inventory.removeStack(slot, amount);
+    public ItemStack removeItem(int slot, int amount) {
+        return inventory.removeItem(slot, amount);
     }
 
     @Override
-    public ItemStack removeStack(int slot) {
-        return inventory.removeStack(slot);
+    public ItemStack removeItemNoUpdate(int slot) {
+        return inventory.removeItemNoUpdate(slot);
     }
 
     @Override
-    public int getMaxCountPerStack() {
-        return inventory.getMaxCountPerStack();
+    public int getMaxStackSize() {
+        return inventory.getMaxStackSize();
     }
 
     @Override
-    public void setStack(int slot, ItemStack stack) {
-        inventory.setStack(slot, stack);
+    public void setItem(int slot, ItemStack stack) {
+        inventory.setItem(slot, stack);
     }
 
     @Override
-    public boolean canPlayerUse(PlayerEntity player) {
-        return inventory.canPlayerUse(player);
+    public boolean stillValid(Player player) {
+        return inventory.stillValid(player);
     }
 
     @Override
-    public int getMaxCount(ItemStack stack) {
-        return inventory.getMaxCount(stack);
+    public int getMaxStackSize(ItemStack stack) {
+        return inventory.getMaxStackSize(stack);
     }
 
     @Override
-    public void clear() {
-        inventory.clear();
+    public void clearContent() {
+        inventory.clearContent();
     }
 
     public class Inventory extends SingleCountInventory {
@@ -256,8 +256,8 @@ public class ModernMillStoneBE extends BlockEntity implements Inventory {
             super();
         }
 
-        public void markDirty() {
-            ModernMillStoneBE.this.markDirty();
+        public void setChanged() {
+            ModernMillStoneBE.this.setChanged();
         }
     }
 

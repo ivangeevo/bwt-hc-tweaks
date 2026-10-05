@@ -1,8 +1,8 @@
 package org.btwr.bwt_hct.recipes;
 
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import org.btwr.bwt_hct.BWT_HCTMod;
 import org.btwr.bwt_hct.recipes.mill_stone.ModernMillStoneRecipe;
 
@@ -10,9 +10,9 @@ public class ModRecipes {
 
     public static void register() {
         // Mill Stone (modern)
-        Registry.register(Registries.RECIPE_SERIALIZER, Identifier.of(BWT_HCTMod.MOD_ID, ModernMillStoneRecipe.Serializer.ID),
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, ResourceLocation.fromNamespaceAndPath(BWT_HCTMod.MOD_ID, ModernMillStoneRecipe.Serializer.ID),
                 ModernMillStoneRecipe.Serializer.INSTANCE);
-        Registry.register(Registries.RECIPE_TYPE, Identifier.of(BWT_HCTMod.MOD_ID, ModernMillStoneRecipe.Type.ID),
+        Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(BWT_HCTMod.MOD_ID, ModernMillStoneRecipe.Type.ID),
                 ModernMillStoneRecipe.Type.INSTANCE);
     }
 

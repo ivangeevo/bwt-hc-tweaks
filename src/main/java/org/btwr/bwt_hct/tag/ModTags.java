@@ -1,9 +1,9 @@
 package org.btwr.bwt_hct.tag;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import org.btwr.bwt_hct.BWT_HCTMod;
 
 public class ModTags {
@@ -14,7 +14,7 @@ public class ModTags {
         );
 
         private static TagKey<EntityType<?>> createTag(String name) {
-            return TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(BWT_HCTMod.MOD_ID, name));
+            return TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(BWT_HCTMod.MOD_ID, name));
         }
     }
 }

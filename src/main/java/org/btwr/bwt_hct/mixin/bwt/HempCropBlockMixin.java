@@ -1,12 +1,14 @@
 package org.btwr.bwt_hct.mixin.bwt;
 
 import com.bwt.blocks.HempCropBlock;
-import net.minecraft.block.*;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import org.btwr.bwt_hct.blocks.HempCropBlockManager;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,27 +23,27 @@ public abstract class HempCropBlockMixin extends CropBlock {
 
     @Shadow @Final public static BooleanProperty CONNECTED_UP;
 
-    public HempCropBlockMixin(Settings settings) {
+    public HempCropBlockMixin(Properties settings) {
         super(settings);
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void initProperty(Settings settings, CallbackInfo ci) {
-        this.setDefaultState(this.getDefaultState().with(CONNECTED_UP, false).with(HempCropBlockManager.IS_TOP, false));
+    private void initProperty(Properties settings, CallbackInfo ci) {
+        this.registerDefaultState(this.defaultBlockState().setValue(CONNECTED_UP, false).setValue(HempCropBlockManager.IS_TOP, false));
     }
 
-    @Inject(method = "appendProperties", at = @At("TAIL"))
-    private void appendCustomProperties(StateManager.Builder<Block, BlockState> builder, CallbackInfo ci) {
+    @Inject(method = "createBlockStateDefinition", at = @At("TAIL"))
+    private void appendCustomProperties(StateDefinition.Builder<Block, BlockState> builder, CallbackInfo ci) {
         builder.add(HempCropBlockManager.IS_TOP);
     }
 
-    @Inject(method = "hasRandomTicks", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "isRandomlyTicking", at = @At("HEAD"), cancellable = true)
     private void setHasRandomTicks(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(!state.get(HempCropBlockManager.IS_TOP));
+        cir.setReturnValue(!state.getValue(HempCropBlockManager.IS_TOP));
     }
 
     @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
-    private void onRandomTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
+    private void onRandomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random, CallbackInfo ci) {
         HempCropBlockManager.getInstance().onRandomTick(state, world, pos, random, this);
         ci.cancel();
     }
