@@ -4,6 +4,8 @@
 + Changed Soul Urns to not spawn Ghast when thrown
 + Changed Soul Urn to have compatibility with possession mechanics from the "Nothing To Worry About" mod
 
+## v???(dev)
+
 ## v1.5.1
 + Updated the mod to Better With Time 2.0.3 and updated the source code to use Mojang mappings instead of Yarn
 + Added a new configuration option for boats for the rework below
