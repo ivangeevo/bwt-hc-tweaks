@@ -3,10 +3,11 @@
 + Changed the Mechanical Hopper to have compatibility with possession mechanics from the "Nothing To Worry About" for filtering
 + Changed Soul Urns to not spawn Ghast when thrown
 + Changed Soul Urn to have compatibility with possession mechanics from the "Nothing To Worry About" mod
-+ Changed boats, so they're much slower unless the player is holding a sail item (working, but disabled)
 
 ## v???(dev)
-
++ Updated the mod to Better With Time 2.0.3 and updated the source code to use Mojang mappings instead of Yarn
++ Added a new configuration option for boats for the rework below
++ Changed boats, so they're much slower unless the player is holding a sail item and reworked how their paddles sit to look much better
 + Updated the mod to Fabric API 0.116.17, Fabric Loader 0.19.5 & BTWR: Shared Library 0.8.5
 
 ## v1.5
